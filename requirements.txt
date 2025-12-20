@@ -3,6 +3,9 @@
 # GUI Framework (Qt6 for Python)
 PySide6>=6.5.0
 
+# System and process monitoring (for resource usage tracking)
+psutil>=5.9.0
+
 # Note: The following are included with Python standard library:
 # - json
 # - socket

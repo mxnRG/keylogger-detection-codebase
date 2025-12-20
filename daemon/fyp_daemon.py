@@ -26,6 +26,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from datetime import datetime
+from pathlib import Path
 
 # Configure logging to file and console
 log_handlers = [logging.StreamHandler()]
@@ -118,10 +119,13 @@ class Alert:
 class DetectionEngine:
     """Applies heuristic detection rules (NO ML)"""
     
-    # Heuristic thresholds
+    # Default heuristic thresholds
     RAPID_RATIO_THRESHOLD = 50.0  # % of events that are rapid
-    BURST_THRESHOLD = 100         # events per second
+    DEFAULT_BURST_THRESHOLD = 100  # events per second (default)
     BURST_WINDOW = 2.0            # seconds to establish rate
+    
+    # Configuration file path
+    CONFIG_FILE = Path("/tmp/fyp_daemon_config.json")
     
     # Process whitelist (known-good applications)
     WHITELIST = {
@@ -136,6 +140,30 @@ class DetectionEngine:
     def __init__(self):
         self.alerts: List[Alert] = []
         self.alerted_pids: set = set()  # Track which PIDs we've alerted on
+        self.BURST_THRESHOLD = self.DEFAULT_BURST_THRESHOLD
+        self.config_mtime = 0  # Track config file modification time
+        self.load_config()  # Load initial configuration
+    
+    def load_config(self):
+        """Load threshold configuration from JSON file if it exists"""
+        try:
+            if self.CONFIG_FILE.exists():
+                # Check if file has been modified since last load
+                current_mtime = self.CONFIG_FILE.stat().st_mtime
+                if current_mtime != self.config_mtime:
+                    with open(self.CONFIG_FILE, 'r') as f:
+                        config = json.load(f)
+                    
+                    # Update burst threshold if present
+                    if 'burst_threshold' in config:
+                        new_threshold = config['burst_threshold']
+                        if self.BURST_THRESHOLD != new_threshold:
+                            logger.info(f"✓ Config updated: BURST_THRESHOLD {self.BURST_THRESHOLD} → {new_threshold} eps")
+                        self.BURST_THRESHOLD = new_threshold
+                    
+                    self.config_mtime = current_mtime
+        except Exception as e:
+            logger.warning(f"Failed to load config from {self.CONFIG_FILE}: {e}")
     
     def check_rapid_typing(self, stats: ProcessStats) -> Optional[Alert]:
         """Rule 1: Detect automated/rapid input stream fetching"""
@@ -155,7 +183,9 @@ class DetectionEngine:
                 process_name=stats.comm,
                 pid=stats.pid,
                 rule="Rapid Input Stream Access",
-                details=f"Rapid fetching ratio: {stats.rapid_ratio:.1f}% "\n                       f"(threshold: {self.RAPID_RATIO_THRESHOLD}%) - "\n                       f"Process is accessing keyboard events too quickly"
+                details=f"Rapid fetching ratio: {stats.rapid_ratio:.1f}% "
+                       f"(threshold: {self.RAPID_RATIO_THRESHOLD}%) - "
+                       f"Process is accessing keyboard events too quickly"
             )
         return None
     
@@ -503,6 +533,9 @@ class FYPDaemon:
                 time.sleep(1)  # Write every second
                 self.write_status_file()
                 self.print_status()
+                
+                # Reload config every cycle to pick up threshold changes
+                self.detection_engine.load_config()
         except Exception as e:
             logger.error(f"Status writer error: {e}", exc_info=True)
         

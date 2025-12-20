@@ -6,6 +6,9 @@
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![Kernel: 5.15.x](https://img.shields.io/badge/Kernel-5.15.x-orange.svg)]()
 [![Platform: Ubuntu 22.04](https://img.shields.io/badge/Platform-Ubuntu%2022.04-red.svg)]()
+[![Version](https://img.shields.io/badge/Kernel-v0.6-green.svg)]()
+[![Version](https://img.shields.io/badge/GUI-v3.3-blue.svg)]()
+[![Version](https://img.shields.io/badge/Daemon-v0.2-orange.svg)]()
 
 ## 🎯 Project Overview
 
@@ -27,27 +30,30 @@ This project implements a **keylogger detection system** that monitors keyboard 
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        KERNEL SPACE                         │
+│                    KERNEL SPACE (v0.6)                      │
 │  ┌─────────────────────────────────────────────────────┐   │
 │  │  Keyboard Notifier Hook (fyp_kbd.ko)                │   │
 │  │  - Observes keyboard events (press/release)         │   │
-│  │  - Collects behavioral metadata only                │   │
+│  │  - Collects behavioral metadata + cmdline           │   │
+│  │  - Runtime-configurable thresholds (sysfs)          │   │
+│  │  - Workqueue for safe process inspection            │   │
 │  │  - NO keystroke content capture                     │   │
 │  └──────────────────┬──────────────────────────────────┘   │
 └─────────────────────┼──────────────────────────────────────┘
                       │
-                      │ Netlink / Procfs (planned)
+                      │ Netlink Socket (Protocol 31)
                       ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                       USER SPACE                            │
+│                   USER SPACE (v0.2 / v3.3)                  │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │  Python Daemon (planned)                            │   │
-│  │  - Aggregates kernel events                         │   │
-│  │  - Applies detection heuristics                     │   │
-│  │  - Identifies anomalous patterns                    │   │
+│  │  Python Daemon (fyp_daemon.py)                      │   │
+│  │  - Receives events via Netlink                      │   │
+│  │  - Applies 3 heuristic detection rules              │   │
+│  │  - Generates security alerts                        │   │
+│  │  - Writes JSON status file                          │   │
 │  └──────────────────┬──────────────────────────────────┘   │
 │                     │                                       │
-│                     │ WebSocket                             │
+│                     │ File-based IPC (/tmp/fyp_status.json)│
 │                     ▼                                       │
 │  ┌─────────────────────────────────────────────────────┐   │
 │  │  Web Dashboard (Flask + WebSockets) (planned)       │   │
@@ -73,18 +79,20 @@ This project implements a **keylogger detection system** that monitors keyboard 
 - **Ethical design:** NO keycode or keystroke capture
 - Clean compilation on Ubuntu 22.04 LTS
 
-### 🔄 In Progress (Phase 2)
+### ✅ Complete (Phase 2)
 
-- [ ] Kernel → Userspace communication (Netlink/Procfs)
-- [ ] Python daemon for event processing
-- [ ] Basic detection heuristics
+- [x] Kernel → Userspace communication (Netlink Protocol 31)
+- [x] Python daemon v0.2 with 3 heuristic detection rules
+- [x] Qt GUI v3.3 with responsive 2-column dashboard
+- [x] Real-time resource monitoring (CPU/Memory tracking)
+- [x] Runtime-configurable thresholds via sysfs parameters
 
-### 📋 Planned (Phase 3)
+### 🔬 Research Contributions
 
-- [ ] Flask web dashboard
-- [ ] Real-time WebSocket updates
-- [ ] Alert visualization
-- [ ] Demo scenarios and testing
+- [x] Behavioral fingerprinting without keystroke capture
+- [x] Process-context attribution for keyboard events
+- [x] Timing-based anomaly detection framework
+- [x] Comprehensive ethical analysis and privacy safeguards
 
 ## 🛠️ Technical Stack
 
@@ -93,20 +101,20 @@ This project implements a **keylogger detection system** that monitors keyboard 
 | **OS** | Ubuntu 22.04 LTS |
 | **Kernel** | Linux 5.15.x (GA kernel) |
 | **Virtualization** | Oracle VirtualBox |
-| **Kernel Module** | C (Loadable Kernel Module) |
-| **Userspace Daemon** | Python 3 |
-| **Web Framework** | Flask + WebSockets |
-| **Frontend** | HTML/CSS/JavaScript |
-| **Communication** | Netlink sockets / Procfs |
+| **Kernel Module** | C (Loadable Kernel Module v0.6) |
+| **Userspace Daemon** | Python 3.10+ (v0.2) |
+| **GUI Framework** | PySide6 (Qt6 for Python) |
+| **Resource Monitor** | psutil |
+| **Communication** | Netlink sockets (Protocol 31) + JSON file IPC |
 
 ## 📦 Installation & Usage
 
 ### Prerequisites
 
 ```bash
-# System dependencies
+# System dependencies (kernel headers and Qt6 libraries)
 sudo apt update
-sudo apt install linux-headers-$(uname -r) build-essential libxcb-cursor0 libnotify-bin
+sudo apt install linux-headers-$(uname -r) build-essential libxcb-cursor0 libnotify-bin python3-pip
 
 # Python dependencies
 pip3 install -r requirements.txt
@@ -120,8 +128,7 @@ uname -r
 The project requires the following Python packages (see `requirements.txt`):
 
 - **PySide6 >= 6.5.0** - Qt6 for Python (GUI framework)
-  - Includes QtWidgets, QtCharts, QtCore, QtGui
-
+  - Includes QtWidgets, QtCharts, QtCore, QtGui- **psutil >= 5.9.0** - System and process monitoring (resource usage tracking)
 All other dependencies are part of Python's standard library (json, socket, threading, logging, etc.)
 
 ### Quick Start (Automated)
@@ -170,20 +177,38 @@ cd gui/
 ./fyp_gui.py
 ```
 
+### Runtime Configuration (Optional)
+
+```bash
+# View current thresholds
+cat /sys/module/fyp_kbd/parameters/rapid_threshold_ms
+cat /sys/module/fyp_kbd/parameters/burst_threshold_eps
+
+# Tune thresholds dynamically (no module reload needed)
+echo 100 | sudo tee /sys/module/fyp_kbd/parameters/rapid_threshold_ms
+echo 150 | sudo tee /sys/module/fyp_kbd/parameters/burst_threshold_eps
+
+# View updated configuration
+cat /proc/fyp_detector/config
+```
+
 ### Viewing Activity
 
 ```bash
-# Check kernel module stats
+# Check kernel module statistics
 cat /proc/fyp_detector/stats
 
-# View kernel logs
+# View runtime configuration
+cat /proc/fyp_detector/config
+
+# View kernel logs (Netlink events)
 sudo dmesg -w | grep fyp_detector
 
-# View daemon logs
+# View daemon logs (detection events)
 tail -f /tmp/fyp_daemon.log
 
-# View GUI logs
-tail -f /tmp/fyp_gui.log
+# Monitor GUI resource usage (in GUI dashboard)
+# See "Resource Monitor" widget for real-time CPU/Memory
 ```
 
 ### Stopping the System
@@ -265,10 +290,16 @@ This software is intended for:
 
 ## 📚 Documentation
 
-- [`kernel/README.md`](kernel/README.md) - Kernel module technical details
-- [`kernel/ETHICS.md`](kernel/ETHICS.md) - Ethical design decisions
-- [`kernel/CHANGELOG.md`](kernel/CHANGELOG.md) - Version history
-- [`kernel/QUICKREF.md`](kernel/QUICKREF.md) - Quick reference guide
+### Comprehensive Guides
+- [`docs/KERNEL_MODULE.md`](docs/KERNEL_MODULE.md) - Kernel module architecture (Netlink, workqueue, sysfs)
+- [`docs/DAEMON.md`](docs/DAEMON.md) - Detection daemon and heuristics
+- [`docs/GUI.md`](docs/GUI.md) - Qt GUI responsive design and resource monitoring
+- [`docs/ETHICS.md`](docs/ETHICS.md) - Privacy-by-design and responsible use
+- [`docs/RESEARCH.md`](docs/RESEARCH.md) - Novel contributions and academic context
+- [`docs/TESTING.md`](docs/TESTING.md) - Testing methodology and validation
+
+### Quick References
+- [`QUICKSTART.md`](QUICKSTART.md) - Quick setup guide
 - [`current.md`](current.md) - Current development status
 
 ## 🧪 Testing
@@ -321,6 +352,6 @@ Academic Year 2024-2025
 
 ---
 
-**Last Updated:** December 15, 2025  
-**Version:** 0.3 (Kernel Module - Behavioral Observer)  
-**Status:** Phase 1 Complete ✅ | Phase 2 In Progress 🔄
+**Last Updated:** December 20, 2025  
+**Version:** Kernel v0.6 | Daemon v0.2 | GUI v3.3  
+**Status:** Phase 1 Complete ✅ | Phase 2 Complete ✅

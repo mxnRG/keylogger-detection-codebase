@@ -1,5 +1,5 @@
 /*
- * FYP Keylogger Detection - Kernel Module v0.5 (Netlink Edition)
+ * FYP Keylogger Detection - Kernel Module v0.6 (Runtime Configuration Edition)
  * 
  * ETHICAL NOTICE: This is a keylogger DETECTOR, not a keylogger.
  * We collect BEHAVIORAL PATTERNS only - NO individual keystroke data.
@@ -10,7 +10,7 @@
  * WHAT WE COLLECT (Safe for detection):
  *   - Event frequency and rate
  *   - Timing patterns (inter-keystroke intervals)
- *   - Process context (PID, comm)
+ *   - Process context (PID, comm, cmdline)
  *   - Statistical anomalies
  * 
  * WHAT WE DO NOT COLLECT (Avoids keylogging):
@@ -25,19 +25,25 @@
  *     - No polling overhead, no circular buffer
  *     - Unicast messages to userspace daemon
  * 
- *   FALLBACK: Procfs stats (debugging only)
+ *   FALLBACK: Procfs interface
  *     /proc/fyp_detector/stats - Current statistics (read-only)
+ *     /proc/fyp_detector/config - Runtime configuration (read/write)
  * 
  * RATE LIMITING:
  * - Token bucket per-PID (1000 events/sec max per process)
  * - Anti-flood protection against malicious synthetic events
  * - Dropped events counted in statistics
  * 
+ * RUNTIME CONFIGURATION (via sysfs):
+ * - /sys/module/fyp_kbd/parameters/rapid_threshold_ms (default: 50ms)
+ * - /sys/module/fyp_kbd/parameters/burst_threshold_eps (default: 100 events/sec)
+ * 
  * SAFETY NOTES:
  * - Keyboard notifier runs in atomic context (cannot sleep)
  * - All allocations use GFP_ATOMIC (safe for interrupt context)
  * - Netlink send is non-blocking
  * - Process context (current) may be interrupt context (PID 0/swapper)
+ * - Workqueue used for delayed cmdline capture (avoids atomic context issues)
  */
 
 #include <linux/module.h>
@@ -47,19 +53,42 @@
 #include <linux/notifier.h>
 #include <linux/sched.h>          /* for task_struct, current */
 #include <linux/sched/signal.h>   /* for task_lock */
+#include <linux/sched/mm.h>       /* for mm_struct access */
+#include <linux/mm.h>             /* for memory management */
 #include <linux/jiffies.h>        /* for timing analysis */
 #include <linux/proc_fs.h>        /* for procfs fallback */
 #include <linux/seq_file.h>       /* for seq_file API */
 #include <linux/spinlock.h>       /* for rate limiter locks */
 #include <linux/slab.h>           /* for kmalloc/kfree */
 #include <linux/hashtable.h>      /* for per-PID rate limiter */
+#include <linux/workqueue.h>      /* for deferred cmdline capture */
 #include <net/sock.h>             /* for netlink */
 #include <net/netlink.h>          /* for netlink APIs */
+#include <linux/uaccess.h>        /* for copy_from_user */
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("FYP Team");
-MODULE_DESCRIPTION("FYP Keylogger Detection - Behavioral Observer with Netlink");
-MODULE_VERSION("0.5");
+MODULE_DESCRIPTION("FYP Keylogger Detection - Behavioral Observer with Runtime Config");
+MODULE_VERSION("0.6");
+
+/* ========================================================================
+ * RUNTIME CONFIGURATION (MODULE PARAMETERS)
+ * ======================================================================== */
+
+/*
+ * Runtime-tunable parameters via sysfs
+ * 
+ * Examples:
+ *   echo 100 > /sys/module/fyp_kbd/parameters/rapid_threshold_ms
+ *   echo 200 > /sys/module/fyp_kbd/parameters/burst_threshold_eps
+ */
+static int rapid_threshold_ms = 50;
+module_param(rapid_threshold_ms, int, 0644);
+MODULE_PARM_DESC(rapid_threshold_ms, "Threshold in ms for rapid event detection (default: 50)");
+
+static int burst_threshold_eps = 100;
+module_param(burst_threshold_eps, int, 0644);
+MODULE_PARM_DESC(burst_threshold_eps, "Threshold in events/sec for burst detection (default: 100)");
 
 /* ========================================================================
  * NETLINK CONFIGURATION
@@ -75,8 +104,8 @@ MODULE_VERSION("0.5");
 #define NETLINK_FYP_DETECTOR 31
 
 /*
- * Netlink Event Message Format (STABLE ABI)
- * Total size: 30 bytes (fixed, no dynamic allocation needed)
+ * Netlink Event Message Format (STABLE ABI v2)
+ * Total size: 158 bytes (fixed, includes cmdline)
  * 
  * Userspace must use matching struct for parsing
  */
@@ -84,8 +113,9 @@ struct fyp_netlink_event {
 	__u64 timestamp_ns;          /* Event time (nanoseconds since boot) */
 	__u32 pid;                   /* Process ID (may be 0 for interrupt context) */
 	char comm[TASK_COMM_LEN];    /* Process name (16 bytes, null-terminated) */
+	char cmdline[128];           /* Process command line (captured via workqueue) */
 	__u8 event_type;             /* 0=press, 1=release */
-	__u8 rapid_flag;             /* 1 if inter-event time <50ms, 0 otherwise */
+	__u8 rapid_flag;             /* 1 if inter-event time <rapid_threshold_ms */
 } __attribute__((packed));
 
 /* Netlink socket */
@@ -94,6 +124,129 @@ static struct sock *nl_sock = NULL;
 /* Userspace daemon PID (for unicast delivery) */
 static __u32 daemon_pid = 0;
 static DEFINE_SPINLOCK(daemon_pid_lock);
+
+/* ========================================================================
+ * WORKQUEUE FOR DEFERRED CMDLINE CAPTURE
+ * ======================================================================== */
+
+/*
+ * Workqueue work item for cmdline extraction
+ * 
+ * Why workqueue?
+ * - Keyboard notifier runs in atomic context (cannot access mm_struct safely)
+ * - Cmdline requires reading from process memory (mm->arg_start to mm->arg_end)
+ * - Workqueue runs in process context where we can safely access memory
+ */
+struct cmdline_work {
+	struct work_struct work;
+	pid_t pid;
+	char comm[TASK_COMM_LEN];
+	__u64 timestamp_ns;
+	__u8 event_type;
+	__u8 rapid_flag;
+};
+
+/*
+ * Extract process cmdline safely
+ * 
+ * @pid: Process ID
+ * @cmdline: Output buffer (128 bytes)
+ * 
+ * Return: 0 on success, negative on error
+ * 
+ * Context: Process context (workqueue handler)
+ */
+static int extract_cmdline(pid_t pid, char *cmdline)
+{
+	struct task_struct *task;
+	struct mm_struct *mm;
+	unsigned long arg_start, arg_end, len;
+	int ret = 0;
+
+	memset(cmdline, 0, 128);
+
+	/* Find task by PID */
+	rcu_read_lock();
+	task = pid_task(find_vpid(pid), PIDTYPE_PID);
+	if (!task) {
+		rcu_read_unlock();
+		return -ESRCH;
+	}
+
+	/* Get mm_struct with reference count */
+	mm = get_task_mm(task);
+	rcu_read_unlock();
+
+	if (!mm) {
+		/* Kernel thread or exiting process - no mm */
+		strncpy(cmdline, "[kernel]", 128);
+		return 0;
+	}
+
+	/* Extract cmdline from memory */
+	arg_start = mm->arg_start;
+	arg_end = mm->arg_end;
+
+	if (arg_start >= arg_end) {
+		mmput(mm);
+		return -EINVAL;
+	}
+
+	len = arg_end - arg_start;
+	if (len > 127)
+		len = 127;
+
+	/* Copy cmdline from user memory */
+	ret = access_process_vm(task, arg_start, cmdline, len, 0);
+	if (ret <= 0) {
+		mmput(mm);
+		return -EFAULT;
+	}
+
+	/* Replace null bytes with spaces for readability */
+	int i;
+	for (i = 0; i < ret - 1; i++) {
+		if (cmdline[i] == '\0')
+			cmdline[i] = ' ';
+	}
+	cmdline[ret] = '\0';
+
+	mmput(mm);
+	return 0;
+}
+
+/* Forward declaration */
+static int netlink_send_event(const struct fyp_netlink_event *event);
+
+/*
+ * Workqueue handler for cmdline capture
+ * 
+ * Context: Process context (system_wq)
+ */
+static void cmdline_work_handler(struct work_struct *work)
+{
+	struct cmdline_work *cmd_work = container_of(work, struct cmdline_work, work);
+	struct fyp_netlink_event event;
+
+	/* Build complete event with cmdline */
+	memset(&event, 0, sizeof(event));
+	event.timestamp_ns = cmd_work->timestamp_ns;
+	event.pid = cmd_work->pid;
+	strncpy(event.comm, cmd_work->comm, TASK_COMM_LEN);
+	event.event_type = cmd_work->event_type;
+	event.rapid_flag = cmd_work->rapid_flag;
+
+	/* Extract cmdline (safe in process context) */
+	if (extract_cmdline(cmd_work->pid, event.cmdline) < 0) {
+		strncpy(event.cmdline, "[unavailable]", 128);
+	}
+
+	/* Send event via netlink */
+	netlink_send_event(&event);
+
+	/* Free work item */
+	kfree(cmd_work);
+}
 
 /* ========================================================================
  * RATE LIMITING (TOKEN BUCKET PER PID)
@@ -239,13 +392,12 @@ static void rate_limiter_cleanup(void)
 static unsigned long event_count = 0;
 static unsigned long press_count = 0;
 static unsigned long release_count = 0;
-static unsigned long rapid_events = 0;      /* Events within 50ms */
+static unsigned long rapid_events = 0;      /* Events within rapid_threshold_ms */
 static unsigned long dropped_events = 0;    /* Rate-limited events */
 static unsigned long netlink_send_errors = 0;  /* Failed sends */
+static unsigned long cmdline_work_queued = 0;  /* Workqueue items scheduled */
 static unsigned long last_event_jiffies = 0;
 static unsigned long module_start_jiffies = 0;
-
-#define RAPID_THRESHOLD_MS 50  /* Threshold for detecting rapid/automated typing */
 
 /* ========================================================================
  * NETLINK MESSAGE DELIVERY
@@ -374,7 +526,7 @@ static int fyp_keyboard_notifier(struct notifier_block *nblock,
 {
 	struct keyboard_notifier_param *param = _param;
 	struct task_struct *task;
-	struct fyp_netlink_event event;
+	struct cmdline_work *work;
 	unsigned long current_jiffies, time_delta_ms;
 	pid_t pid;
 	char comm[TASK_COMM_LEN];
@@ -407,24 +559,39 @@ static int fyp_keyboard_notifier(struct notifier_block *nblock,
 	is_rapid = false;
 	if (last_event_jiffies != 0) {
 		time_delta_ms = jiffies_to_msecs(current_jiffies - last_event_jiffies);
-		if (time_delta_ms < RAPID_THRESHOLD_MS) {
+		if (time_delta_ms < rapid_threshold_ms) {
 			rapid_events++;
 			is_rapid = true;
 		}
 	}
 	last_event_jiffies = current_jiffies;
 
-	/* Build Netlink event message */
-	memset(&event, 0, sizeof(event));
-	event.timestamp_ns = ktime_get_ns();  /* High-precision timestamp */
-	event.pid = pid;
-	strncpy(event.comm, comm, TASK_COMM_LEN);
-	event.comm[TASK_COMM_LEN - 1] = '\0';  /* Ensure null-termination */
-	event.event_type = param->down ? 0 : 1;  /* 0=press, 1=release */
-	event.rapid_flag = is_rapid ? 1 : 0;
-
-	/* Send to userspace daemon via Netlink */
-	netlink_send_event(&event);
+	/* Schedule workqueue for cmdline capture and event delivery */
+	{
+		struct cmdline_work *work = kmalloc(sizeof(*work), GFP_ATOMIC);
+		if (work) {
+			INIT_WORK(&work->work, cmdline_work_handler);
+			work->pid = pid;
+			strncpy(work->comm, comm, TASK_COMM_LEN);
+			work->timestamp_ns = ktime_get_ns();
+			work->event_type = param->down ? 0 : 1;
+			work->rapid_flag = is_rapid ? 1 : 0;
+			
+			schedule_work(&work->work);
+			cmdline_work_queued++;
+		} else {
+			/* Fallback: send basic event without cmdline */
+			struct fyp_netlink_event fallback_event;
+			memset(&fallback_event, 0, sizeof(fallback_event));
+			fallback_event.timestamp_ns = ktime_get_ns();
+			fallback_event.pid = pid;
+			strncpy(fallback_event.comm, comm, TASK_COMM_LEN);
+			fallback_event.event_type = param->down ? 0 : 1;
+			fallback_event.rapid_flag = is_rapid ? 1 : 0;
+			strncpy(fallback_event.cmdline, "[oom]", 128);
+			netlink_send_event(&fallback_event);
+		}
+	}
 
 	/*
 	 * IMPORTANT: Return NOTIFY_OK (not NOTIFY_STOP)
@@ -450,6 +617,7 @@ static struct notifier_block fyp_nb = {
 /* Procfs entries */
 static struct proc_dir_entry *proc_dir = NULL;
 static struct proc_dir_entry *proc_stats = NULL;
+static struct proc_dir_entry *proc_config = NULL;
 
 /*
  * /proc/fyp_detector/stats reader
@@ -470,6 +638,7 @@ static int stats_show(struct seq_file *m, void *v)
 	seq_printf(m, "rapid_events=%lu\n", rapid_events);
 	seq_printf(m, "dropped_events=%lu\n", dropped_events);
 	seq_printf(m, "netlink_errors=%lu\n", netlink_send_errors);
+	seq_printf(m, "cmdline_work_queued=%lu\n", cmdline_work_queued);
 
 	if (event_count > 0) {
 		seq_printf(m, "rapid_ratio=%lu\n", (rapid_events * 100) / event_count);
@@ -485,6 +654,33 @@ static int stats_open(struct inode *inode, struct file *file)
 
 static const struct proc_ops stats_ops = {
 	.proc_open = stats_open,
+	.proc_read = seq_read,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
+};
+
+/*
+ * /proc/fyp_detector/config reader
+ * 
+ * Displays current configuration parameters
+ */
+static int config_show(struct seq_file *m, void *v)
+{
+	seq_printf(m, "rapid_threshold_ms=%d\n", rapid_threshold_ms);
+	seq_printf(m, "burst_threshold_eps=%d\n", burst_threshold_eps);
+	seq_printf(m, "\n# Runtime tunable via sysfs:\n");
+	seq_printf(m, "# echo VALUE > /sys/module/fyp_kbd/parameters/rapid_threshold_ms\n");
+	seq_printf(m, "# echo VALUE > /sys/module/fyp_kbd/parameters/burst_threshold_eps\n");
+	return 0;
+}
+
+static int config_open(struct inode *inode, struct file *file)
+{
+	return single_open(file, config_show, NULL);
+}
+
+static const struct proc_ops config_ops = {
+	.proc_open = config_open,
 	.proc_read = seq_read,
 	.proc_lseek = seq_lseek,
 	.proc_release = single_release,
@@ -510,7 +706,7 @@ static int __init fyp_init(void)
 	};
 	int ret;
 
-	pr_info("fyp_detector: Initializing keylogger detection module v0.5\n");
+	pr_info("fyp_detector: Initializing keylogger detection module v0.6\n");
 
 	/* Record module start time */
 	module_start_jiffies = jiffies;
@@ -537,12 +733,19 @@ static int __init fyp_init(void)
 		if (!proc_stats) {
 			pr_warn("fyp_detector: Failed to create /proc/fyp_detector/stats\n");
 		}
+		
+		/* Create config file */
+		proc_config = proc_create("config", 0444, proc_dir, &config_ops);
+		if (!proc_config) {
+			pr_warn("fyp_detector: Failed to create /proc/fyp_detector/config\n");
+		}
 	}
 
 	/* Register keyboard notifier */
 	ret = register_keyboard_notifier(&fyp_nb);
 	if (ret) {
 		pr_err("fyp_detector: Failed to register keyboard notifier (%d)\n", ret);
+		if (proc_config) proc_remove(proc_config);
 		if (proc_stats) proc_remove(proc_stats);
 		if (proc_dir) proc_remove(proc_dir);
 		netlink_kernel_release(nl_sock);
@@ -550,8 +753,12 @@ static int __init fyp_init(void)
 	}
 
 	pr_info("fyp_detector: Module loaded successfully\n");
+	pr_info("fyp_detector: Runtime config: rapid_threshold=%dms, burst_threshold=%deps\n", 
+		rapid_threshold_ms, burst_threshold_eps);
 	pr_info("fyp_detector: Waiting for daemon registration...\n");
-	pr_info("fyp_detector: Statistics available at /proc/fyp_detector/stats\n");
+	pr_info("fyp_detector: Statistics: /proc/fyp_detector/stats\n");
+	pr_info("fyp_detector: Configuration: /proc/fyp_detector/config\n");
+	pr_info("fyp_detector: Tune via: echo VALUE > /sys/module/fyp_kbd/parameters/PARAM\n");
 
 	return 0;
 }
@@ -573,7 +780,12 @@ static void __exit fyp_exit(void)
 	unregister_keyboard_notifier(&fyp_nb);
 	pr_info("fyp_detector: Keyboard notifier unregistered\n");
 
+	/* Flush workqueue (wait for pending cmdline captures) */
+	flush_scheduled_work();
+	pr_info("fyp_detector: Workqueue flushed (%lu items processed)\n", cmdline_work_queued);
+
 	/* Remove procfs entries */
+	if (proc_config) proc_remove(proc_config);
 	if (proc_stats) proc_remove(proc_stats);
 	if (proc_dir) proc_remove(proc_dir);
 	pr_info("fyp_detector: Procfs interface removed\n");

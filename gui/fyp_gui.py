@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-FYP Keylogger Detection System - Professional GUI v3.0
-Modern sidebar navigation, responsive design, 60fps animations
+FYP Keylogger Detection System - Professional GUI v3.3
+Modern sidebar navigation, responsive 2-column layout, resource monitoring, 60fps animations
 """
 
 import sys
@@ -10,7 +10,7 @@ import json
 import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 from dataclasses import dataclass
 from collections import deque
 import logging
@@ -34,6 +34,15 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtCharts import *
+
+# Import psutil for resource monitoring
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+    logger.info("psutil loaded successfully for resource monitoring")
+except ImportError:
+    PSUTIL_AVAILABLE = False
+    logger.warning("psutil not available - resource monitoring disabled. Install with: pip3 install psutil")
 
 # =============== PROFESSIONAL DARK THEME ===============
 DARK_THEME = """
@@ -555,6 +564,321 @@ class ProcessBarChart(QChartView):
         self.axis_y.setRange(0, max(10, max_events * 1.2))
 
 
+class ResourceMonitorWidget(QGroupBox):
+    """Widget for displaying application resource usage (GUI + Daemon)"""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTitle("")
+        self.setStyleSheet("""
+            QGroupBox {
+                background-color: #161b22;
+                border: 1px solid #30363d;
+                border-radius: 6px;
+                padding: 12px;
+                margin-top: 0px;
+            }
+        """)
+        
+        main_layout = QVBoxLayout(self)
+        main_layout.setSpacing(8)
+        main_layout.setContentsMargins(12, 12, 12, 12)
+        
+        # Title row
+        title_row = QHBoxLayout()
+        title = QLabel("System Resources")
+        title.setStyleSheet("font-size: 13px; font-weight: bold; color: #f0f6fc;")
+        title_row.addWidget(title)
+        
+        subtitle = QLabel("GUI + Daemon")
+        subtitle.setStyleSheet("font-size: 10px; color: #8b949e;")
+        title_row.addWidget(subtitle)
+        title_row.addStretch()
+        main_layout.addLayout(title_row)
+        
+        if not PSUTIL_AVAILABLE:
+            # Show warning if psutil not available
+            warning = QLabel("⚠️ psutil not installed - Resource monitoring disabled")
+            warning.setAlignment(Qt.AlignCenter)
+            warning.setStyleSheet("color: #d4a72c; font-size: 10px; padding: 16px;")
+            main_layout.addWidget(warning)
+            return
+        
+        # Metrics and chart in horizontal layout
+        content_layout = QHBoxLayout()
+        content_layout.setSpacing(16)
+        
+        # LEFT: Metrics
+        metrics_widget = QWidget()
+        metrics_layout = QVBoxLayout(metrics_widget)
+        metrics_layout.setSpacing(12)
+        metrics_layout.setContentsMargins(0, 0, 0, 0)
+        
+        # CPU metric
+        cpu_container = QWidget()
+        cpu_layout = QVBoxLayout(cpu_container)
+        cpu_layout.setSpacing(6)
+        cpu_layout.setContentsMargins(0, 0, 0, 0)
+        
+        cpu_label = QLabel("CPU")
+        cpu_label.setStyleSheet("font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase;")
+        cpu_layout.addWidget(cpu_label)
+        
+        self.cpu_value_label = QLabel("0.0%")
+        self.cpu_value_label.setStyleSheet("font-size: 32px; font-weight: 700; color: #1f6feb;")
+        cpu_layout.addWidget(self.cpu_value_label)
+        
+        self.cpu_progress = QProgressBar()
+        self.cpu_progress.setRange(0, 100)
+        self.cpu_progress.setValue(0)
+        self.cpu_progress.setTextVisible(False)
+        self.cpu_progress.setFixedHeight(8)
+        self.cpu_progress.setStyleSheet("""
+            QProgressBar {
+                border: none;
+                border-radius: 4px;
+                background-color: #0d1117;
+            }
+            QProgressBar::chunk {
+                background-color: #1f6feb;
+                border-radius: 4px;
+            }
+        """)
+        cpu_layout.addWidget(self.cpu_progress)
+        metrics_layout.addWidget(cpu_container)
+        
+        # Memory metric
+        mem_container = QWidget()
+        mem_layout = QVBoxLayout(mem_container)
+        mem_layout.setSpacing(6)
+        mem_layout.setContentsMargins(0, 0, 0, 0)
+        
+        mem_label = QLabel("MEMORY")
+        mem_label.setStyleSheet("font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase;")
+        mem_layout.addWidget(mem_label)
+        
+        self.mem_value_label = QLabel("0 MB")
+        self.mem_value_label.setStyleSheet("font-size: 32px; font-weight: 700; color: #2ea043;")
+        mem_layout.addWidget(self.mem_value_label)
+        
+        self.mem_progress = QProgressBar()
+        self.mem_progress.setRange(0, 200)  # 200 MB max for visualization
+        self.mem_progress.setValue(0)
+        self.mem_progress.setTextVisible(False)
+        self.mem_progress.setFixedHeight(8)
+        self.mem_progress.setStyleSheet("""
+            QProgressBar {
+                border: none;
+                border-radius: 4px;
+                background-color: #0d1117;
+            }
+            QProgressBar::chunk {
+                background-color: #2ea043;
+                border-radius: 4px;
+            }
+        """)
+        mem_layout.addWidget(self.mem_progress)
+        metrics_layout.addWidget(mem_container)
+        
+        metrics_layout.addStretch()
+        
+        # Breakdown info (hover to see)
+        self.detail_label = QLabel("")
+        self.detail_label.setWordWrap(True)
+        self.detail_label.setStyleSheet("""
+            QLabel {
+                background-color: #0d1117;
+                border: 1px solid #30363d;
+                border-radius: 4px;
+                padding: 8px;
+                color: #c9d1d9;
+                font-size: 10px;
+                font-family: 'Courier', monospace;
+            }
+        """)
+        self.detail_label.hide()
+        metrics_layout.addWidget(self.detail_label)
+        
+        content_layout.addWidget(metrics_widget, 1)
+        
+        # RIGHT: Compact history chart
+        self.resource_chart_view = QChartView()
+        self.resource_chart_view.setRenderHint(QPainter.Antialiasing)
+        self.resource_chart_view.setMinimumHeight(240)  # Larger for readability
+        self.resource_chart_view.setMinimumWidth(350)
+        
+        self.resource_chart = QChart()
+        self.resource_chart.setTheme(QChart.ChartThemeDark)
+        self.resource_chart.setBackgroundBrush(QBrush(QColor(13, 17, 23)))
+        self.resource_chart.legend().setAlignment(Qt.AlignBottom)
+        self.resource_chart.legend().setFont(QFont('Inter', 9))
+        self.resource_chart.legend().setLabelColor(QColor(139, 148, 158))
+        self.resource_chart.setMargins(QMargins(8, 8, 8, 8))
+        
+        # CPU series
+        self.cpu_series = QSplineSeries()
+        self.cpu_series.setName("CPU %")
+        self.cpu_series.setColor(QColor(31, 111, 235))
+        self.cpu_series.setPen(QPen(QColor(31, 111, 235), 2))
+        self.resource_chart.addSeries(self.cpu_series)
+        
+        # Memory series (scaled to 0-100 for display)
+        self.mem_series = QSplineSeries()
+        self.mem_series.setName("Mem MB")
+        self.mem_series.setColor(QColor(46, 160, 67))
+        self.mem_series.setPen(QPen(QColor(46, 160, 67), 2))
+        self.resource_chart.addSeries(self.mem_series)
+        
+        # X axis (time in seconds) - readable
+        self.axis_x = QValueAxis()
+        self.axis_x.setRange(0, 60)
+        self.axis_x.setLabelsFont(QFont('Inter', 8))
+        self.axis_x.setLabelsColor(QColor(139, 148, 158))
+        self.axis_x.setGridLineColor(QColor(48, 54, 61))
+        self.axis_x.setTickCount(7)
+        
+        # Y axis (percentage) - readable
+        self.axis_y = QValueAxis()
+        self.axis_y.setRange(0, 100)
+        self.axis_y.setLabelsFont(QFont('Inter', 8))
+        self.axis_y.setLabelsColor(QColor(139, 148, 158))
+        self.axis_y.setGridLineColor(QColor(48, 54, 61))
+        self.axis_y.setTickCount(6)
+        
+        self.resource_chart.addAxis(self.axis_x, Qt.AlignBottom)
+        self.resource_chart.addAxis(self.axis_y, Qt.AlignLeft)
+        self.cpu_series.attachAxis(self.axis_x)
+        self.cpu_series.attachAxis(self.axis_y)
+        self.mem_series.attachAxis(self.axis_x)
+        self.mem_series.attachAxis(self.axis_y)
+        
+        self.resource_chart_view.setChart(self.resource_chart)
+        content_layout.addWidget(self.resource_chart_view, 2)
+        
+        main_layout.addLayout(content_layout)
+        
+        # Enable mouse tracking for hover tooltip
+        self.setMouseTracking(True)
+        self.show_details = False
+    
+    def update_resources(self, total_cpu, total_mem, gui_cpu, gui_mem, daemon_cpu, daemon_mem, cpu_history, mem_history):
+        """Update resource displays with current values"""
+        # Update labels
+        self.cpu_value_label.setText(f"{total_cpu:.1f}%")
+        self.mem_value_label.setText(f"{total_mem:.0f} MB")
+        
+        # Update progress bars
+        self.cpu_progress.setValue(int(min(total_cpu, 100)))
+        self.mem_progress.setValue(int(min(total_mem, 200)))
+        
+        # Update color based on thresholds
+        if total_cpu < 20:
+            cpu_color = "#1f6feb"  # Blue
+        elif total_cpu < 50:
+            cpu_color = "#f9c513"  # Yellow
+        else:
+            cpu_color = "#f85149"  # Red
+        
+        self.cpu_progress.setStyleSheet(f"""
+            QProgressBar {{
+                border: none;
+                border-radius: 4px;
+                background-color: #0d1117;
+            }}
+            QProgressBar::chunk {{
+                background-color: {cpu_color};
+                border-radius: 4px;
+            }}
+        """)
+        self.cpu_value_label.setStyleSheet(f"font-size: 32px; font-weight: 700; color: {cpu_color};")
+        
+        # Update chart with history
+        self.cpu_series.clear()
+        self.mem_series.clear()
+        
+        for i, (cpu_val, mem_val) in enumerate(zip(cpu_history, mem_history)):
+            self.cpu_series.append(i, cpu_val)
+            self.mem_series.append(i, min(mem_val, 200))  # Cap at 200 for visualization
+        
+        # Update detailed breakdown
+        self.detail_label.setText(
+            f"GUI:    CPU {gui_cpu:.1f}%  |  Mem {gui_mem:.0f} MB\n"
+            f"Daemon: CPU {daemon_cpu:.1f}%  |  Mem {daemon_mem:.0f} MB"
+        )
+        
+        # Update color based on usage
+        if total_cpu > 50:
+            self.cpu_progress.setStyleSheet("""
+                QProgressBar {
+                    border: 1px solid #30363d;
+                    border-radius: 4px;
+                    background-color: #0d1117;
+                    height: 8px;
+                }
+                QProgressBar::chunk {
+                    background-color: #da3633;
+                    border-radius: 3px;
+                }
+            """)
+        elif total_cpu > 20:
+            self.cpu_progress.setStyleSheet("""
+                QProgressBar {
+                    border: 1px solid #30363d;
+                    border-radius: 4px;
+                    background-color: #0d1117;
+                    height: 8px;
+                }
+                QProgressBar::chunk {
+                    background-color: #d4a72c;
+                    border-radius: 3px;
+                }
+            """)
+        else:
+            self.cpu_progress.setStyleSheet("""
+                QProgressBar {
+                    border: 1px solid #30363d;
+                    border-radius: 4px;
+                    background-color: #0d1117;
+                    height: 8px;
+                }
+                QProgressBar::chunk {
+                    background-color: #1f6feb;
+                    border-radius: 3px;
+                }
+            """)
+        
+        # Update chart
+        self.cpu_series.clear()
+        self.mem_series.clear()
+        
+        for i, cpu_val in enumerate(cpu_history):
+            self.cpu_series.append(60 - len(cpu_history) + i, cpu_val)
+        
+        for i, mem_val in enumerate(mem_history):
+            # Scale memory to fit on same chart (divide by 5 for display)
+            self.mem_series.append(60 - len(mem_history) + i, mem_val / 5)
+        
+        # Update tooltip with detailed breakdown
+        detail_text = (
+            f"<b>Detailed Breakdown:</b><br>"
+            f"GUI Process:    {gui_cpu:.1f}% CPU, {gui_mem:.1f} MB<br>"
+            f"Daemon Process: {daemon_cpu:.1f}% CPU, {daemon_mem:.1f} MB<br>"
+            f"<b>Total:         {total_cpu:.1f}% CPU, {total_mem:.1f} MB</b>"
+        )
+        self.setToolTip(detail_text)
+    
+    def enterEvent(self, event):
+        """Show detailed breakdown on hover"""
+        if PSUTIL_AVAILABLE:
+            self.detail_label.show()
+            self.detail_label.setText(self.toolTip())
+        super().enterEvent(event)
+    
+    def leaveEvent(self, event):
+        """Hide detailed breakdown when mouse leaves"""
+        self.detail_label.hide()
+        super().leaveEvent(event)
+
+
 class DaemonMonitor(QObject):
     """Monitors daemon with enhanced logging"""
     status_updated = Signal(dict)
@@ -570,6 +894,7 @@ class DaemonMonitor(QObject):
         self.is_connected = False
         self.last_event_count = 0
         self.events_per_sec = 0.0
+        self.first_update = True  # Flag to skip initial spike
         logger.info(f"Daemon monitor initialized: {status_file}")
         
     def start(self, interval_ms: int = 500):
@@ -596,14 +921,23 @@ class DaemonMonitor(QObject):
                     data = json.load(f)
                     
                     current_count = data.get('total_events', 0)
-                    self.events_per_sec = max(0, (current_count - self.last_event_count) * 2)
-                    self.last_event_count = current_count
+                    
+                    # On first update, initialize baseline without creating a spike
+                    if self.first_update:
+                        self.last_event_count = current_count
+                        self.events_per_sec = 0.0
+                        self.first_update = False
+                        logger.info(f"✓ Daemon connection established. Baseline: {current_count} events")
+                    else:
+                        # Normal delta calculation
+                        self.events_per_sec = max(0, (current_count - self.last_event_count) * 2)
+                        self.last_event_count = current_count
+                    
                     data['events_per_second'] = self.events_per_sec
                     
                     if not self.is_connected:
                         self.is_connected = True
                         self.connection_changed.emit(True)
-                        logger.info("Daemon connection established")
                         
                     self.status_updated.emit(data)
                     
@@ -639,10 +973,10 @@ class DaemonMonitor(QObject):
 
 
 class FYPMainWindow(QMainWindow):
-    """Professional main window with sidebar navigation"""
+    """Professional main window with sidebar navigation and resource monitoring"""
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("FYP Keylogger Detection System")
+        self.setWindowTitle("FYP Keylogger Detection System v3.3")
         self.setMinimumSize(1400, 900)
         
         # Enable OpenGL for smoother rendering
@@ -653,12 +987,18 @@ class FYPMainWindow(QMainWindow):
         self.is_fullscreen = False
         
         logger.info("=" * 80)
-        logger.info("FYP Keylogger Detection System - GUI v3.0")
-        logger.info("Professional Interface with Sidebar Navigation")
+        logger.info("FYP Keylogger Detection System - GUI v3.3")
+        logger.info("Professional Interface with Responsive Layout & Resource Monitoring")
         logger.info("=" * 80)
         
         self.alerts = []
         self.current_page = "dashboard"
+        
+        # Resource monitoring
+        self.gui_pid = os.getpid()
+        self.daemon_pid = None
+        self.cpu_history = deque(maxlen=60)  # 60 seconds of history
+        self.memory_history = deque(maxlen=60)
         
         self.daemon_monitor = DaemonMonitor()
         self.daemon_monitor.status_updated.connect(self.on_status_update)
@@ -668,6 +1008,16 @@ class FYPMainWindow(QMainWindow):
         self.setup_tray()
         self.init_ui()
         self.daemon_monitor.start()
+        
+        # Resource monitoring timer (1000ms = 1 second)
+        if PSUTIL_AVAILABLE:
+            self.resource_timer = QTimer()
+            self.resource_timer.timeout.connect(self.update_resource_usage)
+            self.resource_timer.start(1000)
+            logger.info("Resource monitoring enabled (1s interval)")
+        else:
+            self.resource_timer = None
+            logger.warning("Resource monitoring disabled (psutil not available)")
         
         # Fullscreen shortcut
         fullscreen_action = QAction("Toggle Fullscreen", self)
@@ -955,10 +1305,11 @@ class FYPMainWindow(QMainWindow):
         self.current_page = page_id
     
     def create_dashboard_page(self):
+        """Create dashboard with optimized windowed layout: stats top, charts middle, resources bottom"""
         page = QWidget()
-        layout = QVBoxLayout(page)
-        layout.setContentsMargins(20, 20, 20, 20)
-        layout.setSpacing(16)
+        page_layout = QVBoxLayout(page)
+        page_layout.setContentsMargins(20, 20, 20, 20)
+        page_layout.setSpacing(16)
         
         # Page header
         header = QWidget()
@@ -971,51 +1322,52 @@ class FYPMainWindow(QMainWindow):
         subtitle = QLabel("Real-time monitoring of keyboard input stream access")
         subtitle.setObjectName("sectionSubtitle")
         
-        info_label = QLabel(
-            "ℹ️ <b>What is an 'Event'?</b> Each event represents a process accessing the keyboard input stream. "
-            "We don't read keystrokes - we monitor WHO is reading the input stream at the kernel level. "
-            "Legitimate apps (terminals, browsers) access it normally. Keyloggers show up as suspicious processes reading every keystroke."
-        )
-        info_label.setWordWrap(True)
-        info_label.setStyleSheet("color: #8b949e; font-size: 11px; padding: 12px; background-color: #161b22; border-radius: 6px; margin-bottom: 12px;")
-        
         header_layout.addWidget(title)
         header_layout.addWidget(subtitle)
-        layout.addWidget(header)
+        page_layout.addWidget(header)
         
-        # Stats cards row
-        stats_row = QHBoxLayout()
-        stats_row.setSpacing(16)
+        # TOP ROW: Stats cards (horizontal)
+        stats_container = QWidget()
+        stats_layout = QHBoxLayout(stats_container)
+        stats_layout.setSpacing(12)
+        stats_layout.setContentsMargins(0, 0, 0, 0)
         
         self.events_card = self.create_stat_card("Total Events", "0")
         self.events_card.setToolTip("Total number of keyboard input stream accesses detected.\nEach event = one process reading from the input subsystem.")
+        stats_layout.addWidget(self.events_card)
         
         self.rate_card = self.create_stat_card("Event Rate", "0 eps")
         self.rate_card.setToolTip("Events per second - how many processes are accessing keyboard input.\nHuman typing: 2-5 eps | Fast typing: 10-15 eps | Suspicious: >100 eps")
+        stats_layout.addWidget(self.rate_card)
         
         self.alerts_card = self.create_stat_card("Active Alerts", "0")
         self.alerts_card.setToolTip("Number of active security alerts from detection heuristics.")
+        stats_layout.addWidget(self.alerts_card)
         
-        stats_row.addWidget(self.events_card)
-        stats_row.addWidget(self.rate_card)
-        stats_row.addWidget(self.alerts_card)
+        page_layout.addWidget(stats_container)
         
-        layout.addLayout(stats_row)
+        # MIDDLE ROW: Charts side-by-side
+        charts_container = QWidget()
+        charts_layout = QHBoxLayout(charts_container)
+        charts_layout.setSpacing(16)
+        charts_layout.setContentsMargins(0, 0, 0, 0)
         
-        # Charts row
-        charts_row = QHBoxLayout()
-        charts_row.setSpacing(16)
-        
-        # Event rate chart (60%)
+        # Event rate chart (left)
         chart_group = QGroupBox()
+        chart_group.setTitle("")
         chart_layout = QVBoxLayout(chart_group)
+        chart_header = QLabel("Event Rate Over Time")
+        chart_header.setStyleSheet("font-size: 14px; font-weight: bold; color: #f0f6fc; margin-bottom: 8px;")
+        chart_layout.addWidget(chart_header)
         self.event_rate_chart = EventRateChart()
-        self.event_rate_chart.setMinimumHeight(300)
+        self.event_rate_chart.setMinimumHeight(280)
+        self.event_rate_chart.setMinimumWidth(300)
         chart_layout.addWidget(self.event_rate_chart)
-        charts_row.addWidget(chart_group, 6)
+        charts_layout.addWidget(chart_group, 1)
         
-        # Process bar chart (40%)
+        # Process bar chart (right)
         proc_group = QGroupBox()
+        proc_group.setTitle("")
         proc_layout = QVBoxLayout(proc_group)
         
         # Header with "View All" button
@@ -1048,13 +1400,77 @@ class FYPMainWindow(QMainWindow):
         
         self.process_bar_chart = ProcessBarChart()
         self.process_bar_chart.setMinimumHeight(280)
+        self.process_bar_chart.setMinimumWidth(300)
         proc_layout.addWidget(self.process_bar_chart)
-        charts_row.addWidget(proc_group, 4)
+        charts_layout.addWidget(proc_group, 1)
         
-        layout.addLayout(charts_row)
-        layout.addStretch()
+        page_layout.addWidget(charts_container, 1)  # Give charts more space
+        
+        # BOTTOM ROW: Resource monitoring
+        resource_group = QGroupBox()
+        resource_group.setTitle("")
+        resource_layout = QVBoxLayout(resource_group)
+        resource_layout.setContentsMargins(12, 12, 12, 12)
+        
+        resource_header = QLabel("System Resource Usage")
+        resource_header.setStyleSheet("font-size: 14px; font-weight: bold; color: #f0f6fc; margin-bottom: 8px;")
+        resource_layout.addWidget(resource_header)
+        
+        self.resource_widget = ResourceMonitorWidget()
+        self.resource_widget.setMinimumHeight(280)  # Match other charts
+        resource_layout.addWidget(self.resource_widget)
+        
+        page_layout.addWidget(resource_group)
+        
+        # Set minimum window size for proper rendering
+        self.setMinimumSize(1000, 700)
         
         return page
+    
+    def eventFilter(self, obj, event):
+        """Handle responsive layout switching based on width"""
+        if obj == getattr(self, 'responsive_container', None) and event.type() == QEvent.Resize:
+            width = event.size().width()
+            
+            # Switch layout at 1280px breakpoint
+            if width < 1280:
+                # Stack vertically
+                if isinstance(self.dashboard_layout, QHBoxLayout):
+                    # Remove widgets from horizontal layout
+                    while self.dashboard_layout.count():
+                        item = self.dashboard_layout.takeAt(0)
+                    
+                    # Create vertical layout
+                    new_layout = QVBoxLayout()
+                    new_layout.setSpacing(16)
+                    new_layout.setContentsMargins(0, 0, 0, 0)
+                    new_layout.addWidget(self.left_column)
+                    new_layout.addWidget(self.right_column)
+                    
+                    # Replace layout
+                    QWidget().setLayout(self.responsive_container.layout())
+                    self.responsive_container.setLayout(new_layout)
+                    self.dashboard_layout = new_layout
+            else:
+                # Arrange horizontally
+                if isinstance(self.dashboard_layout, QVBoxLayout):
+                    # Remove widgets from vertical layout
+                    while self.dashboard_layout.count():
+                        item = self.dashboard_layout.takeAt(0)
+                    
+                    # Create horizontal layout
+                    new_layout = QHBoxLayout()
+                    new_layout.setSpacing(16)
+                    new_layout.setContentsMargins(0, 0, 0, 0)
+                    new_layout.addWidget(self.left_column, 6)
+                    new_layout.addWidget(self.right_column, 4)
+                    
+                    # Replace layout
+                    QWidget().setLayout(self.responsive_container.layout())
+                    self.responsive_container.setLayout(new_layout)
+                    self.dashboard_layout = new_layout
+        
+        return super().eventFilter(obj, event)
     
     def create_stat_card(self, label: str, value: str):
         card = QGroupBox()
@@ -1598,9 +2014,22 @@ class FYPMainWindow(QMainWindow):
     def apply_detection_settings(self):
         """Apply detection threshold settings"""
         threshold = self.threshold_slider.value()
-        self.statusBar.showMessage(f"Settings applied: Threshold set to {threshold} events/sec", 3000)
-        logger.info(f"Detection threshold updated to {threshold} events/sec")
-        # In production: Send to daemon via IPC
+        
+        # Write configuration file for daemon
+        config_file = Path("/tmp/fyp_daemon_config.json")
+        try:
+            config = {
+                "burst_threshold": threshold,
+                "updated_at": datetime.now().isoformat()
+            }
+            with open(config_file, 'w') as f:
+                json.dump(config, f, indent=2)
+            
+            self.statusBar.showMessage(f"✓ Settings applied: Threshold set to {threshold} events/sec", 3000)
+            logger.info(f"Detection threshold updated to {threshold} events/sec (written to {config_file})")
+        except Exception as e:
+            self.statusBar.showMessage(f"✗ Failed to apply settings: {e}", 5000)
+            logger.error(f"Failed to write daemon config: {e}")
         
     def refresh_risky_processes(self):
         """Refresh the list of high-risk processes from alerts"""
@@ -1831,6 +2260,79 @@ class FYPMainWindow(QMainWindow):
             self.set_tray_status('error')
         elif alert.severity == "MEDIUM" and self.tray_icon.icon().pixmap(16, 16).toImage().pixel(8, 8) != QColor(218, 54, 51).rgb():
             self.set_tray_status('warning')
+    
+    def update_resource_usage(self):
+        """Update resource usage metrics for GUI and daemon processes"""
+        if not PSUTIL_AVAILABLE:
+            return
+        
+        try:
+            gui_cpu = 0.0
+            gui_mem = 0.0
+            daemon_cpu = 0.0
+            daemon_mem = 0.0
+            
+            # Get GUI process stats
+            try:
+                gui_process = psutil.Process(self.gui_pid)
+                gui_cpu = gui_process.cpu_percent(interval=None)
+                gui_mem = gui_process.memory_info().rss / (1024 * 1024)  # MB
+            except (psutil.NoSuchProcess, psutil.AccessDenied) as e:
+                logger.debug(f"Cannot access GUI process stats: {e}")
+            
+            # Get daemon PID from status file or search
+            if self.daemon_pid is None:
+                # Try to find daemon PID
+                try:
+                    status_file = Path('/tmp/fyp_status.json')
+                    if status_file.exists():
+                        with open(status_file, 'r') as f:
+                            data = json.load(f)
+                            # Daemon should include its PID in status file (future enhancement)
+                            pass
+                except Exception:
+                    pass
+                
+                # Fallback: search for daemon process
+                for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                    try:
+                        cmdline = proc.info.get('cmdline', [])
+                        if cmdline and 'fyp_daemon.py' in ' '.join(cmdline):
+                            self.daemon_pid = proc.info['pid']
+                            logger.info(f"Found daemon PID: {self.daemon_pid}")
+                            break
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        continue
+            
+            # Get daemon process stats
+            if self.daemon_pid is not None:
+                try:
+                    daemon_process = psutil.Process(self.daemon_pid)
+                    daemon_cpu = daemon_process.cpu_percent(interval=None)
+                    daemon_mem = daemon_process.memory_info().rss / (1024 * 1024)  # MB
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    logger.debug(f"Daemon process {self.daemon_pid} no longer exists")
+                    self.daemon_pid = None  # Reset to search again
+            
+            # Calculate combined totals
+            total_cpu = gui_cpu + daemon_cpu
+            total_mem = gui_mem + daemon_mem
+            
+            # Store in history
+            self.cpu_history.append(total_cpu)
+            self.memory_history.append(total_mem)
+            
+            # Update resource widget if it exists
+            if hasattr(self, 'resource_widget'):
+                self.resource_widget.update_resources(
+                    total_cpu, total_mem,
+                    gui_cpu, gui_mem,
+                    daemon_cpu, daemon_mem,
+                    list(self.cpu_history),
+                    list(self.memory_history)
+                )
+        except Exception as e:
+            logger.error(f"Error updating resource usage: {e}")
     
     def update_stats_table(self, processes: dict):
         self.stats_table.setRowCount(0)

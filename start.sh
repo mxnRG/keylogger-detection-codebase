@@ -66,8 +66,13 @@ else
     # Get the actual user (not root if using sudo)
     ACTUAL_USER=${SUDO_USER:-$USER}
     
-    # Start daemon as the actual user
-    sudo -u "$ACTUAL_USER" python3 fyp_daemon.py > /tmp/fyp_daemon.log 2>&1 &
+    # Ensure log file exists with correct permissions
+    sudo touch /tmp/fyp_daemon.log
+    sudo chown "$ACTUAL_USER:$ACTUAL_USER" /tmp/fyp_daemon.log
+    sudo chmod 664 /tmp/fyp_daemon.log
+    
+    # Start daemon as the actual user (use bash -c for proper redirection)
+    sudo -u "$ACTUAL_USER" bash -c "python3 fyp_daemon.py > /tmp/fyp_daemon.log 2>&1 &"
     DAEMON_PID=$!
     sleep 2
     
@@ -84,13 +89,16 @@ echo ""
 
 # Step 3: Launch GUI
 echo "[3/3] Launching GUI..."
-cd "$GUI_DIR"
+# Ensure log file exists with correct permissions
+sudo touch /tmp/fyp_gui.log
+sudo chown "$ACTUAL_USER:$ACTUAL_USER" /tmp/fyp_gui.log
+sudo chmod 664 /tmp/fyp_gui.log
 
 ACTUAL_USER=${SUDO_USER:-$USER}
 DISPLAY_VAR="${DISPLAY:-:0}"
 
-# Launch GUI as actual user with proper display
-sudo -u "$ACTUAL_USER" DISPLAY="$DISPLAY_VAR" python3 main_gui.py > /tmp/fyp_gui.log 2>&1 &
+# Launch GUI as actual user with proper display (use bash -c for proper redirection)
+sudo -u "$ACTUAL_USER" bash -c "cd '$GUI_DIR' && DISPLAY='$DISPLAY_VAR' python3 main_gui.py > /tmp/fyp_gui.log 2>&1 &"
 GUI_PID=$!
 
 sleep 2

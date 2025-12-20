@@ -1,14 +1,14 @@
 # FYP Keylogger Detection System - Quick Start Guide
 
-**Version:** 0.4 (Complete Prototype)  
-**Date:** December 15, 2025
+**Version:** Kernel v0.6 | Daemon v0.2 | GUI v3.3  
+**Date:** December 20, 2025
 
 ## System Overview
 
 This project implements a real-time keylogger detection system for Linux:
-- **Kernel Module** (v0.4): Captures keyboard behavioral metadata
-- **Python Daemon** (v0.1): Processes events and applies detection heuristics
-- **Qt GUI** (v0.1): Real-time visualization and alerts
+- **Kernel Module** (v0.6): Captures keyboard behavioral metadata via keyboard notifier, sends events via Netlink socket (Protocol 31), runtime-configurable via sysfs parameters
+- **Python Daemon** (v0.2): Receives Netlink events, applies 3 heuristic detection rules, writes status to JSON file
+- **Qt GUI** (v3.3): Responsive 2-column dashboard with real-time resource monitoring (CPU/Memory tracking)
 
 ## Prerequisites
 
@@ -18,9 +18,9 @@ This project implements a real-time keylogger detection system for Linux:
 sudo apt update
 sudo apt install build-essential linux-headers-$(uname -r)
 
-# Install Python and Qt
+# Install Python and Qt dependencies
 sudo apt install python3 python3-pip
-pip3 install PySide6
+pip3 install PySide6 psutil  # Qt GUI framework + resource monitoring
 ```
 
 ### 2. Verify System
@@ -44,14 +44,31 @@ sudo insmod fyp_kbd.ko
 # Verify it's loaded
 lsmod | grep fyp_kbd
 ls -la /proc/fyp_detector/
+dmesg | tail -5
 ```
 
 Expected output:
 ```
 /proc/fyp_detector/
-├── events   (event stream in CSV format)
-├── stats    (real-time statistics)
-└── control  (accepts commands like 'reset')
+├── config   (runtime threshold configuration)
+└── stats    (real-time statistics)
+
+[fyp_detector] Netlink socket created (Protocol 31)
+[fyp_detector] Keyboard notifier registered
+```
+
+**Optional: Runtime Threshold Tuning**
+```bash
+# View current thresholds
+cat /sys/module/fyp_kbd/parameters/rapid_threshold_ms  # Default: 50
+cat /sys/module/fyp_kbd/parameters/burst_threshold_eps # Default: 100
+
+# Adjust thresholds (no module reload needed)
+echo 100 | sudo tee /sys/module/fyp_kbd/parameters/rapid_threshold_ms
+echo 150 | sudo tee /sys/module/fyp_kbd/parameters/burst_threshold_eps
+
+# Verify changes
+cat /proc/fyp_detector/config
 ```
 
 ### Step 2: Start the Daemon
@@ -63,10 +80,11 @@ python3 fyp_daemon.py
 
 Expected output:
 ```
-[HH:MM:SS] INFO: FYP Keylogger Detection Daemon v0.1
-[HH:MM:SS] INFO: ✓ Kernel module detected
-[HH:MM:SS] INFO: Event reader thread started
+[HH:MM:SS] INFO: FYP Keylogger Detection Daemon v0.2
+[HH:MM:SS] INFO: Registering Netlink socket (Protocol 31)...
+[HH:MM:SS] INFO: ✓ Connected to kernel detector via Netlink
 [HH:MM:SS] INFO: Daemon running. Press Ctrl+C to stop.
+[HH:MM:SS] INFO: Received event: PID=1234 comm=bash cmdline=/bin/bash rapid_events=5 total_events=150
 ```
 
 ### Step 3: Start the GUI
@@ -78,9 +96,11 @@ chmod +x run_gui.sh
 ```
 
 The Qt GUI window should open showing:
-- 🟢 **System Status**: Kernel Active, Daemon Running
+- 🟢Responsive Dashboard**: 2-column layout (>1280px) or stacked (<1280px)
+- **Resource Monitor Widget**: Real-time GUI + Daemon CPU/Memory tracking with 60s history charts
 - **Alerts Tab**: Real-time security alerts
-- **Statistics Tab**: Per-process metrics
+- **Processes Tab**: Per-process behavioral metrics
+- **Event Stream Tab**: Detailed detection metrics
 - **Event Stream Tab**: Raw event log
 
 ## Usage
@@ -99,14 +119,17 @@ The Qt GUI window should open showing:
 
 **Command Line (Alternative):**
 ```bash
-# View real-time events
-cat /proc/fyp_detector/events
+# View runtime configuration
+cat /proc/fyp_detector/config
 
-# View statistics
+# View kernel statistics
 cat /proc/fyp_detector/stats
 
-# Reset counters
-echo "reset" | sudo tee /proc/fyp_detector/control
+# View Netlink events in real-time
+sudo dmesg -w | grep fyp_detector
+
+# Tune thresholds dynamically
+echo 100 | sudo tee /sys/module/fyp_kbd/parameters/rapid_threshold_ms
 ```
 
 ## Detection Heuristics
@@ -186,31 +209,39 @@ cat /proc/fyp_detector/events  # Should work without sudo
 ```
 /home/fyp/project/
 ├── kernel/
-│   ├── fyp_kbd.c          # Kernel module source (v0.4)
+│   ├── fyp_kbd.c          # Kernel module source (v0.6 - Netlink + workqueue)
 │   ├── Makefile           # Build configuration
-│   └── PROCFS_NOTES.md    # Technical details
+│   └── PROCFS_NOTES.md    # Legacy technical notes
 ├── daemon/
-│   └── fyp_daemon.py      # Detection daemon (v0.1)
+│   └── fyp_daemon.py      # Detection daemon (v0.2 - Netlink receiver)
 ├── gui/
-│   ├── fyp_gui.py         # Qt GUI application (v0.1)
+│   ├── fyp_gui.py         # Qt GUI application (v3.3 - responsive + resource monitor)
 │   └── run_gui.sh         # Launch script
 ├── docs/
-│   ├── PHASE2_DESIGN.md   # Architecture docs
-│   └── IMPLEMENTATION_ORDER.md
+│   ├── KERNEL_MODULE.md   # Comprehensive kernel module guide
+│   ├── DAEMON.md          # Daemon architecture and heuristics
+│   ├── GUI.md             # GUI design and resource monitoring
+│   ├── ETHICS.md          # Privacy-by-design and responsible use
+│   ├── RESEARCH.md        # Novel contributions and literature review
+│   ├── TESTING.md         # Testing methodology
+│   └── archive/           # Historical documentation
+├── requirements.txt       # Python dependencies (PySide6, psutil)
 ├── current.md             # Project status
 └── QUICKSTART.md          # This file
 ```
 
 ## Next Steps
 
-- **Demo Scenarios**: Test different input patterns
-- **Fine-tune Heuristics**: Adjust thresholds in daemon
-- **Add Features**: Process whitelisting, logging, etc.
-- **Documentation**: Write FYP report sections
+- **Runtime Tuning**: Experiment with sysfs threshold parameters
+- **Demo Scenarios**: Test different input patterns (see `docs/TESTING.md`)
+- **Resource Monitoring**: Observe GUI and daemon CPU/Memory usage under load
+- **Documentation**: Review comprehensive guides in `docs/` directory
 
 ## Support
 
 For technical details:
-- Kernel implementation: See `kernel/PROCFS_NOTES.md`
-- System design: See `docs/PHASE2_DESIGN.md`
+- Kernel architecture: See `docs/KERNEL_MODULE.md` (Netlink, workqueue, sysfs)
+- Detection heuristics: See `docs/DAEMON.md` (3 detection rules)
+- GUI features: See `docs/GUI.md` (responsive design, resource monitoring)
+- Ethical considerations: See `docs/ETHICS.md`
 - Progress tracking: See `current.md`
