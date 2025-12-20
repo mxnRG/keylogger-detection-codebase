@@ -1,0 +1,1 @@
+cmd_/home/fyp/project/kernel/Module.symvers := sed 's/\.ko$$/\.o/' /home/fyp/project/kernel/modules.order | scripts/mod/modpost -m -a  -o /home/fyp/project/kernel/Module.symvers -e -i Module.symvers   -T -

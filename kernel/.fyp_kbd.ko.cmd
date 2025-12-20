@@ -1,0 +1,1 @@
+cmd_/home/fyp/project/kernel/fyp_kbd.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/fyp/project/kernel/fyp_kbd.ko /home/fyp/project/kernel/fyp_kbd.o /home/fyp/project/kernel/fyp_kbd.mod.o;  true
