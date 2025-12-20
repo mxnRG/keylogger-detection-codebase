@@ -27,11 +27,18 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from datetime import datetime
 
-# Configure logging
+# Configure logging to file and console
+log_handlers = [logging.StreamHandler()]
+try:
+    log_handlers.append(logging.FileHandler('/tmp/fyp_daemon.log'))
+except PermissionError:
+    print("Warning: Cannot write to /tmp/fyp_daemon.log, logging to console only")
+
 logging.basicConfig(
     level=logging.INFO,
-    format='[%(asctime)s] %(levelname)s [%(name)s]: %(message)s',
-    datefmt='%H:%M:%S'
+    format='[%(asctime)s] %(name)s [%(levelname)s]: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    handlers=log_handlers
 )
 logger = logging.getLogger('FYP-Daemon')
 

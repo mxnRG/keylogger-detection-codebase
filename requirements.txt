@@ -1,0 +1,25 @@
+# FYP Keylogger Detection System - Python Dependencies
+
+# GUI Framework (Qt6 for Python)
+PySide6>=6.5.0
+
+# Note: The following are included with Python standard library:
+# - json
+# - socket
+# - struct
+# - threading
+# - logging
+# - subprocess
+# - datetime
+# - pathlib
+# - collections
+# - dataclasses
+
+# System Requirements (install via apt):
+# - libxcb-cursor0 (for Qt xcb platform plugin)
+# - libnotify-bin (for desktop notifications)
+# - build-essential (for kernel module compilation)
+# - linux-headers-$(uname -r) (for kernel module compilation)
+
+# Installation:
+# pip3 install -r requirements.txt

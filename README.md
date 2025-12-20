@@ -104,51 +104,99 @@ This project implements a **keylogger detection system** that monitors keyboard 
 ### Prerequisites
 
 ```bash
-# Install kernel headers
+# System dependencies
 sudo apt update
-sudo apt install linux-headers-$(uname -r) build-essential
+sudo apt install linux-headers-$(uname -r) build-essential libxcb-cursor0 libnotify-bin
+
+# Python dependencies
+pip3 install -r requirements.txt
 
 # Verify kernel version (must be 5.15.x)
 uname -r
 ```
 
-### Building the Kernel Module
+### Python Dependencies
+
+The project requires the following Python packages (see `requirements.txt`):
+
+- **PySide6 >= 6.5.0** - Qt6 for Python (GUI framework)
+  - Includes QtWidgets, QtCharts, QtCore, QtGui
+
+All other dependencies are part of Python's standard library (json, socket, threading, logging, etc.)
+
+### Quick Start (Automated)
+
+The easiest way to start the entire system:
+
+```bash
+# Run the unified start script (requires sudo)
+./start.sh
+```
+
+This script will:
+1. ✓ Load the kernel module (if not already loaded)
+2. ✓ Start the daemon (if not already running)
+3. ✓ Launch the GUI
+
+### Manual Start (Step by Step)
+
+If you prefer manual control:
+
+#### 1. Build & Load Kernel Module
 
 ```bash
 cd kernel/
 make
+sudo insmod fyp_kbd.ko
+
+# Verify module loaded
+lsmod | grep fyp_kbd
 ```
 
-### Loading the Module
+#### 2. Start Daemon
 
 ```bash
-sudo insmod fyp_kbd.ko
+cd daemon/
+./fyp_daemon.py &
+
+# Check daemon is running
+ps aux | grep fyp_daemon
+```
+
+#### 3. Launch GUI
+
+```bash
+cd gui/
+./fyp_gui.py
 ```
 
 ### Viewing Activity
 
 ```bash
-# View real-time logs
-sudo dmesg -w | grep FYP
+# Check kernel module stats
+cat /proc/fyp_detector/stats
 
-# View recent events
-sudo dmesg | grep FYP | tail -20
+# View kernel logs
+sudo dmesg -w | grep fyp_detector
+
+# View daemon logs
+tail -f /tmp/fyp_daemon.log
+
+# View GUI logs
+tail -f /tmp/fyp_gui.log
 ```
 
-### Unloading the Module
+### Stopping the System
 
 ```bash
+# Stop all components
+pkill -f fyp_daemon.py
+pkill -f fyp_gui.py
 sudo rmmod fyp_kbd
-```
 
-The module will display session statistics upon unload:
-```
-[FYP] Session Statistics:
-[FYP]   Total events:    120
-[FYP]   Press events:    60
-[FYP]   Release events:  60
-[FYP]   Rapid events:    3 (<10ms)
-[FYP]   Rapid ratio:     2%
+# Or use the Makefile
+cd kernel/
+sudo make unload
 ```
 
 ## 🔍 Detection Methodology
