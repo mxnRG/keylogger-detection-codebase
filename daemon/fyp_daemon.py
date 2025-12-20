@@ -138,7 +138,7 @@ class DetectionEngine:
         self.alerted_pids: set = set()  # Track which PIDs we've alerted on
     
     def check_rapid_typing(self, stats: ProcessStats) -> Optional[Alert]:
-        """Rule 1: Detect automated/rapid typing"""
+        """Rule 1: Detect automated/rapid input stream fetching"""
         if stats.total_events < 20:  # Need minimum sample size
             return None
         
@@ -154,9 +154,8 @@ class DetectionEngine:
                 severity="HIGH",
                 process_name=stats.comm,
                 pid=stats.pid,
-                rule="Rapid Typing",
-                details=f"Rapid ratio: {stats.rapid_ratio:.1f}% "
-                       f"(threshold: {self.RAPID_RATIO_THRESHOLD}%)"
+                rule="Rapid Input Stream Access",
+                details=f"Rapid fetching ratio: {stats.rapid_ratio:.1f}% "\n                       f"(threshold: {self.RAPID_RATIO_THRESHOLD}%) - "\n                       f"Process is accessing keyboard events too quickly"
             )
         return None
     

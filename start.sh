@@ -90,13 +90,13 @@ ACTUAL_USER=${SUDO_USER:-$USER}
 DISPLAY_VAR="${DISPLAY:-:0}"
 
 # Launch GUI as actual user with proper display
-sudo -u "$ACTUAL_USER" DISPLAY="$DISPLAY_VAR" python3 fyp_gui.py > /tmp/fyp_gui.log 2>&1 &
+sudo -u "$ACTUAL_USER" DISPLAY="$DISPLAY_VAR" python3 main_gui.py > /tmp/fyp_gui.log 2>&1 &
 GUI_PID=$!
 
 sleep 2
 
-if pgrep -f "fyp_gui.py" > /dev/null; then
-    echo "✓ GUI launched successfully (PID: $(pgrep -f fyp_gui.py))"
+if pgrep -f "main_gui.py\|fyp_gui.py" > /dev/null; then
+    echo "✓ GUI launched successfully (PID: $(pgrep -f 'main_gui.py\|fyp_gui.py'))"
 else
     echo "✗ Failed to launch GUI"
     echo "  Check logs: tail -20 /tmp/fyp_gui.log"
@@ -109,7 +109,7 @@ echo "System Status:"
 echo "========================================="
 echo "Kernel Module: $(lsmod | grep fyp_kbd | awk '{print "Loaded (" $2 " size)"}')"
 echo "Daemon:        Running (PID: $(pgrep -f fyp_daemon.py 2>/dev/null || echo 'Not running'))"
-echo "GUI:           Running (PID: $(pgrep -f fyp_gui.py 2>/dev/null || echo 'Not running'))"
+echo "GUI:           Running (PID: $(pgrep -f 'main_gui.py\|fyp_gui.py' 2>/dev/null || echo 'Not running'))"
 echo ""
 echo "Log files:"
 echo "  Daemon: /tmp/fyp_daemon.log"
@@ -118,6 +118,6 @@ echo "  Kernel: dmesg | grep fyp_detector"
 echo ""
 echo "To stop:"
 echo "  pkill -f fyp_daemon.py"
-echo "  pkill -f fyp_gui.py"
+echo "  pkill -f 'main_gui.py\|fyp_gui.py'"
 echo "  sudo rmmod fyp_kbd"
 echo "========================================="
