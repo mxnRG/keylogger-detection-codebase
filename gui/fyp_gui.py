@@ -436,34 +436,38 @@ class EventRateChart(QChartView):
         self.chart.setBackgroundBrush(QBrush(QColor(22, 27, 34)))
         self.chart.setTitleBrush(QBrush(QColor(240, 246, 252)))
         self.chart.setTitleFont(QFont('Inter', 14, QFont.Bold))
-        self.chart.setTitle("Event Rate Over Time")
+        self.chart.setTitle("")
         self.chart.legend().hide()
-        self.chart.setMargins(QMargins(0, 0, 0, 0))
+        self.chart.setMargins(QMargins(12, 8, 16, 8))
         
         # Use spline for smooth curves
         self.series = QSplineSeries()
-        self.series.setColor(QColor(31, 111, 235))
-        self.series.setPen(QPen(QColor(31, 111, 235), 3))
+        self.series.setColor(QColor(56, 139, 253))
+        pen = QPen(QColor(56, 139, 253), 2)
+        pen.setCapStyle(Qt.RoundCap)
+        self.series.setPen(pen)
         self.chart.addSeries(self.series)
         
         # Axes with better styling
         self.axis_x = QValueAxis()
         self.axis_x.setRange(0, 60)
-        self.axis_x.setTitleText("Time (seconds ago)")
-        self.axis_x.setTitleFont(QFont('Inter', 10))
-        self.axis_x.setLabelsFont(QFont('Inter', 9))
-        self.axis_x.setLabelsColor(QColor(139, 148, 158))
-        self.axis_x.setTitleBrush(QBrush(QColor(139, 148, 158)))
-        self.axis_x.setGridLineColor(QColor(48, 54, 61))
+        self.axis_x.setTitleText("Time (s)")
+        self.axis_x.setTitleFont(QFont('Inter', 9))
+        self.axis_x.setLabelsFont(QFont('Inter', 8))
+        self.axis_x.setLabelsColor(QColor(125, 133, 144))
+        self.axis_x.setTitleBrush(QBrush(QColor(125, 133, 144)))
+        self.axis_x.setGridLineColor(QColor(33, 38, 45))
+        self.axis_x.setTickCount(7)
         
         self.axis_y = QValueAxis()
         self.axis_y.setRange(0, 100)
-        self.axis_y.setTitleText("Events/second")
-        self.axis_y.setTitleFont(QFont('Inter', 10))
-        self.axis_y.setLabelsFont(QFont('Inter', 9))
-        self.axis_y.setLabelsColor(QColor(139, 148, 158))
-        self.axis_y.setTitleBrush(QBrush(QColor(139, 148, 158)))
-        self.axis_y.setGridLineColor(QColor(48, 54, 61))
+        self.axis_y.setTitleText("Events/sec")
+        self.axis_y.setTitleFont(QFont('Inter', 9))
+        self.axis_y.setLabelsFont(QFont('Inter', 8))
+        self.axis_y.setLabelsColor(QColor(125, 133, 144))
+        self.axis_y.setTitleBrush(QBrush(QColor(125, 133, 144)))
+        self.axis_y.setGridLineColor(QColor(33, 38, 45))
+        self.axis_y.setTickCount(5)
         
         self.chart.addAxis(self.axis_x, Qt.AlignBottom)
         self.chart.addAxis(self.axis_y, Qt.AlignLeft)
@@ -495,14 +499,23 @@ class EventRateChart(QChartView):
             
             # Color code based on severity
             if max_rate > 100:
-                self.series.setColor(QColor(218, 54, 51))  # Red
-                self.series.setPen(QPen(QColor(218, 54, 51), 3))
+                color = QColor(248, 81, 73)  # Red
+                self.series.setColor(color)
+                pen = QPen(color, 2)
+                pen.setCapStyle(Qt.RoundCap)
+                self.series.setPen(pen)
             elif max_rate > 50:
-                self.series.setColor(QColor(212, 167, 44))  # Yellow
-                self.series.setPen(QPen(QColor(212, 167, 44), 3))
+                color = QColor(210, 153, 34)  # Yellow
+                self.series.setColor(color)
+                pen = QPen(color, 2)
+                pen.setCapStyle(Qt.RoundCap)
+                self.series.setPen(pen)
             else:
-                self.series.setColor(QColor(46, 160, 67))  # Green
-                self.series.setPen(QPen(QColor(46, 160, 67), 3))
+                color = QColor(63, 185, 80)  # Green
+                self.series.setColor(color)
+                pen = QPen(color, 2)
+                pen.setCapStyle(Qt.RoundCap)
+                self.series.setPen(pen)
 
 
 class ProcessBarChart(QChartView):
@@ -516,24 +529,26 @@ class ProcessBarChart(QChartView):
         self.chart.setBackgroundBrush(QBrush(QColor(22, 27, 34)))
         self.chart.setTitleBrush(QBrush(QColor(240, 246, 252)))
         self.chart.setTitleFont(QFont('Inter', 14, QFont.Bold))
-        self.chart.setTitle("Top Active Processes")
+        self.chart.setTitle("")
         self.chart.legend().hide()
-        self.chart.setMargins(QMargins(0, 0, 0, 0))
+        self.chart.setMargins(QMargins(12, 8, 16, 8))
         
         self.series = QBarSeries()
+        self.series.setBarWidth(0.6)
         self.chart.addSeries(self.series)
         
         self.axis_x = QBarCategoryAxis()
-        self.axis_x.setLabelsFont(QFont('Inter', 9))
-        self.axis_x.setLabelsColor(QColor(139, 148, 158))
+        self.axis_x.setLabelsFont(QFont('Inter', 8))
+        self.axis_x.setLabelsColor(QColor(125, 133, 144))
         
         self.axis_y = QValueAxis()
-        self.axis_y.setTitleText("Event Count")
-        self.axis_y.setTitleFont(QFont('Inter', 10))
-        self.axis_y.setLabelsFont(QFont('Inter', 9))
-        self.axis_y.setLabelsColor(QColor(139, 148, 158))
-        self.axis_y.setTitleBrush(QBrush(QColor(139, 148, 158)))
-        self.axis_y.setGridLineColor(QColor(48, 54, 61))
+        self.axis_y.setTitleText("Events")
+        self.axis_y.setTitleFont(QFont('Inter', 9))
+        self.axis_y.setLabelsFont(QFont('Inter', 8))
+        self.axis_y.setLabelsColor(QColor(125, 133, 144))
+        self.axis_y.setTitleBrush(QBrush(QColor(125, 133, 144)))
+        self.axis_y.setGridLineColor(QColor(33, 38, 45))
+        self.axis_y.setTickCount(5)
         
         self.chart.addAxis(self.axis_x, Qt.AlignBottom)
         self.chart.addAxis(self.axis_y, Qt.AlignLeft)
@@ -549,7 +564,8 @@ class ProcessBarChart(QChartView):
         
         self.series.clear()
         bar_set = QBarSet("Events")
-        bar_set.setColor(QColor(31, 111, 235))
+        bar_set.setColor(QColor(56, 139, 253))
+        bar_set.setBorderColor(QColor(56, 139, 253))
         
         categories = []
         for pid, stats in sorted_procs:
@@ -572,8 +588,8 @@ class ResourceMonitorWidget(QGroupBox):
         self.setStyleSheet("""
             QGroupBox {
                 background-color: #161b22;
-                border: 1px solid #30363d;
-                border-radius: 6px;
+                border: 1px solid #21262d;
+                border-radius: 10px;
                 padding: 12px;
                 margin-top: 0px;
             }
@@ -586,11 +602,11 @@ class ResourceMonitorWidget(QGroupBox):
         # Title row
         title_row = QHBoxLayout()
         title = QLabel("System Resources")
-        title.setStyleSheet("font-size: 13px; font-weight: bold; color: #f0f6fc;")
+        title.setStyleSheet("font-size: 13px; font-weight: bold; color: #e6edf3;")
         title_row.addWidget(title)
         
         subtitle = QLabel("GUI + Daemon")
-        subtitle.setStyleSheet("font-size: 10px; color: #8b949e;")
+        subtitle.setStyleSheet("font-size: 10px; color: #7d8590;")
         title_row.addWidget(subtitle)
         title_row.addStretch()
         main_layout.addLayout(title_row)
@@ -620,27 +636,27 @@ class ResourceMonitorWidget(QGroupBox):
         cpu_layout.setContentsMargins(0, 0, 0, 0)
         
         cpu_label = QLabel("CPU")
-        cpu_label.setStyleSheet("font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase;")
+        cpu_label.setStyleSheet("font-size: 10px; font-weight: 600; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px;")
         cpu_layout.addWidget(cpu_label)
         
         self.cpu_value_label = QLabel("0.0%")
-        self.cpu_value_label.setStyleSheet("font-size: 32px; font-weight: 700; color: #1f6feb;")
+        self.cpu_value_label.setStyleSheet("font-size: 28px; font-weight: 700; color: #58a6ff;")
         cpu_layout.addWidget(self.cpu_value_label)
         
         self.cpu_progress = QProgressBar()
         self.cpu_progress.setRange(0, 100)
         self.cpu_progress.setValue(0)
         self.cpu_progress.setTextVisible(False)
-        self.cpu_progress.setFixedHeight(8)
+        self.cpu_progress.setFixedHeight(6)
         self.cpu_progress.setStyleSheet("""
             QProgressBar {
                 border: none;
-                border-radius: 4px;
-                background-color: #0d1117;
+                border-radius: 3px;
+                background-color: #21262d;
             }
             QProgressBar::chunk {
-                background-color: #1f6feb;
-                border-radius: 4px;
+                background-color: #58a6ff;
+                border-radius: 3px;
             }
         """)
         cpu_layout.addWidget(self.cpu_progress)
@@ -653,27 +669,27 @@ class ResourceMonitorWidget(QGroupBox):
         mem_layout.setContentsMargins(0, 0, 0, 0)
         
         mem_label = QLabel("MEMORY")
-        mem_label.setStyleSheet("font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase;")
+        mem_label.setStyleSheet("font-size: 10px; font-weight: 600; color: #7d8590; text-transform: uppercase; letter-spacing: 0.5px;")
         mem_layout.addWidget(mem_label)
         
         self.mem_value_label = QLabel("0 MB")
-        self.mem_value_label.setStyleSheet("font-size: 32px; font-weight: 700; color: #2ea043;")
+        self.mem_value_label.setStyleSheet("font-size: 28px; font-weight: 700; color: #3fb950;")
         mem_layout.addWidget(self.mem_value_label)
         
         self.mem_progress = QProgressBar()
         self.mem_progress.setRange(0, 200)  # 200 MB max for visualization
         self.mem_progress.setValue(0)
         self.mem_progress.setTextVisible(False)
-        self.mem_progress.setFixedHeight(8)
+        self.mem_progress.setFixedHeight(6)
         self.mem_progress.setStyleSheet("""
             QProgressBar {
                 border: none;
-                border-radius: 4px;
-                background-color: #0d1117;
+                border-radius: 3px;
+                background-color: #21262d;
             }
             QProgressBar::chunk {
-                background-color: #2ea043;
-                border-radius: 4px;
+                background-color: #3fb950;
+                border-radius: 3px;
             }
         """)
         mem_layout.addWidget(self.mem_progress)
@@ -687,10 +703,10 @@ class ResourceMonitorWidget(QGroupBox):
         self.detail_label.setStyleSheet("""
             QLabel {
                 background-color: #0d1117;
-                border: 1px solid #30363d;
-                border-radius: 4px;
+                border: 1px solid #21262d;
+                border-radius: 6px;
                 padding: 8px;
-                color: #c9d1d9;
+                color: #e6edf3;
                 font-size: 10px;
                 font-family: 'Courier', monospace;
             }
@@ -710,38 +726,38 @@ class ResourceMonitorWidget(QGroupBox):
         self.resource_chart.setTheme(QChart.ChartThemeDark)
         self.resource_chart.setBackgroundBrush(QBrush(QColor(13, 17, 23)))
         self.resource_chart.legend().setAlignment(Qt.AlignBottom)
-        self.resource_chart.legend().setFont(QFont('Inter', 9))
-        self.resource_chart.legend().setLabelColor(QColor(139, 148, 158))
-        self.resource_chart.setMargins(QMargins(8, 8, 8, 8))
+        self.resource_chart.legend().setFont(QFont('Inter', 8))
+        self.resource_chart.legend().setLabelColor(QColor(125, 133, 144))
+        self.resource_chart.setMargins(QMargins(8, 4, 12, 4))
         
         # CPU series
         self.cpu_series = QSplineSeries()
         self.cpu_series.setName("CPU %")
-        self.cpu_series.setColor(QColor(31, 111, 235))
-        self.cpu_series.setPen(QPen(QColor(31, 111, 235), 2))
+        self.cpu_series.setColor(QColor(56, 139, 253))
+        self.cpu_series.setPen(QPen(QColor(56, 139, 253), 2))
         self.resource_chart.addSeries(self.cpu_series)
         
         # Memory series (scaled to 0-100 for display)
         self.mem_series = QSplineSeries()
         self.mem_series.setName("Mem MB")
-        self.mem_series.setColor(QColor(46, 160, 67))
-        self.mem_series.setPen(QPen(QColor(46, 160, 67), 2))
+        self.mem_series.setColor(QColor(63, 185, 80))
+        self.mem_series.setPen(QPen(QColor(63, 185, 80), 2))
         self.resource_chart.addSeries(self.mem_series)
         
         # X axis (time in seconds) - readable
         self.axis_x = QValueAxis()
         self.axis_x.setRange(0, 60)
-        self.axis_x.setLabelsFont(QFont('Inter', 8))
-        self.axis_x.setLabelsColor(QColor(139, 148, 158))
-        self.axis_x.setGridLineColor(QColor(48, 54, 61))
+        self.axis_x.setLabelsFont(QFont('Inter', 7))
+        self.axis_x.setLabelsColor(QColor(125, 133, 144))
+        self.axis_x.setGridLineColor(QColor(33, 38, 45))
         self.axis_x.setTickCount(7)
         
         # Y axis (percentage) - readable
         self.axis_y = QValueAxis()
         self.axis_y.setRange(0, 100)
-        self.axis_y.setLabelsFont(QFont('Inter', 8))
-        self.axis_y.setLabelsColor(QColor(139, 148, 158))
-        self.axis_y.setGridLineColor(QColor(48, 54, 61))
+        self.axis_y.setLabelsFont(QFont('Inter', 7))
+        self.axis_y.setLabelsColor(QColor(125, 133, 144))
+        self.axis_y.setGridLineColor(QColor(33, 38, 45))
         self.axis_y.setTickCount(6)
         
         self.resource_chart.addAxis(self.axis_x, Qt.AlignBottom)
@@ -772,24 +788,24 @@ class ResourceMonitorWidget(QGroupBox):
         
         # Update color based on thresholds
         if total_cpu < 20:
-            cpu_color = "#1f6feb"  # Blue
+            cpu_color = "#58a6ff"  # Blue
         elif total_cpu < 50:
-            cpu_color = "#f9c513"  # Yellow
+            cpu_color = "#d29922"  # Yellow
         else:
             cpu_color = "#f85149"  # Red
         
         self.cpu_progress.setStyleSheet(f"""
             QProgressBar {{
                 border: none;
-                border-radius: 4px;
-                background-color: #0d1117;
+                border-radius: 3px;
+                background-color: #21262d;
             }}
             QProgressBar::chunk {{
                 background-color: {cpu_color};
-                border-radius: 4px;
+                border-radius: 3px;
             }}
         """)
-        self.cpu_value_label.setStyleSheet(f"font-size: 32px; font-weight: 700; color: {cpu_color};")
+        self.cpu_value_label.setStyleSheet(f"font-size: 28px; font-weight: 700; color: {cpu_color};")
         
         # Update chart with history
         self.cpu_series.clear()
@@ -809,39 +825,36 @@ class ResourceMonitorWidget(QGroupBox):
         if total_cpu > 50:
             self.cpu_progress.setStyleSheet("""
                 QProgressBar {
-                    border: 1px solid #30363d;
-                    border-radius: 4px;
-                    background-color: #0d1117;
-                    height: 8px;
+                    border: none;
+                    border-radius: 3px;
+                    background-color: #21262d;
                 }
                 QProgressBar::chunk {
-                    background-color: #da3633;
+                    background-color: #f85149;
                     border-radius: 3px;
                 }
             """)
         elif total_cpu > 20:
             self.cpu_progress.setStyleSheet("""
                 QProgressBar {
-                    border: 1px solid #30363d;
-                    border-radius: 4px;
-                    background-color: #0d1117;
-                    height: 8px;
+                    border: none;
+                    border-radius: 3px;
+                    background-color: #21262d;
                 }
                 QProgressBar::chunk {
-                    background-color: #d4a72c;
+                    background-color: #d29922;
                     border-radius: 3px;
                 }
             """)
         else:
             self.cpu_progress.setStyleSheet("""
                 QProgressBar {
-                    border: 1px solid #30363d;
-                    border-radius: 4px;
-                    background-color: #0d1117;
-                    height: 8px;
+                    border: none;
+                    border-radius: 3px;
+                    background-color: #21262d;
                 }
                 QProgressBar::chunk {
-                    background-color: #1f6feb;
+                    background-color: #58a6ff;
                     border-radius: 3px;
                 }
             """)
@@ -1199,17 +1212,17 @@ class FYPMainWindow(QMainWindow):
         # ===== LEFT SIDEBAR (20%) =====
         sidebar = QWidget()
         sidebar.setObjectName("sidebar")
-        sidebar.setFixedWidth(280)
+        sidebar.setFixedWidth(260)
         sidebar_layout = QVBoxLayout(sidebar)
-        sidebar_layout.setSpacing(4)
-        sidebar_layout.setContentsMargins(12, 20, 12, 20)
+        sidebar_layout.setSpacing(2)
+        sidebar_layout.setContentsMargins(12, 16, 12, 16)
         
         # Logo/Title
         title_label = QLabel("Keylogger Detection")
-        title_label.setStyleSheet("font-size: 16px; font-weight: 700; color: #f0f6fc; padding: 12px 8px;")
+        title_label.setStyleSheet("font-size: 15px; font-weight: 700; color: #f0f6fc; padding: 10px 8px 4px 8px;")
         sidebar_layout.addWidget(title_label)
         
-        sidebar_layout.addSpacing(20)
+        sidebar_layout.addSpacing(16)
         
         # Navigation buttons
         self.nav_buttons = {}
@@ -1240,8 +1253,8 @@ class FYPMainWindow(QMainWindow):
         status_layout.setContentsMargins(8, 12, 8, 12)
         status_layout.setSpacing(8)
         
-        status_title = QLabel("System Status")
-        status_title.setStyleSheet("font-size: 11px; font-weight: 600; color: #8b949e; text-transform: uppercase;")
+        status_title = QLabel("SYSTEM STATUS")
+        status_title.setStyleSheet("font-size: 10px; font-weight: 600; color: #7d8590; text-transform: uppercase; letter-spacing: 1px;")
         status_layout.addWidget(status_title)
         
         # Kernel status
@@ -1307,14 +1320,26 @@ class FYPMainWindow(QMainWindow):
     def create_dashboard_page(self):
         """Create dashboard with optimized windowed layout: stats top, charts middle, resources bottom"""
         page = QWidget()
-        page_layout = QVBoxLayout(page)
-        page_layout.setContentsMargins(20, 20, 20, 20)
-        page_layout.setSpacing(16)
+        outer_layout = QVBoxLayout(page)
+        outer_layout.setContentsMargins(0, 0, 0, 0)
+        outer_layout.setSpacing(0)
+        
+        # Wrap everything in a scroll area so content is never cut off
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        scroll.setStyleSheet("QScrollArea { background-color: #0d1117; border: none; }")
+        
+        scroll_content = QWidget()
+        page_layout = QVBoxLayout(scroll_content)
+        page_layout.setContentsMargins(28, 24, 28, 24)
+        page_layout.setSpacing(20)
         
         # Page header
         header = QWidget()
         header_layout = QVBoxLayout(header)
-        header_layout.setContentsMargins(0, 0, 0, 0)
+        header_layout.setContentsMargins(0, 0, 0, 4)
         header_layout.setSpacing(4)
         
         title = QLabel("Dashboard")
@@ -1329,18 +1354,18 @@ class FYPMainWindow(QMainWindow):
         # TOP ROW: Stats cards (horizontal)
         stats_container = QWidget()
         stats_layout = QHBoxLayout(stats_container)
-        stats_layout.setSpacing(12)
+        stats_layout.setSpacing(14)
         stats_layout.setContentsMargins(0, 0, 0, 0)
         
-        self.events_card = self.create_stat_card("Total Events", "0")
+        self.events_card = self.create_stat_card("Total Events", "0", "#58a6ff")
         self.events_card.setToolTip("Total number of keyboard input stream accesses detected.\nEach event = one process reading from the input subsystem.")
         stats_layout.addWidget(self.events_card)
         
-        self.rate_card = self.create_stat_card("Event Rate", "0 eps")
+        self.rate_card = self.create_stat_card("Event Rate", "0.0 eps", "#3fb950")
         self.rate_card.setToolTip("Events per second - how many processes are accessing keyboard input.\nHuman typing: 2-5 eps | Fast typing: 10-15 eps | Suspicious: >100 eps")
         stats_layout.addWidget(self.rate_card)
         
-        self.alerts_card = self.create_stat_card("Active Alerts", "0")
+        self.alerts_card = self.create_stat_card("Active Alerts", "0", "#d29922")
         self.alerts_card.setToolTip("Number of active security alerts from detection heuristics.")
         stats_layout.addWidget(self.alerts_card)
         
@@ -1349,78 +1374,90 @@ class FYPMainWindow(QMainWindow):
         # MIDDLE ROW: Charts side-by-side
         charts_container = QWidget()
         charts_layout = QHBoxLayout(charts_container)
-        charts_layout.setSpacing(16)
+        charts_layout.setSpacing(14)
         charts_layout.setContentsMargins(0, 0, 0, 0)
         
         # Event rate chart (left)
         chart_group = QGroupBox()
         chart_group.setTitle("")
-        chart_layout = QVBoxLayout(chart_group)
+        chart_group.setObjectName("dashCard")
+        chart_inner = QVBoxLayout(chart_group)
+        chart_inner.setContentsMargins(16, 14, 16, 14)
+        chart_inner.setSpacing(8)
         chart_header = QLabel("Event Rate Over Time")
-        chart_header.setStyleSheet("font-size: 14px; font-weight: bold; color: #f0f6fc; margin-bottom: 8px;")
-        chart_layout.addWidget(chart_header)
+        chart_header.setStyleSheet("font-size: 13px; font-weight: 600; color: #e6edf3;")
+        chart_inner.addWidget(chart_header)
         self.event_rate_chart = EventRateChart()
-        self.event_rate_chart.setMinimumHeight(280)
-        self.event_rate_chart.setMinimumWidth(300)
-        chart_layout.addWidget(self.event_rate_chart)
+        self.event_rate_chart.setMinimumHeight(260)
+        chart_inner.addWidget(self.event_rate_chart, 1)
         charts_layout.addWidget(chart_group, 1)
         
         # Process bar chart (right)
         proc_group = QGroupBox()
         proc_group.setTitle("")
-        proc_layout = QVBoxLayout(proc_group)
+        proc_group.setObjectName("dashCard")
+        proc_inner = QVBoxLayout(proc_group)
+        proc_inner.setContentsMargins(16, 14, 16, 14)
+        proc_inner.setSpacing(8)
         
         # Header with "View All" button
         proc_header = QHBoxLayout()
         proc_title = QLabel("Top Active Processes")
-        proc_title.setStyleSheet("font-size: 14px; font-weight: bold; color: #f0f6fc;")
+        proc_title.setStyleSheet("font-size: 13px; font-weight: 600; color: #e6edf3;")
         proc_header.addWidget(proc_title)
         proc_header.addStretch()
         
         view_all_btn = QPushButton("View All")
         view_all_btn.setStyleSheet("""
             QPushButton {
-                background-color: #21262d;
+                background-color: transparent;
                 border: 1px solid #30363d;
                 border-radius: 6px;
-                padding: 4px 12px;
+                padding: 3px 12px;
                 color: #58a6ff;
-                font-size: 10px;
+                font-size: 11px;
                 font-weight: 500;
             }
             QPushButton:hover {
-                background-color: #30363d;
+                background-color: #1c2128;
                 border-color: #58a6ff;
             }
         """)
         view_all_btn.clicked.connect(self.show_all_processes_dialog)
         proc_header.addWidget(view_all_btn)
         
-        proc_layout.addLayout(proc_header)
+        proc_inner.addLayout(proc_header)
         
         self.process_bar_chart = ProcessBarChart()
-        self.process_bar_chart.setMinimumHeight(280)
-        self.process_bar_chart.setMinimumWidth(300)
-        proc_layout.addWidget(self.process_bar_chart)
+        self.process_bar_chart.setMinimumHeight(260)
+        proc_inner.addWidget(self.process_bar_chart, 1)
         charts_layout.addWidget(proc_group, 1)
         
-        page_layout.addWidget(charts_container, 1)  # Give charts more space
+        page_layout.addWidget(charts_container)
         
         # BOTTOM ROW: Resource monitoring
         resource_group = QGroupBox()
         resource_group.setTitle("")
-        resource_layout = QVBoxLayout(resource_group)
-        resource_layout.setContentsMargins(12, 12, 12, 12)
+        resource_group.setObjectName("dashCard")
+        resource_inner = QVBoxLayout(resource_group)
+        resource_inner.setContentsMargins(16, 14, 16, 14)
+        resource_inner.setSpacing(8)
         
         resource_header = QLabel("System Resource Usage")
-        resource_header.setStyleSheet("font-size: 14px; font-weight: bold; color: #f0f6fc; margin-bottom: 8px;")
-        resource_layout.addWidget(resource_header)
+        resource_header.setStyleSheet("font-size: 13px; font-weight: 600; color: #e6edf3;")
+        resource_inner.addWidget(resource_header)
         
         self.resource_widget = ResourceMonitorWidget()
-        self.resource_widget.setMinimumHeight(280)  # Match other charts
-        resource_layout.addWidget(self.resource_widget)
+        self.resource_widget.setMinimumHeight(240)
+        resource_inner.addWidget(self.resource_widget)
         
         page_layout.addWidget(resource_group)
+        
+        # Spacer at bottom
+        page_layout.addSpacing(8)
+        
+        scroll.setWidget(scroll_content)
+        outer_layout.addWidget(scroll)
         
         # Set minimum window size for proper rendering
         self.setMinimumSize(1000, 700)
@@ -1472,17 +1509,32 @@ class FYPMainWindow(QMainWindow):
         
         return super().eventFilter(obj, event)
     
-    def create_stat_card(self, label: str, value: str):
+    def create_stat_card(self, label: str, value: str, accent_color: str = "#f0f6fc"):
         card = QGroupBox()
+        card.setObjectName("statCard")
+        card.setStyleSheet(f"""
+            QGroupBox#statCard {{
+                background-color: #161b22;
+                border: 1px solid #30363d;
+                border-radius: 10px;
+                padding: 18px 20px;
+                margin-top: 0px;
+            }}
+            QGroupBox#statCard:hover {{
+                border-color: #484f58;
+                background-color: #1c2128;
+            }}
+        """)
         card_layout = QVBoxLayout(card)
-        card_layout.setSpacing(8)
+        card_layout.setSpacing(6)
+        card_layout.setContentsMargins(16, 14, 16, 14)
         
         label_widget = QLabel(label)
-        label_widget.setStyleSheet("font-size: 12px; color: #8b949e; font-weight: 500;")
+        label_widget.setStyleSheet("font-size: 11px; color: #7d8590; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;")
         
         value_widget = QLabel(value)
         value_widget.setObjectName("cardValue")
-        value_widget.setStyleSheet("font-size: 28px; color: #f0f6fc; font-weight: 700;")
+        value_widget.setStyleSheet(f"font-size: 30px; color: {accent_color}; font-weight: 700;")
         
         card_layout.addWidget(label_widget)
         card_layout.addWidget(value_widget)

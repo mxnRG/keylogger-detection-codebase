@@ -31,34 +31,38 @@ class EventRateChart(QChartView):
         self.chart.setBackgroundBrush(QBrush(QColor(22, 27, 34)))
         self.chart.setTitleBrush(QBrush(QColor(240, 246, 252)))
         self.chart.setTitleFont(QFont('Inter', 14, QFont.Bold))
-        self.chart.setTitle("Event Rate Over Time")
+        self.chart.setTitle("")
         self.chart.legend().hide()
-        self.chart.setMargins(QMargins(0, 0, 0, 0))
+        self.chart.setMargins(QMargins(12, 8, 16, 8))
         
         # Use spline for smooth curves
         self.series = QSplineSeries()
-        self.series.setColor(QColor(31, 111, 235))
-        self.series.setPen(QPen(QColor(31, 111, 235), 3))
+        self.series.setColor(QColor(56, 139, 253))
+        pen = QPen(QColor(56, 139, 253), 2)
+        pen.setCapStyle(Qt.RoundCap)
+        self.series.setPen(pen)
         self.chart.addSeries(self.series)
         
         # Axes with better styling
         self.axis_x = QValueAxis()
         self.axis_x.setRange(0, 60)
-        self.axis_x.setTitleText("Time (seconds ago)")
-        self.axis_x.setTitleFont(QFont('Inter', 10))
-        self.axis_x.setLabelsFont(QFont('Inter', 9))
-        self.axis_x.setLabelsColor(QColor(139, 148, 158))
-        self.axis_x.setTitleBrush(QBrush(QColor(139, 148, 158)))
-        self.axis_x.setGridLineColor(QColor(48, 54, 61))
+        self.axis_x.setTitleText("Time (s)")
+        self.axis_x.setTitleFont(QFont('Inter', 9))
+        self.axis_x.setLabelsFont(QFont('Inter', 8))
+        self.axis_x.setLabelsColor(QColor(125, 133, 144))
+        self.axis_x.setTitleBrush(QBrush(QColor(125, 133, 144)))
+        self.axis_x.setGridLineColor(QColor(33, 38, 45))
+        self.axis_x.setTickCount(7)
         
         self.axis_y = QValueAxis()
         self.axis_y.setRange(0, 100)
-        self.axis_y.setTitleText("Events/second")
-        self.axis_y.setTitleFont(QFont('Inter', 10))
-        self.axis_y.setLabelsFont(QFont('Inter', 9))
-        self.axis_y.setLabelsColor(QColor(139, 148, 158))
-        self.axis_y.setTitleBrush(QBrush(QColor(139, 148, 158)))
-        self.axis_y.setGridLineColor(QColor(48, 54, 61))
+        self.axis_y.setTitleText("Events/sec")
+        self.axis_y.setTitleFont(QFont('Inter', 9))
+        self.axis_y.setLabelsFont(QFont('Inter', 8))
+        self.axis_y.setLabelsColor(QColor(125, 133, 144))
+        self.axis_y.setTitleBrush(QBrush(QColor(125, 133, 144)))
+        self.axis_y.setGridLineColor(QColor(33, 38, 45))
+        self.axis_y.setTickCount(5)
         
         self.chart.addAxis(self.axis_x, Qt.AlignBottom)
         self.chart.addAxis(self.axis_y, Qt.AlignLeft)
@@ -90,14 +94,23 @@ class EventRateChart(QChartView):
             
             # Color code based on severity
             if max_rate > 100:
-                self.series.setColor(QColor(218, 54, 51))  # Red
-                self.series.setPen(QPen(QColor(218, 54, 51), 3))
+                color = QColor(248, 81, 73)
+                self.series.setColor(color)
+                pen = QPen(color, 2)
+                pen.setCapStyle(Qt.RoundCap)
+                self.series.setPen(pen)
             elif max_rate > 50:
-                self.series.setColor(QColor(212, 167, 44))  # Yellow
-                self.series.setPen(QPen(QColor(212, 167, 44), 3))
+                color = QColor(210, 153, 34)
+                self.series.setColor(color)
+                pen = QPen(color, 2)
+                pen.setCapStyle(Qt.RoundCap)
+                self.series.setPen(pen)
             else:
-                self.series.setColor(QColor(46, 160, 67))  # Green
-                self.series.setPen(QPen(QColor(46, 160, 67), 3))
+                color = QColor(63, 185, 80)
+                self.series.setColor(color)
+                pen = QPen(color, 2)
+                pen.setCapStyle(Qt.RoundCap)
+                self.series.setPen(pen)
 
 
 class ProcessBarChart(QChartView):
@@ -119,24 +132,26 @@ class ProcessBarChart(QChartView):
         self.chart.setBackgroundBrush(QBrush(QColor(22, 27, 34)))
         self.chart.setTitleBrush(QBrush(QColor(240, 246, 252)))
         self.chart.setTitleFont(QFont('Inter', 14, QFont.Bold))
-        self.chart.setTitle("Top Active Processes")
+        self.chart.setTitle("")
         self.chart.legend().hide()
-        self.chart.setMargins(QMargins(0, 0, 0, 0))
+        self.chart.setMargins(QMargins(12, 8, 16, 8))
         
         self.series = QBarSeries()
+        self.series.setBarWidth(0.6)
         self.chart.addSeries(self.series)
         
         self.axis_x = QBarCategoryAxis()
-        self.axis_x.setLabelsFont(QFont('Inter', 9))
-        self.axis_x.setLabelsColor(QColor(139, 148, 158))
+        self.axis_x.setLabelsFont(QFont('Inter', 8))
+        self.axis_x.setLabelsColor(QColor(125, 133, 144))
         
         self.axis_y = QValueAxis()
-        self.axis_y.setTitleText("Event Count")
-        self.axis_y.setTitleFont(QFont('Inter', 10))
-        self.axis_y.setLabelsFont(QFont('Inter', 9))
-        self.axis_y.setLabelsColor(QColor(139, 148, 158))
-        self.axis_y.setTitleBrush(QBrush(QColor(139, 148, 158)))
-        self.axis_y.setGridLineColor(QColor(48, 54, 61))
+        self.axis_y.setTitleText("Events")
+        self.axis_y.setTitleFont(QFont('Inter', 9))
+        self.axis_y.setLabelsFont(QFont('Inter', 8))
+        self.axis_y.setLabelsColor(QColor(125, 133, 144))
+        self.axis_y.setTitleBrush(QBrush(QColor(125, 133, 144)))
+        self.axis_y.setGridLineColor(QColor(33, 38, 45))
+        self.axis_y.setTickCount(5)
         
         self.chart.addAxis(self.axis_x, Qt.AlignBottom)
         self.chart.addAxis(self.axis_y, Qt.AlignLeft)
@@ -152,7 +167,8 @@ class ProcessBarChart(QChartView):
         
         self.series.clear()
         bar_set = QBarSet("Events")
-        bar_set.setColor(QColor(31, 111, 235))
+        bar_set.setColor(QColor(56, 139, 253))
+        bar_set.setBorderColor(QColor(56, 139, 253))
         
         categories = []
         for pid, stats in sorted_procs:
