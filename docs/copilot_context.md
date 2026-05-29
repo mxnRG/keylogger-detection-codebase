@@ -1,7 +1,7 @@
 # FYP Keylogger Detector - AI Agent Context
 
-**Last Updated:** December 20, 2025  
-**Project Status:** Phase 2 Complete ✅  
+**Last Updated:** May 29, 2026  
+**Project Status:** Phase 3 — ML on fixed telemetry dataset  
 **Versions:** Kernel v0.6 | Daemon v0.2 | GUI v3.3
 
 ---
@@ -26,7 +26,7 @@ A Linux-based **keylogger detection system** using behavioral analysis without c
 │  │  Keyboard Notifier (keyboard_notifier_list) │
 │  │  - Captures behavioral metadata          │   │
 │  │  - NO keycode capture (privacy-by-design)│   │
-│  │  - Timing analysis (<10ms = "rapid")     │   │
+│  │  - Timing analysis (<50ms = "rapid")     │   │
 │  └──────────────┬───────────────────────────┘   │
 │                 │                                │
 │  ┌──────────────▼───────────────────────────┐   │
@@ -39,8 +39,8 @@ A Linux-based **keylogger detection system** using behavioral analysis without c
 │  ┌──────────────▼───────────────────────────┐   │
 │  │  Netlink Socket (Protocol 31)            │   │
 │  │  - 158-byte struct fyp_netlink_event     │   │
-│  │  - PID, PPID, comm, cmdline[128]         │   │
-│  │  - rapid_events, total_events, ratio     │   │
+│  │  - timestamp_ns, pid, comm, cmdline[128] │   │
+│  │  - event_type, rapid_flag                │   │
 │  └──────────────┬───────────────────────────┘   │
 │                 │                                │
 │  ┌──────────────▼───────────────────────────┐   │
@@ -63,8 +63,8 @@ A Linux-based **keylogger detection system** using behavioral analysis without c
 │  ┌──────────────────────────────────────────┐   │
 │  │  Netlink Socket Receiver                 │   │
 │  │  - Registers NETLINK_FYP_DETECTOR        │   │
-│  │  - Parses 158-byte events                │   │
-│  │  - Timeout handling, disconnect detection│   │
+│  │  - Parses 30-byte subset (no cmdline)    │   │
+│  │  - Blocking receive loop + error logging │   │
 │  └──────────────┬───────────────────────────┘   │
 │                 │                                │
 │  ┌──────────────▼───────────────────────────┐   │
@@ -77,8 +77,8 @@ A Linux-based **keylogger detection system** using behavioral analysis without c
 │  ┌──────────────▼───────────────────────────┐   │
 │  │  Status File Writer                      │   │
 │  │  - Outputs /tmp/fyp_status.json          │   │
-│  │  - Latest alert, process list            │   │
-│  │  - Severity: LOW, MEDIUM, HIGH           │   │
+│  │  - Alerts list + processes dict          │   │
+│  │  - Severity: MEDIUM, HIGH (current rules)│   │
 │  └──────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────┘
                          │ JSON File IPC
@@ -89,18 +89,18 @@ A Linux-based **keylogger detection system** using behavioral analysis without c
 │  ┌──────────────────────────────────────────┐   │
 │  │  PySide6 (Qt6 for Python)                │   │
 │  │  - GitHub dark theme (#0d1117, #1f6feb)  │   │
-│  │  - Responsive 2-column layout (1280px)   │   │
+│  │  - Stacked rows layout (stats/charts/resources) │   │
 │  └──────────────┬───────────────────────────┘   │
 │                 │                                │
 │  ┌──────────────▼───────────────────────────┐   │
 │  │  Dashboard Pages (7 total)               │   │
 │  │  1. Dashboard: Overview + resource monitor   │
-│  │  2. Processes: Per-process metrics       │   │
-│  │  3. Alerts: Detection timeline           │   │
-│  │  4. Whitelist: Trusted processes         │   │
-│  │  5. Logs: System event viewer            │   │
-│  │  6. Settings: Configuration              │   │
-│  │  7. About: Project info                  │   │
+│  │  2. Alerts: Detection timeline           │   │
+│  │  3. Processes: Per-process metrics       │   │
+│  │  4. Event Stream: Raw event log          │   │
+│  │  5. AI Assistant: Placeholder            │   │
+│  │  6. ML Insights: Placeholder             │   │
+│  │  7. Configuration: Threshold + controls  │   │
 │  └──────────────┬───────────────────────────┘   │
 │                 │                                │
 │  ┌──────────────▼───────────────────────────┐   │
@@ -125,18 +125,21 @@ A Linux-based **keylogger detection system** using behavioral analysis without c
 **Key Structures:**
 ```c
 struct fyp_netlink_event {
+    u64 timestamp_ns;        // Nanoseconds since boot
     u32 pid;
-    u32 ppid;
-    char process_name[16];
-    char cmdline[128];        // NEW in v0.6
-    u32 rapid_events;
-    u32 total_events;
-    u32 rapid_ratio;
+    char comm[16];           // TASK_COMM_LEN
+    char cmdline[128];
+    u8 event_type;           // 0=press, 1=release
+    u8 rapid_flag;           // 1 if rapid
 };
 
 struct cmdline_work {
     struct work_struct work;
-    struct fyp_netlink_event event;
+    pid_t pid;
+    char comm[TASK_COMM_LEN];
+    u64 timestamp_ns;
+    u8 event_type;
+    u8 rapid_flag;
 };
 ```
 
@@ -152,7 +155,7 @@ module_param(burst_threshold_eps, int, 0644);
 - `fyp_keyboard_notifier()` - Keyboard event callback (atomic context)
 - `extract_cmdline()` - Safely captures command line with NULL checks
 - `cmdline_work_handler()` - Workqueue handler for deferred processing
-- `send_netlink_event()` - Sends 158-byte event via Netlink
+- `netlink_send_event()` - Sends 158-byte event via Netlink
 
 **Workqueue Pattern:**
 ```c
@@ -175,7 +178,7 @@ mmput(mm);
 **Netlink Socket:**
 - Protocol: 31 (`NETLINK_FYP_DETECTOR`)
 - Group: 0 (unicast only)
-- Message size: 158 bytes
+- Message size: 158 bytes (daemon currently parses 30-byte subset)
 
 **Procfs Files:**
 - `/proc/fyp_detector/stats` - Real-time statistics
@@ -191,15 +194,17 @@ mmput(mm);
 ```python
 import socket
 import struct
+import os
 
 NETLINK_FYP_DETECTOR = 31
 sock = socket.socket(socket.AF_NETLINK, socket.SOCK_RAW, NETLINK_FYP_DETECTOR)
-sock.bind((0, 0))  # PID 0 = kernel assigns, Group 0 = unicast
+sock.bind((os.getpid(), 0))  # Unicast
 
-# Parse 158-byte events
-fmt = '=II16s128sIII'  # PID, PPID, comm, cmdline, rapid, total, ratio
-data = sock.recv(158)
-pid, ppid, comm, cmdline, rapid, total, ratio = struct.unpack(fmt, data)
+# Parse 30-byte event subset (cmdline ignored in current daemon)
+fmt = '<QI16sBB'  # timestamp_ns, pid, comm, event_type, rapid_flag
+data = sock.recv(4096)
+payload = data[16:16 + 30]
+timestamp_ns, pid, comm, event_type, rapid_flag = struct.unpack(fmt, payload)
 ```
 
 **Detection Rules:**
@@ -216,35 +221,42 @@ def check_burst_pattern(events_per_sec):
 
 **Whitelist (Default):**
 ```python
-WHITELIST = [
-    'bash', 'zsh', 'fish',
-    'python3', 'python',
+WHITELIST = {
+    'gnome-shell', 'Xorg', 'gdm-x-session',
+    'bash', 'sh', 'zsh', 'fish',
+    'python3', 'python', 'code', 'firefox',
+    'gnome-terminal', 'konsole', 'xterm',
     'vim', 'nano', 'emacs',
-    'code', 'codium',
-    'gnome-terminal', 'konsole', 'xterm'
-]
+    'swapper/0', 'swapper/1', 'swapper/2', 'swapper/3'
+}
 ```
 
 **Status File Format:**
 ```json
 {
-    "timestamp": "2025-12-20T12:34:56",
-    "latest_alert": {
-        "severity": "HIGH",
-        "rule": "Rapid Typing",
-        "pid": 1234,
-        "process": "bash",
-        "cmdline": "/bin/bash",
-        "rapid_ratio": 0.75
-    },
-    "processes": [
-        {
-            "pid": 1234,
-            "name": "bash",
-            "rapid_events": 750,
-            "total_events": 1000,
-            "rapid_ratio": 0.75
+    "timestamp": "2026-05-22T12:34:56.123456",
+    "daemon_running": true,
+    "kernel_loaded": true,
+    "total_events": 5432,
+    "processes": {
+        "1913": {
+            "comm": "gnome-shell",
+            "total_events": 2500,
+            "rapid_ratio": 2.0,
+            "events_per_second": 4.5
         }
+    },
+    "alerts": [
+        {
+            "timestamp": "2026-05-22T12:34:50.000000",
+            "severity": "HIGH",
+            "message": "Rapid Input Stream Access: Rapid fetching ratio: 80.0% (threshold: 50.0%)",
+            "process": "suspicious",
+            "pid": 2048
+        }
+    ],
+    "recent_events": [
+        "123456789,P,2048,suspicious,1"
     ]
 }
 ```
@@ -255,6 +267,8 @@ WHITELIST = [
 
 **File:** `/home/fyp/project/gui/fyp_gui.py` (main application logic)  
 **Entry Point:** `/home/fyp/project/gui/main_gui.py` (imports and launches fyp_gui)
+
+**Note:** The `components/` and `pages/` packages exist but are not wired into `fyp_gui.py` yet. The GUI currently defines its widgets and pages inline.
 
 **Dependencies:**
 ```python
@@ -267,46 +281,19 @@ import os
 from collections import deque
 ```
 
-**Responsive Layout (Breakpoint: 1280px):**
-```python
-class FYPMainWindow(QMainWindow):
-    def eventFilter(self, obj, event):
-        if event.type() == QEvent.Resize:
-            if self.width() > 1280:
-                # Horizontal 2-column layout
-                self.dashboard_layout = QHBoxLayout()
-            else:
-                # Vertical stacked layout
-                self.dashboard_layout = QVBoxLayout()
-```
+**Dashboard Layout:**
+- Current build uses stacked rows (stats, charts, resources)
+- Responsive 2-column switching is not wired in the active dashboard layout
 
 **Resource Monitor Widget:**
 ```python
-class ResourceMonitorWidget(QWidget):
-    def __init__(self):
-        self.cpu_history = deque(maxlen=60)  # 60-second window
-        self.memory_history = deque(maxlen=60)
-        
-        # Progress bars (color-coded)
-        self.cpu_bar = QProgressBar()
-        self.memory_bar = QProgressBar()
-        
-        # History chart (QSplineSeries)
-        self.chart = QChart()
-        self.cpu_series = QSplineSeries()
-        self.mem_series = QSplineSeries()
-    
-    def update_resources(self, gui_cpu, gui_mem, daemon_cpu, daemon_mem):
-        combined_cpu = gui_cpu + daemon_cpu
-        combined_mem = gui_mem + daemon_mem
-        
-        # Color-coded thresholds
-        if combined_cpu < 20:
-            self.cpu_bar.setStyleSheet("QProgressBar::chunk { background: #1f6feb; }")  # Blue
-        elif combined_cpu < 50:
-            self.cpu_bar.setStyleSheet("QProgressBar::chunk { background: #f9c513; }")  # Yellow
-        else:
-            self.cpu_bar.setStyleSheet("QProgressBar::chunk { background: #f85149; }")  # Red
+class ResourceMonitorWidget(QGroupBox):
+    def update_resources(self, total_cpu, total_mem, gui_cpu, gui_mem,
+                         daemon_cpu, daemon_mem, cpu_history, mem_history):
+        # Update totals and color-coded CPU bar
+        # Update chart history (60 seconds)
+        # Provide hover tooltip with GUI/daemon breakdown
+        pass
 ```
 
 **Resource Tracking (psutil):**
@@ -332,8 +319,17 @@ def update_resource_usage(self):
         else:
             daemon_cpu, daemon_mem = 0.0, 0.0
         
+        total_cpu = gui_cpu + daemon_cpu
+        total_mem = gui_mem + daemon_mem
+
         # Update widget
-        self.resource_widget.update_resources(gui_cpu, gui_mem, daemon_cpu, daemon_mem)
+        self.resource_widget.update_resources(
+            total_cpu, total_mem,
+            gui_cpu, gui_mem,
+            daemon_cpu, daemon_mem,
+            list(self.cpu_history),
+            list(self.memory_history)
+        )
     except (psutil.NoSuchProcess, psutil.AccessDenied):
         pass  # Graceful fallback
 ```
@@ -354,6 +350,40 @@ DANGER = "#f85149"
 
 ---
 
+## ML Pipeline (Phase 3)
+
+### Dataset
+
+- **Location:** `dataset/manifest.yaml` → L2–L4 Linux eBPF CSVs (~94k rows)
+- **Constraint:** One benign + one malicious file per level; different capture VMs
+- **Do not use:** `Data/combined/all_levels_ebpf_keylogger.csv` (malicious-only)
+
+### Evaluation tiers (`evaluation.json`)
+
+| Tier | Split | Use in thesis |
+|------|-------|---------------|
+| A | Per-level row stratified | Upper bound only (~1.0 AUC) |
+| B | Cross-level holdout | Secondary (~1.0 AUC — signal generalizes) |
+| C | Cross-level + behavioral features | **Primary realistic metric** (0.75–0.99 AUC) |
+
+### Key scripts
+
+```bash
+python scripts/train_ml.py --split-mode all --feature-policy standard
+python scripts/analyze_dataset.py
+python scripts/verify_artifacts.py
+```
+
+### Resume after SSH disconnect
+
+Read `docs/SESSION_RESUME.md` and `docs/ML_DATASET_REALISTIC_EVAL_PLAN.md` first.
+
+### Latest artifact run
+
+`artifacts/run_20260529_193015/evaluation.json`
+
+---
+
 ## File Structure Reference
 
 ```
@@ -366,7 +396,7 @@ DANGER = "#f85149"
 │   └── fyp_daemon.py      # v0.2 - Netlink receiver + 3 heuristics
 ├── gui/
 │   ├── main_gui.py        # Entry point (imports fyp_gui)
-│   ├── fyp_gui.py         # v3.3 - Responsive layout + resource monitor
+│   ├── fyp_gui.py         # v3.3 - Dashboard + resource monitor
 │   ├── daemon_monitor.py  # Daemon status checker
 │   ├── models.py          # Data models
 │   ├── theme.py           # Color scheme definitions
@@ -382,12 +412,22 @@ DANGER = "#f85149"
 │   ├── ETHICS.md          # Privacy analysis (12+ pages)
 │   ├── RESEARCH.md        # Academic contributions (15+ pages)
 │   ├── TESTING.md         # Testing methodology (10+ pages)
+│   ├── ML_DATASET_REALISTIC_EVAL_PLAN.md  # Phase 3 ML plan
+│   ├── SESSION_RESUME.md  # SSH session quick resume
+│   ├── DATASET_ANALYSIS_LATEST.md         # Auto-generated dataset report
 │   ├── copilot_context.md # This file
 │   └── archive/           # Historical docs (6 files)
+├── scripts/
+│   ├── train_ml.py        # ML training + evaluation.json
+│   ├── analyze_dataset.py # Dataset analysis report
+│   └── verify_artifacts.py
+├── dataset/
+│   └── manifest.yaml      # Canonical L2-L4 CSV paths
+├── artifacts/             # Training runs (run_<timestamp>/)
 ├── requirements.txt       # PySide6>=6.5.0, psutil>=5.9.0
 ├── README.md              # Main project documentation
 ├── QUICKSTART.md          # Quick setup guide
-└── current.md             # Phase 2 completion summary
+└── current.md             # Phase 3 ML status (gitignored locally)
 ```
 
 ---
@@ -645,7 +685,7 @@ sudo dmesg | grep "fyp_detector" | tail -20
 | v0.1 | Dec 12, 2025 | Daemon | Procfs event reader + 3 heuristics |
 | v0.2 | Dec 12, 2025 | Daemon | Netlink receiver |
 | v0.1 | Dec 15, 2025 | GUI | Qt6 initial release |
-| v3.3 | Dec 19-20, 2025 | GUI | Responsive layout + resource monitor |
+| v3.3 | Dec 19-20, 2025 | GUI | Dashboard + resource monitor |
 
 ---
 
@@ -656,7 +696,7 @@ sudo dmesg | grep "fyp_detector" | tail -20
 3. **Workqueue is mandatory** for mm_struct access (kernel notifier is atomic context)
 4. **NULL-check mm_struct** (kernel threads return NULL from `get_task_mm()`)
 5. **Use psutil for resource monitoring** (with graceful fallback if unavailable)
-6. **Responsive layout breakpoint is 1280px** (horizontal >1280px, vertical <1280px)
+6. **Dashboard layout is stacked rows** (stats, charts, resources); responsive 2-column switching is not wired
 7. **Color thresholds:** Blue <20%, Yellow 20-50%, Red >50%
 8. **Documentation is comprehensive** - refer agents to `docs/` for detailed technical specs
 9. **Privacy-by-design:** NEVER suggest capturing keycodes or keystroke content

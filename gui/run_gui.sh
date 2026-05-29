@@ -5,11 +5,11 @@
 echo "FYP Keylogger Detection - GUI Launcher"
 echo "========================================"
 
-# Check if kernel module is loaded
-if [ ! -f /proc/fyp_detector/events ]; then
-    echo "ERROR: Kernel module not loaded!"
-    echo "Please run: cd ../kernel && sudo insmod fyp_kbd.ko"
-    exit 1
+# Check if kernel module is loaded (v0.6 procfs)
+if ! lsmod | grep -q '^fyp_kbd ' || [ ! -r /proc/fyp_detector/stats ]; then
+    echo "WARNING: Kernel module not loaded or procfs unavailable"
+    echo "Start demo stack: sudo ../scripts/start_demo_stack.sh"
+    echo "Or manually: cd ../kernel && sudo insmod fyp_kbd.ko"
 fi
 
 # Check if daemon is running

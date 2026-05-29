@@ -6,6 +6,23 @@ PySide6>=6.5.0
 # System and process monitoring (for resource usage tracking)
 psutil>=5.9.0
 
+# Telemetry dataset collection
+pandas>=2.0.0
+keyboard>=0.13.5
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+xgboost>=2.0.0
+PyYAML>=6.0.0
+
+# Live ML demo API
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+joblib>=1.3.0
+
+# eBPF live collector (BCC — install system package python3-bcc on Ubuntu)
+# bcc
+
 # Note: The following are included with Python standard library:
 # - json
 # - socket

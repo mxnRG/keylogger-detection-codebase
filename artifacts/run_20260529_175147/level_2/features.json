@@ -1,0 +1,20 @@
+[
+  "cpu_usage",
+  "memory_usage",
+  "system_uptime_minutes",
+  "high_cpu_processes",
+  "high_memory_processes",
+  "zombie_processes",
+  "total_threads",
+  "thread_to_process_ratio",
+  "cpu_to_keyboard_ratio",
+  "keyboard_hardware_interrupts",
+  "kernel_context_switches_delta",
+  "kernel_sys_read_delta",
+  "kernel_sys_write_delta",
+  "network_connections",
+  "total_connections",
+  "shell_processes",
+  "python_processes",
+  "suspicious_process_names"
+]

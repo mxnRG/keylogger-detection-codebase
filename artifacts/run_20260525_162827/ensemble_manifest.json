@@ -1,0 +1,25 @@
+{
+  "strategy": "average",
+  "models": [
+    {
+      "level": "2",
+      "model": "random_forest",
+      "path": "/home/fyp/project/artifacts/run_20260525_162827/level_2/random_forest/random_forest.joblib"
+    },
+    {
+      "level": "2",
+      "model": "extra_trees",
+      "path": "/home/fyp/project/artifacts/run_20260525_162827/level_2/extra_trees/extra_trees.joblib"
+    },
+    {
+      "level": "2",
+      "model": "xgboost",
+      "path": "/home/fyp/project/artifacts/run_20260525_162827/level_2/xgboost/xgboost.joblib"
+    }
+  ],
+  "weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ]
+}

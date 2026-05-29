@@ -1,0 +1,555 @@
+{
+  "thesis_primary": "B",
+  "split_mode": "all",
+  "feature_policy": "standard",
+  "tiers": {
+    "A": {
+      "name": "in_distribution_row_split",
+      "description": "Upper bound \u2014 same capture sessions in train and test",
+      "levels": {
+        "2": {
+          "split_method": "stratified_row_split",
+          "models": {
+            "random_forest": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            },
+            "extra_trees": {
+              "in_distribution_auc": 0.9999999999999999,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            },
+            "xgboost": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            }
+          }
+        },
+        "3": {
+          "split_method": "stratified_row_split",
+          "models": {
+            "random_forest": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            },
+            "extra_trees": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            },
+            "xgboost": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            }
+          }
+        },
+        "4": {
+          "split_method": "stratified_row_split",
+          "models": {
+            "random_forest": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            },
+            "extra_trees": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            },
+            "xgboost": {
+              "in_distribution_auc": 1.0,
+              "in_distribution_ap": 1.0,
+              "val_auc": 1.0,
+              "val_ap": 1.0
+            }
+          }
+        }
+      },
+      "macro_avg": {
+        "random_forest": {
+          "test_auc": 1.0,
+          "test_ap": 1.0
+        },
+        "extra_trees": {
+          "test_auc": 1.0,
+          "test_ap": 1.0
+        },
+        "xgboost": {
+          "test_auc": 1.0,
+          "test_ap": 1.0
+        }
+      }
+    },
+    "B": {
+      "name": "cross_level_holdout",
+      "feature_policy": "standard",
+      "forced_drop": [
+        "keyboard_events",
+        "cpu_threads"
+      ],
+      "folds": [
+        {
+          "train_levels": [
+            3,
+            4
+          ],
+          "test_level": 2,
+          "train_rows": 55063,
+          "test_rows": 25047,
+          "features": [
+            "active_processes",
+            "background_processes",
+            "cpu_to_keyboard_ratio",
+            "cpu_usage",
+            "high_cpu_processes",
+            "high_memory_processes",
+            "kernel_connect_delta",
+            "kernel_context_switches_delta",
+            "kernel_execve_delta",
+            "kernel_openat_delta",
+            "kernel_sys_read_delta",
+            "kernel_sys_write_delta",
+            "keyboard_hardware_interrupts",
+            "memory_usage",
+            "network_connections",
+            "process_count",
+            "python_processes",
+            "shell_processes",
+            "suspicious_process_names",
+            "swap_memory",
+            "system_uptime_minutes",
+            "thread_to_process_ratio",
+            "total_connections",
+            "total_open_files",
+            "total_threads",
+            "zombie_processes"
+          ],
+          "feature_drops": {
+            "disk_usage_percent": [
+              "single_threshold_separator"
+            ],
+            "keyboard_to_process_ratio": [
+              "constant"
+            ]
+          },
+          "models": {
+            "random_forest": {
+              "val_auc": 1.0,
+              "test_auc": 1.0,
+              "val_ap": 1.0,
+              "test_ap": 1.0,
+              "in_distribution_auc": 1.0,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L2/random_forest/random_forest.joblib"
+            },
+            "extra_trees": {
+              "val_auc": 1.0,
+              "test_auc": 0.9999535258035291,
+              "val_ap": 1.0,
+              "test_ap": 0.9999724949376388,
+              "in_distribution_auc": 0.9999535258035291,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L2/extra_trees/extra_trees.joblib"
+            },
+            "xgboost": {
+              "val_auc": 1.0,
+              "test_auc": 0.9995414825811513,
+              "val_ap": 1.0,
+              "test_ap": 0.9998338564846444,
+              "in_distribution_auc": 0.9995414825811513,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L2/xgboost/xgboost.joblib"
+            }
+          }
+        },
+        {
+          "train_levels": [
+            2,
+            4
+          ],
+          "test_level": 3,
+          "train_rows": 41592,
+          "test_rows": 41885,
+          "features": [
+            "active_processes",
+            "background_processes",
+            "cpu_to_keyboard_ratio",
+            "cpu_usage",
+            "high_cpu_processes",
+            "high_memory_processes",
+            "kernel_connect_delta",
+            "kernel_context_switches_delta",
+            "kernel_execve_delta",
+            "kernel_openat_delta",
+            "kernel_sys_read_delta",
+            "kernel_sys_write_delta",
+            "keyboard_hardware_interrupts",
+            "memory_usage",
+            "network_connections",
+            "process_count",
+            "python_processes",
+            "shell_processes",
+            "suspicious_process_names",
+            "swap_memory",
+            "system_uptime_minutes",
+            "thread_to_process_ratio",
+            "total_connections",
+            "total_open_files",
+            "total_threads",
+            "zombie_processes"
+          ],
+          "feature_drops": {
+            "disk_usage_percent": [
+              "single_threshold_separator"
+            ],
+            "keyboard_to_process_ratio": [
+              "constant"
+            ]
+          },
+          "models": {
+            "random_forest": {
+              "val_auc": 1.0,
+              "test_auc": 0.9999999999999999,
+              "val_ap": 1.0,
+              "test_ap": 1.0,
+              "in_distribution_auc": 0.9999999999999999,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L3/random_forest/random_forest.joblib"
+            },
+            "extra_trees": {
+              "val_auc": 1.0,
+              "test_auc": 1.0,
+              "val_ap": 1.0,
+              "test_ap": 1.0000000000000002,
+              "in_distribution_auc": 1.0,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L3/extra_trees/extra_trees.joblib"
+            },
+            "xgboost": {
+              "val_auc": 1.0,
+              "test_auc": 0.9999514902712409,
+              "val_ap": 1.0,
+              "test_ap": 0.9999779807787417,
+              "in_distribution_auc": 0.9999514902712409,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L3/xgboost/xgboost.joblib"
+            }
+          }
+        },
+        {
+          "train_levels": [
+            2,
+            3
+          ],
+          "test_level": 4,
+          "train_rows": 53545,
+          "test_rows": 26944,
+          "features": [
+            "active_processes",
+            "background_processes",
+            "cpu_to_keyboard_ratio",
+            "cpu_usage",
+            "high_cpu_processes",
+            "high_memory_processes",
+            "kernel_connect_delta",
+            "kernel_context_switches_delta",
+            "kernel_execve_delta",
+            "kernel_openat_delta",
+            "kernel_sys_read_delta",
+            "kernel_sys_write_delta",
+            "keyboard_hardware_interrupts",
+            "memory_usage",
+            "network_connections",
+            "process_count",
+            "python_processes",
+            "shell_processes",
+            "suspicious_process_names",
+            "swap_memory",
+            "system_uptime_minutes",
+            "thread_to_process_ratio",
+            "total_connections",
+            "total_open_files",
+            "total_threads",
+            "zombie_processes"
+          ],
+          "feature_drops": {
+            "disk_usage_percent": [
+              "single_threshold_separator"
+            ],
+            "keyboard_to_process_ratio": [
+              "constant"
+            ]
+          },
+          "models": {
+            "random_forest": {
+              "val_auc": 1.0,
+              "test_auc": 0.9999992492357219,
+              "val_ap": 1.0,
+              "test_ap": 0.9999992310319575,
+              "in_distribution_auc": 0.9999992492357219,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L4/random_forest/random_forest.joblib"
+            },
+            "extra_trees": {
+              "val_auc": 1.0,
+              "test_auc": 1.0,
+              "val_ap": 1.0,
+              "test_ap": 1.0,
+              "in_distribution_auc": 1.0,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L4/extra_trees/extra_trees.joblib"
+            },
+            "xgboost": {
+              "val_auc": 0.9999999999999999,
+              "test_auc": 0.9999952460830218,
+              "val_ap": 1.0,
+              "test_ap": 0.9999959324187472,
+              "in_distribution_auc": 0.9999952460830218,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_B/test_L4/xgboost/xgboost.joblib"
+            }
+          }
+        }
+      ],
+      "macro_avg": {
+        "random_forest": {
+          "test_auc": 0.9999997497452405,
+          "test_ap": 0.9999997436773191,
+          "val_auc": 1.0,
+          "val_ap": 1.0
+        },
+        "extra_trees": {
+          "test_auc": 0.9999845086011764,
+          "test_ap": 0.9999908316458797,
+          "val_auc": 1.0,
+          "val_ap": 1.0
+        },
+        "xgboost": {
+          "test_auc": 0.9998294063118046,
+          "test_ap": 0.9999359232273778,
+          "val_auc": 1.0,
+          "val_ap": 1.0
+        }
+      }
+    },
+    "C": {
+      "name": "behavioral_cross_level",
+      "feature_policy": "behavioral",
+      "forced_drop": [
+        "keyboard_events",
+        "cpu_threads",
+        "swap_memory",
+        "disk_usage_percent",
+        "system_uptime_minutes",
+        "process_count",
+        "active_processes",
+        "background_processes",
+        "total_open_files",
+        "users_logged_in",
+        "keyboard_to_process_ratio",
+        "hour",
+        "minute",
+        "second"
+      ],
+      "folds": [
+        {
+          "train_levels": [
+            3,
+            4
+          ],
+          "test_level": 2,
+          "train_rows": 55063,
+          "test_rows": 25047,
+          "features": [
+            "kernel_context_switches_delta",
+            "kernel_sys_read_delta",
+            "kernel_sys_write_delta",
+            "kernel_openat_delta",
+            "kernel_execve_delta",
+            "kernel_connect_delta",
+            "keyboard_hardware_interrupts",
+            "cpu_to_keyboard_ratio",
+            "thread_to_process_ratio",
+            "network_connections",
+            "total_connections",
+            "shell_processes",
+            "python_processes",
+            "suspicious_process_names",
+            "high_cpu_processes",
+            "high_memory_processes",
+            "zombie_processes",
+            "cpu_usage",
+            "memory_usage",
+            "total_threads"
+          ],
+          "feature_drops": {},
+          "models": {
+            "random_forest": {
+              "val_auc": 1.0,
+              "test_auc": 0.7809421885170302,
+              "val_ap": 1.0,
+              "test_ap": 0.9022939170956917,
+              "in_distribution_auc": 0.7809421885170302,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L2/random_forest/random_forest.joblib"
+            },
+            "extra_trees": {
+              "val_auc": 1.0,
+              "test_auc": 0.275709267096638,
+              "val_ap": 1.0,
+              "test_ap": 0.6114716630931553,
+              "in_distribution_auc": 0.275709267096638,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L2/extra_trees/extra_trees.joblib"
+            },
+            "xgboost": {
+              "val_auc": 1.0,
+              "test_auc": 0.9703761847717353,
+              "val_ap": 1.0,
+              "test_ap": 0.9870762343939593,
+              "in_distribution_auc": 0.9703761847717353,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L2/xgboost/xgboost.joblib"
+            }
+          }
+        },
+        {
+          "train_levels": [
+            2,
+            4
+          ],
+          "test_level": 3,
+          "train_rows": 41592,
+          "test_rows": 41885,
+          "features": [
+            "kernel_context_switches_delta",
+            "kernel_sys_read_delta",
+            "kernel_sys_write_delta",
+            "kernel_openat_delta",
+            "kernel_execve_delta",
+            "kernel_connect_delta",
+            "keyboard_hardware_interrupts",
+            "cpu_to_keyboard_ratio",
+            "thread_to_process_ratio",
+            "network_connections",
+            "total_connections",
+            "shell_processes",
+            "python_processes",
+            "suspicious_process_names",
+            "high_cpu_processes",
+            "high_memory_processes",
+            "zombie_processes",
+            "cpu_usage",
+            "memory_usage",
+            "total_threads"
+          ],
+          "feature_drops": {},
+          "models": {
+            "random_forest": {
+              "val_auc": 1.0,
+              "test_auc": 0.9999999866120968,
+              "val_ap": 1.0,
+              "test_ap": 0.9999999940594502,
+              "in_distribution_auc": 0.9999999866120968,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L3/random_forest/random_forest.joblib"
+            },
+            "extra_trees": {
+              "val_auc": 1.0,
+              "test_auc": 1.0,
+              "val_ap": 1.0,
+              "test_ap": 0.9999999999999998,
+              "in_distribution_auc": 1.0,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L3/extra_trees/extra_trees.joblib"
+            },
+            "xgboost": {
+              "val_auc": 1.0,
+              "test_auc": 0.9999999062846769,
+              "val_ap": 1.0,
+              "test_ap": 0.9999999584185668,
+              "in_distribution_auc": 0.9999999062846769,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L3/xgboost/xgboost.joblib"
+            }
+          }
+        },
+        {
+          "train_levels": [
+            2,
+            3
+          ],
+          "test_level": 4,
+          "train_rows": 53545,
+          "test_rows": 26944,
+          "features": [
+            "kernel_context_switches_delta",
+            "kernel_sys_read_delta",
+            "kernel_sys_write_delta",
+            "kernel_openat_delta",
+            "kernel_execve_delta",
+            "kernel_connect_delta",
+            "keyboard_hardware_interrupts",
+            "cpu_to_keyboard_ratio",
+            "thread_to_process_ratio",
+            "network_connections",
+            "total_connections",
+            "shell_processes",
+            "python_processes",
+            "suspicious_process_names",
+            "high_cpu_processes",
+            "high_memory_processes",
+            "zombie_processes",
+            "cpu_usage",
+            "memory_usage",
+            "total_threads"
+          ],
+          "feature_drops": {},
+          "models": {
+            "random_forest": {
+              "val_auc": 1.0,
+              "test_auc": 0.9991234203725664,
+              "val_ap": 1.0,
+              "test_ap": 0.9991758311415414,
+              "in_distribution_auc": 0.9991234203725664,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L4/random_forest/random_forest.joblib"
+            },
+            "extra_trees": {
+              "val_auc": 1.0,
+              "test_auc": 0.9855140032553139,
+              "val_ap": 1.0,
+              "test_ap": 0.9481459885956485,
+              "in_distribution_auc": 0.9855140032553139,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L4/extra_trees/extra_trees.joblib"
+            },
+            "xgboost": {
+              "val_auc": 1.0,
+              "test_auc": 0.998867703410633,
+              "val_ap": 1.0,
+              "test_ap": 0.9991127380944466,
+              "in_distribution_auc": 0.998867703410633,
+              "model_path": "/home/fyp/project/artifacts/run_20260529_193015/cross_level_C/test_L4/xgboost/xgboost.joblib"
+            }
+          }
+        }
+      ],
+      "macro_avg": {
+        "random_forest": {
+          "test_auc": 0.9266885318338978,
+          "test_ap": 0.9671565807655611,
+          "val_auc": 1.0,
+          "val_ap": 1.0
+        },
+        "extra_trees": {
+          "test_auc": 0.7537410901173174,
+          "test_ap": 0.8532058838962678,
+          "val_auc": 1.0,
+          "val_ap": 1.0
+        },
+        "xgboost": {
+          "test_auc": 0.9897479314890151,
+          "test_ap": 0.9953963103023242,
+          "val_auc": 1.0,
+          "val_ap": 1.0
+        }
+      }
+    }
+  }
+}

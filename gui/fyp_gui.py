@@ -44,6 +44,14 @@ except ImportError:
     PSUTIL_AVAILABLE = False
     logger.warning("psutil not available - resource monitoring disabled. Install with: pip3 install psutil")
 
+try:
+    from lkm_status_monitor import LkmStatusMonitor
+    from telemetry_ml_monitor import TelemetryMlMonitor
+    ML_INTEGRATION_AVAILABLE = True
+except ImportError as exc:
+    ML_INTEGRATION_AVAILABLE = False
+    logger.warning("ML live integration unavailable: %s", exc)
+
 # =============== PROFESSIONAL DARK THEME ===============
 DARK_THEME = """
 * {
@@ -1021,6 +1029,19 @@ class FYPMainWindow(QMainWindow):
         self.setup_tray()
         self.init_ui()
         self.daemon_monitor.start()
+
+        self.lkm_monitor = None
+        self.telemetry_ml = None
+        if ML_INTEGRATION_AVAILABLE:
+            self.lkm_monitor = LkmStatusMonitor()
+            self.lkm_monitor.status_updated.connect(self.on_lkm_status_update)
+            self.lkm_monitor.start(2000)
+            self.telemetry_ml = TelemetryMlMonitor()
+            self.telemetry_ml.prediction_received.connect(self.on_ml_prediction)
+            self.telemetry_ml.api_error.connect(self.on_ml_api_error)
+            self.telemetry_ml.csv_offline.connect(self.on_ml_csv_offline)
+            self.telemetry_ml.start(500)
+            logger.info("Live ML + LKM watchdog monitors enabled")
         
         # Resource monitoring timer (1000ms = 1 second)
         if PSUTIL_AVAILABLE:
@@ -1350,6 +1371,31 @@ class FYPMainWindow(QMainWindow):
         header_layout.addWidget(title)
         header_layout.addWidget(subtitle)
         page_layout.addWidget(header)
+
+        # ML live detection status (demo)
+        self.ml_panel = QGroupBox()
+        self.ml_panel.setObjectName("mlStatusPanel")
+        ml_panel_layout = QHBoxLayout(self.ml_panel)
+        ml_panel_layout.setContentsMargins(16, 12, 16, 12)
+        ml_panel_layout.setSpacing(12)
+        self.ml_status_indicator = StatusIndicator()
+        self.ml_status_indicator.setFixedSize(16, 16)
+        ml_text_layout = QVBoxLayout()
+        ml_text_layout.setSpacing(2)
+        self.ml_status_title = QLabel("System Clean")
+        self.ml_status_title.setStyleSheet(
+            "font-size: 18px; font-weight: 700; color: #3fb950;"
+        )
+        self.ml_status_detail = QLabel("ML: waiting for telemetry API…")
+        self.ml_status_detail.setStyleSheet("font-size: 12px; color: #8b949e;")
+        ml_text_layout.addWidget(self.ml_status_title)
+        ml_text_layout.addWidget(self.ml_status_detail)
+        ml_panel_layout.addWidget(self.ml_status_indicator)
+        ml_panel_layout.addLayout(ml_text_layout, 1)
+        self.ml_panel.setStyleSheet(
+            "#mlStatusPanel { border: 2px solid #238636; border-radius: 8px; background-color: #0d1f12; }"
+        )
+        page_layout.addWidget(self.ml_panel)
         
         # TOP ROW: Stats cards (horizontal)
         stats_container = QWidget()
@@ -2263,17 +2309,88 @@ class FYPMainWindow(QMainWindow):
             logger.warning("✗ Daemon connection lost")
             self.set_tray_status('error')
     
+    def on_lkm_status_update(self, data: dict):
+        loaded = data.get("loaded", False)
+        state = data.get("state", "unknown")
+        message = data.get("message", "")
+
+        if loaded:
+            self.kernel_indicator.set_status("success", pulse=True)
+            self.kernel_label.setText("Kernel: Active")
+        elif state == "reloading":
+            self.kernel_indicator.set_status("warning", pulse=True)
+            self.kernel_label.setText("Kernel: Reloading…")
+        elif state in ("failed", "offline"):
+            self.kernel_indicator.set_status("error")
+            self.kernel_label.setText("Kernel: Offline")
+        else:
+            self.kernel_indicator.set_status("warning")
+            self.kernel_label.setText(f"Kernel: {message[:36]}")
+
+    def on_ml_prediction(self, data: dict):
+        label = data.get("label", "benign")
+        level = data.get("level")
+        confidence = float(data.get("confidence", 0.0))
+        per_level = data.get("per_level", {})
+
+        if label == "malicious":
+            self.ml_status_indicator.set_status("error", pulse=True)
+            lvl_text = level if level is not None else "?"
+            self.ml_status_title.setText(f"Keylogger Detected — Level {lvl_text}")
+            self.ml_status_title.setStyleSheet(
+                "font-size: 18px; font-weight: 700; color: #ff7b72;"
+            )
+            self.ml_panel.setStyleSheet(
+                "#mlStatusPanel { border: 2px solid #da3633; border-radius: 8px; "
+                "background-color: #1c1214; }"
+            )
+            self.set_tray_status("error")
+        else:
+            self.ml_status_indicator.set_status("success", pulse=True)
+            self.ml_status_title.setText("System Clean")
+            self.ml_status_title.setStyleSheet(
+                "font-size: 18px; font-weight: 700; color: #3fb950;"
+            )
+            self.ml_panel.setStyleSheet(
+                "#mlStatusPanel { border: 2px solid #238636; border-radius: 8px; "
+                "background-color: #0d1f12; }"
+            )
+
+        detail = f"Confidence: {confidence:.2f}"
+        if per_level:
+            detail += " | " + ", ".join(f"L{k}:{v:.2f}" for k, v in per_level.items())
+        self.ml_status_detail.setText(detail)
+
+    def on_ml_api_error(self, message: str):
+        self.ml_status_indicator.set_status("warning")
+        self.ml_status_title.setText("ML Offline")
+        self.ml_status_title.setStyleSheet(
+            "font-size: 18px; font-weight: 700; color: #d29922;"
+        )
+        self.ml_status_detail.setText(message)
+        self.ml_panel.setStyleSheet(
+            "#mlStatusPanel { border: 2px solid #9e6a03; border-radius: 8px; "
+            "background-color: #1c1810; }"
+        )
+
+    def on_ml_csv_offline(self, offline: bool):
+        if offline and self.ml_status_title.text() == "System Clean":
+            self.ml_status_detail.setText(
+                "Telemetry CSV missing — start collector_live.py or demo stack"
+            )
+
     def on_status_update(self, data: dict):
         # Update status indicators
         kernel_loaded = data.get('kernel_loaded', False)
         daemon_running = data.get('daemon_running', False)
-        
-        if kernel_loaded:
-            self.kernel_indicator.set_status('success', pulse=True)
-            self.kernel_label.setText("Kernel: Active")
-        else:
-            self.kernel_indicator.set_status('error')
-            self.kernel_label.setText("Kernel: Inactive")
+
+        if not self.lkm_monitor:
+            if kernel_loaded:
+                self.kernel_indicator.set_status('success', pulse=True)
+                self.kernel_label.setText("Kernel: Active")
+            else:
+                self.kernel_indicator.set_status('error')
+                self.kernel_label.setText("Kernel: Inactive")
         
         if daemon_running:
             self.daemon_indicator.set_status('success', pulse=True)

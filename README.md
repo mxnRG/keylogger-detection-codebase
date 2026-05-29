@@ -224,7 +224,7 @@ cd kernel/
 sudo make unload
 ```
 
-## 🔍 Detection Methodology
+## Detection Methodology
 
 ### Behavioral Indicators (No Keystroke Content Required)
 
@@ -258,7 +258,7 @@ sudo make unload
 [FYP]   Rapid ratio:     75%
 ```
 
-## 🛡️ Ethical Considerations
+## Ethical Considerations
 
 ### Privacy-Preserving Design
 
@@ -288,7 +288,7 @@ This software is intended for:
 - Production deployment without privacy review
 - Use on systems without proper authorization
 
-## 📚 Documentation
+##  Documentation
 
 ### Comprehensive Guides
 - [`docs/KERNEL_MODULE.md`](docs/KERNEL_MODULE.md) - Kernel module architecture (Netlink, workqueue, sysfs)
@@ -297,12 +297,26 @@ This software is intended for:
 - [`docs/ETHICS.md`](docs/ETHICS.md) - Privacy-by-design and responsible use
 - [`docs/RESEARCH.md`](docs/RESEARCH.md) - Novel contributions and academic context
 - [`docs/TESTING.md`](docs/TESTING.md) - Testing methodology and validation
+- [`docs/ML_DATASET_REALISTIC_EVAL_PLAN.md`](docs/ML_DATASET_REALISTIC_EVAL_PLAN.md) - Realistic ML evaluation on fixed telemetry
+- [`docs/SESSION_RESUME.md`](docs/SESSION_RESUME.md) - Quick resume after SSH reconnect
 
 ### Quick References
 - [`QUICKSTART.md`](QUICKSTART.md) - Quick setup guide
 - [`current.md`](current.md) - Current development status
 
-## 🧪 Testing
+## Machine Learning (Phase 3)
+
+Train on L2–L4 eBPF telemetry with tiered evaluation:
+
+```bash
+python scripts/train_ml.py --split-mode all --feature-policy standard
+python scripts/verify_artifacts.py
+python scripts/analyze_dataset.py
+```
+
+See [`docs/ML_DATASET_REALISTIC_EVAL_PLAN.md`](docs/ML_DATASET_REALISTIC_EVAL_PLAN.md) for tier A/B/C metrics and thesis guidance.
+
+## Testing
 
 ```bash
 # Build and test the kernel module
@@ -319,15 +333,15 @@ sudo dmesg | grep FYP | tail -10
 sudo rmmod fyp_kbd
 ```
 
-## 🤝 Contributing
+## Contributing
 
 This is an academic project for a Final Year Project. While not actively seeking contributions, feedback and suggestions are welcome through issues.
 
-## 📄 License
+## License
 
 This project is licensed under the GNU General Public License v2.0 - see the [LICENSE](LICENSE) file for details.
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 **FOR EDUCATIONAL PURPOSES ONLY**
 
@@ -339,13 +353,17 @@ This software is provided for academic research and educational purposes. Users 
 - This is a prototype, not production-ready software
 - No warranty or guarantee of fitness for any purpose
 
-## 👨‍💻 Author
+## Author
 
 **FYP Team**  
 Final Year Project - Linux Kernel Security  
 Academic Year 2024-2025
 
-## 🔗 Links
+Muhammad Mamoon
+Natasha Zaheer
+Haider Ali
+
+## Links
 
 - GitHub Repository: [keylogger-detection-codebase](https://github.com/mxnRG/keylogger-detection-codebase)
 - Documentation: See `/kernel` directory for detailed technical docs

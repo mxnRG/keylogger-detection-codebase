@@ -1,0 +1,124 @@
+{
+  "run_id": "20260525_135325",
+  "rows": 70974,
+  "features": [
+    "keyboard_events",
+    "keyboard_to_process_ratio",
+    "cpu_to_keyboard_ratio",
+    "kernel_context_switches_delta",
+    "kernel_sys_read_delta",
+    "kernel_sys_write_delta",
+    "network_connections",
+    "total_connections",
+    "suspicious_process_names",
+    "shell_processes",
+    "python_processes",
+    "thread_to_process_ratio"
+  ],
+  "validation": {
+    "rows": 70974,
+    "label_counts": {
+      "0": 35766,
+      "1": 35208
+    },
+    "levels": {
+      "2": 49212,
+      "1": 21762
+    },
+    "os_counts": {
+      "linux": 70974
+    },
+    "present_features": [
+      "keyboard_events",
+      "keyboard_to_process_ratio",
+      "cpu_to_keyboard_ratio",
+      "kernel_context_switches_delta",
+      "kernel_sys_read_delta",
+      "kernel_sys_write_delta",
+      "network_connections",
+      "total_connections",
+      "suspicious_process_names",
+      "shell_processes",
+      "python_processes",
+      "thread_to_process_ratio"
+    ],
+    "missing_features": []
+  },
+  "levels": {
+    "2": {
+      "level": "2",
+      "rows": 49212,
+      "features": [
+        "cpu_to_keyboard_ratio",
+        "kernel_context_switches_delta",
+        "kernel_sys_read_delta",
+        "kernel_sys_write_delta",
+        "network_connections",
+        "total_connections",
+        "suspicious_process_names",
+        "shell_processes",
+        "python_processes",
+        "thread_to_process_ratio"
+      ],
+      "split": {
+        "train_levels": [
+          "random"
+        ],
+        "val_level": [
+          "random"
+        ],
+        "test_level": [
+          "random"
+        ],
+        "deduped_rows": 23282,
+        "original_rows": 49212,
+        "deduped": true,
+        "split_method": "stratified_fallback"
+      },
+      "feature_drops": {
+        "keyboard_events": [
+          "forced_drop",
+          "l2_separator_drop"
+        ],
+        "keyboard_to_process_ratio": [
+          "constant"
+        ],
+        "total_open_files": [
+          "l2_separator_drop"
+        ],
+        "process_count": [
+          "l2_separator_drop"
+        ],
+        "active_processes": [
+          "l2_separator_drop"
+        ],
+        "background_processes": [
+          "l2_separator_drop"
+        ]
+      },
+      "models": {
+        "random_forest": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260525_135325/level_2/random_forest/random_forest.joblib"
+        },
+        "extra_trees": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260525_135325/level_2/extra_trees/extra_trees.joblib"
+        },
+        "xgboost": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260525_135325/level_2/xgboost/xgboost.joblib"
+        }
+      }
+    }
+  }
+}

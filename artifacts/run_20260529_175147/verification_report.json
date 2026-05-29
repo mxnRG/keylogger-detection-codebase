@@ -1,0 +1,74 @@
+{
+  "run_dir": "/home/fyp/project/artifacts/run_20260529_175147",
+  "checks": {
+    "metrics.json": "present",
+    "dataset_quality.json": "present",
+    "feature_dive.json": "present",
+    "ensemble_manifest.json": "present",
+    "levels_trained": [
+      "2",
+      "3",
+      "4"
+    ],
+    "leakage_flag_count": 4,
+    "ingestion_files": [
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Mamoon (ubuntu)/level2 benign/level2.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 2_ Hook trap/level2_ebpf_keylogger.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 3/level3_benign_ebpf.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 3_ RootKit/level3_ebpf_keylogger_v2.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 4/level4_benign_ebpf.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 4_ kernel Level/level4_ebpf_kernel_behavior.csv"
+    ]
+  },
+  "run_id": "20260529_175147",
+  "issues": {
+    "warnings": [
+      "Level 2: used stratified_fallback split (val may equal test)",
+      "Level 2 random_forest: suspiciously perfect val_auc=1.0",
+      "Level 2 random_forest: suspiciously perfect test_auc=1.0",
+      "Level 2 random_forest: suspiciously perfect val_ap=1.0",
+      "Level 2 random_forest: suspiciously perfect test_ap=1.0",
+      "Level 2 extra_trees: suspiciously perfect val_auc=1.0",
+      "Level 2 extra_trees: suspiciously perfect test_auc=0.9999999999999999",
+      "Level 2 extra_trees: suspiciously perfect val_ap=1.0",
+      "Level 2 extra_trees: suspiciously perfect test_ap=1.0",
+      "Level 2 xgboost: suspiciously perfect val_auc=1.0",
+      "Level 2 xgboost: suspiciously perfect test_auc=1.0",
+      "Level 2 xgboost: suspiciously perfect val_ap=1.0",
+      "Level 2 xgboost: suspiciously perfect test_ap=1.0",
+      "Level 2: separator features dropped: ['swap_memory', 'disk_usage_percent', 'total_open_files', 'process_count', 'active_processes', 'background_processes']",
+      "Level 3 random_forest: suspiciously perfect val_auc=1.0",
+      "Level 3 random_forest: suspiciously perfect test_auc=1.0",
+      "Level 3 random_forest: suspiciously perfect val_ap=1.0",
+      "Level 3 random_forest: suspiciously perfect test_ap=1.0",
+      "Level 3 extra_trees: suspiciously perfect val_auc=1.0",
+      "Level 3 extra_trees: suspiciously perfect test_auc=1.0",
+      "Level 3 extra_trees: suspiciously perfect val_ap=1.0",
+      "Level 3 extra_trees: suspiciously perfect test_ap=1.0",
+      "Level 3 xgboost: suspiciously perfect val_auc=1.0",
+      "Level 3 xgboost: suspiciously perfect test_auc=1.0",
+      "Level 3 xgboost: suspiciously perfect val_ap=1.0",
+      "Level 3 xgboost: suspiciously perfect test_ap=1.0",
+      "Level 3: separator features dropped: ['disk_usage_percent', 'python_processes']",
+      "Level 4: used stratified_fallback split (val may equal test)",
+      "Level 4 random_forest: suspiciously perfect val_auc=1.0",
+      "Level 4 random_forest: suspiciously perfect test_auc=1.0",
+      "Level 4 random_forest: suspiciously perfect val_ap=1.0",
+      "Level 4 random_forest: suspiciously perfect test_ap=1.0",
+      "Level 4 extra_trees: suspiciously perfect val_auc=1.0",
+      "Level 4 extra_trees: suspiciously perfect test_auc=1.0",
+      "Level 4 extra_trees: suspiciously perfect val_ap=1.0",
+      "Level 4 extra_trees: suspiciously perfect test_ap=1.0",
+      "Level 4 xgboost: suspiciously perfect val_auc=1.0",
+      "Level 4 xgboost: suspiciously perfect test_auc=1.0",
+      "Level 4 xgboost: suspiciously perfect val_ap=1.0",
+      "Level 4 xgboost: suspiciously perfect test_ap=1.0",
+      "Level 4: separator features dropped: ['disk_usage_percent']",
+      "feature_dive overall leakage_flags: 4 features"
+    ]
+  },
+  "summary": {
+    "errors": 0,
+    "warnings": 42
+  }
+}

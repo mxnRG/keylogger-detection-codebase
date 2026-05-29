@@ -1,0 +1,292 @@
+{
+  "run_id": "20260529_175106",
+  "rows": 93876,
+  "ingestion": {
+    "archive_root": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon",
+    "files_loaded": [
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Mamoon (ubuntu)/level2 benign/level2.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 2_ Hook trap/level2_ebpf_keylogger.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 3/level3_benign_ebpf.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 3_ RootKit/level3_ebpf_keylogger_v2.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 4/level4_benign_ebpf.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 4_ kernel Level/level4_ebpf_kernel_behavior.csv"
+    ],
+    "files_skipped": [],
+    "train_levels": [
+      2,
+      3,
+      4
+    ]
+  },
+  "levels": {
+    "2": {
+      "level": "2",
+      "rows": 25047,
+      "features": [
+        "cpu_usage",
+        "memory_usage",
+        "system_uptime_minutes",
+        "high_cpu_processes",
+        "high_memory_processes",
+        "zombie_processes",
+        "total_threads",
+        "thread_to_process_ratio",
+        "cpu_to_keyboard_ratio",
+        "keyboard_hardware_interrupts",
+        "kernel_context_switches_delta",
+        "kernel_sys_read_delta",
+        "kernel_sys_write_delta",
+        "network_connections",
+        "total_connections",
+        "shell_processes",
+        "python_processes",
+        "suspicious_process_names"
+      ],
+      "split": {
+        "train_levels": [
+          "random"
+        ],
+        "val_level": [
+          "random"
+        ],
+        "test_level": [
+          "random"
+        ],
+        "deduped_rows": 25047,
+        "original_rows": 25047,
+        "deduped": true,
+        "split_method": "stratified_fallback",
+        "train_rows": 20037,
+        "val_rows": 5010,
+        "test_rows": 5010,
+        "test_equals_val": true
+      },
+      "feature_drops": {
+        "swap_memory": [
+          "single_threshold_separator"
+        ],
+        "disk_usage_percent": [
+          "single_threshold_separator"
+        ],
+        "keyboard_to_process_ratio": [
+          "constant"
+        ],
+        "total_open_files": [
+          "single_threshold_separator",
+          "l2_separator_drop"
+        ],
+        "process_count": [
+          "single_threshold_separator",
+          "l2_separator_drop"
+        ],
+        "active_processes": [
+          "single_threshold_separator",
+          "l2_separator_drop"
+        ],
+        "background_processes": [
+          "single_threshold_separator",
+          "l2_separator_drop"
+        ],
+        "keyboard_events": [
+          "l2_separator_drop"
+        ]
+      },
+      "models": {
+        "random_forest": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_2/random_forest/random_forest.joblib"
+        },
+        "extra_trees": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_2/extra_trees/extra_trees.joblib"
+        },
+        "xgboost": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_2/xgboost/xgboost.joblib"
+        }
+      },
+      "features_path": "/home/fyp/project/artifacts/run_20260529_175106/level_2/features.json"
+    },
+    "3": {
+      "level": "3",
+      "rows": 41885,
+      "features": [
+        "cpu_usage",
+        "memory_usage",
+        "swap_memory",
+        "system_uptime_minutes",
+        "high_cpu_processes",
+        "high_memory_processes",
+        "zombie_processes",
+        "total_threads",
+        "thread_to_process_ratio",
+        "cpu_to_keyboard_ratio",
+        "keyboard_hardware_interrupts",
+        "kernel_context_switches_delta",
+        "kernel_sys_read_delta",
+        "kernel_sys_write_delta",
+        "kernel_openat_delta",
+        "kernel_execve_delta",
+        "kernel_connect_delta",
+        "network_connections",
+        "total_connections",
+        "shell_processes",
+        "total_open_files",
+        "process_count",
+        "active_processes",
+        "background_processes"
+      ],
+      "split": {
+        "train_levels": [
+          "random"
+        ],
+        "val_level": [
+          "random"
+        ],
+        "test_level": [
+          "random"
+        ],
+        "deduped_rows": 41885,
+        "original_rows": 41885,
+        "deduped": true,
+        "split_method": "stratified_fallback",
+        "train_rows": 33508,
+        "val_rows": 8377,
+        "test_rows": 8377,
+        "test_equals_val": true
+      },
+      "feature_drops": {
+        "disk_usage_percent": [
+          "single_threshold_separator"
+        ],
+        "python_processes": [
+          "single_threshold_separator"
+        ],
+        "suspicious_process_names": [
+          "constant"
+        ],
+        "keyboard_to_process_ratio": [
+          "constant"
+        ]
+      },
+      "models": {
+        "random_forest": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_3/random_forest/random_forest.joblib"
+        },
+        "extra_trees": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_3/extra_trees/extra_trees.joblib"
+        },
+        "xgboost": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_3/xgboost/xgboost.joblib"
+        }
+      },
+      "features_path": "/home/fyp/project/artifacts/run_20260529_175106/level_3/features.json"
+    },
+    "4": {
+      "level": "4",
+      "rows": 26944,
+      "features": [
+        "cpu_usage",
+        "memory_usage",
+        "swap_memory",
+        "system_uptime_minutes",
+        "high_cpu_processes",
+        "high_memory_processes",
+        "zombie_processes",
+        "total_threads",
+        "thread_to_process_ratio",
+        "cpu_to_keyboard_ratio",
+        "keyboard_hardware_interrupts",
+        "kernel_context_switches_delta",
+        "kernel_sys_read_delta",
+        "kernel_sys_write_delta",
+        "kernel_openat_delta",
+        "kernel_execve_delta",
+        "kernel_connect_delta",
+        "network_connections",
+        "total_connections",
+        "shell_processes",
+        "suspicious_process_names",
+        "total_open_files",
+        "process_count",
+        "active_processes",
+        "background_processes"
+      ],
+      "split": {
+        "train_levels": [
+          "random"
+        ],
+        "val_level": [
+          "random"
+        ],
+        "test_level": [
+          "random"
+        ],
+        "deduped_rows": 26944,
+        "original_rows": 26944,
+        "deduped": true,
+        "split_method": "stratified_fallback",
+        "train_rows": 21555,
+        "val_rows": 5389,
+        "test_rows": 5389,
+        "test_equals_val": true
+      },
+      "feature_drops": {
+        "disk_usage_percent": [
+          "single_threshold_separator"
+        ],
+        "python_processes": [
+          "constant"
+        ],
+        "keyboard_to_process_ratio": [
+          "constant"
+        ]
+      },
+      "models": {
+        "random_forest": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_4/random_forest/random_forest.joblib"
+        },
+        "extra_trees": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_4/extra_trees/extra_trees.joblib"
+        },
+        "xgboost": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260529_175106/level_4/xgboost/xgboost.joblib"
+        }
+      },
+      "features_path": "/home/fyp/project/artifacts/run_20260529_175106/level_4/features.json"
+    }
+  }
+}

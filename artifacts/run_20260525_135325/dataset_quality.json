@@ -1,0 +1,115 @@
+{
+  "rows": 70974,
+  "label_counts": {
+    "0": 35766,
+    "1": 35208
+  },
+  "level_counts": {
+    "2": 49212,
+    "1": 21762
+  },
+  "os_counts": {
+    "linux": 70974
+  },
+  "missingness": {
+    "keyboard_events": 0.0,
+    "keyboard_to_process_ratio": 0.0,
+    "cpu_to_keyboard_ratio": 0.0,
+    "kernel_context_switches_delta": 0.30661932538676134,
+    "kernel_sys_read_delta": 0.30661932538676134,
+    "kernel_sys_write_delta": 0.30661932538676134,
+    "network_connections": 0.0,
+    "total_connections": 0.0,
+    "suspicious_process_names": 0.0,
+    "shell_processes": 0.0,
+    "python_processes": 0.0,
+    "thread_to_process_ratio": 0.0
+  },
+  "outliers": {
+    "keyboard_events": {
+      "count": 12364,
+      "fraction": 0.1742046383182574
+    },
+    "keyboard_to_process_ratio": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "cpu_to_keyboard_ratio": {
+      "count": 11690,
+      "fraction": 0.16470820300391692
+    },
+    "kernel_context_switches_delta": {
+      "count": 1452,
+      "fraction": 0.02045819595908361
+    },
+    "kernel_sys_read_delta": {
+      "count": 930,
+      "fraction": 0.01310338997379322
+    },
+    "kernel_sys_write_delta": {
+      "count": 2902,
+      "fraction": 0.04088821258489024
+    },
+    "network_connections": {
+      "count": 4563,
+      "fraction": 0.06429114887141771
+    },
+    "total_connections": {
+      "count": 4534,
+      "fraction": 0.06388254853890157
+    },
+    "suspicious_process_names": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "shell_processes": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "python_processes": {
+      "count": 2680,
+      "fraction": 0.037760306591146056
+    },
+    "thread_to_process_ratio": {
+      "count": 609,
+      "fraction": 0.008580606982838785
+    }
+  },
+  "cleaning_summary": [
+    {
+      "file": "L1_malicious.csv",
+      "rows_loaded": 10602,
+      "data_lines": 11441,
+      "rows_dropped": 839,
+      "nul_bytes_stripped": true
+    },
+    {
+      "file": "L2_Combined.csv",
+      "rows_loaded": 32808,
+      "data_lines": 32808,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false
+    },
+    {
+      "file": "L2_malicious.csv",
+      "rows_loaded": 16845,
+      "data_lines": 16845,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false
+    },
+    {
+      "file": "level1.csv",
+      "rows_loaded": 11160,
+      "data_lines": 11160,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false
+    },
+    {
+      "file": "level2.csv",
+      "rows_loaded": 8202,
+      "data_lines": 8202,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false
+    }
+  ]
+}

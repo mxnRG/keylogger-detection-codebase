@@ -1,0 +1,135 @@
+{
+  "run_id": "20260525_135030",
+  "rows": 38166,
+  "features": [
+    "keyboard_events",
+    "keyboard_to_process_ratio",
+    "cpu_to_keyboard_ratio",
+    "kernel_context_switches_delta",
+    "kernel_sys_read_delta",
+    "kernel_sys_write_delta",
+    "total_open_files",
+    "network_connections",
+    "total_connections",
+    "process_count",
+    "active_processes",
+    "background_processes",
+    "total_threads",
+    "suspicious_process_names",
+    "shell_processes",
+    "python_processes",
+    "thread_to_process_ratio"
+  ],
+  "validation": {
+    "rows": 38166,
+    "label_counts": {
+      "0": 19362,
+      "1": 18804
+    },
+    "levels": {
+      "1": 21762,
+      "2": 16404
+    },
+    "os_counts": {
+      "linux": 38166
+    },
+    "present_features": [
+      "keyboard_events",
+      "keyboard_to_process_ratio",
+      "cpu_to_keyboard_ratio",
+      "kernel_context_switches_delta",
+      "kernel_sys_read_delta",
+      "kernel_sys_write_delta",
+      "total_open_files",
+      "network_connections",
+      "total_connections",
+      "process_count",
+      "active_processes",
+      "background_processes",
+      "total_threads",
+      "suspicious_process_names",
+      "shell_processes",
+      "python_processes",
+      "thread_to_process_ratio"
+    ],
+    "missing_features": []
+  },
+  "levels": {
+    "2": {
+      "level": "2",
+      "rows": 16404,
+      "features": [
+        "cpu_to_keyboard_ratio",
+        "kernel_context_switches_delta",
+        "kernel_sys_read_delta",
+        "kernel_sys_write_delta",
+        "network_connections",
+        "total_connections",
+        "total_threads",
+        "suspicious_process_names",
+        "shell_processes",
+        "python_processes",
+        "thread_to_process_ratio"
+      ],
+      "split": {
+        "train_levels": [
+          "random"
+        ],
+        "val_level": [
+          "random"
+        ],
+        "test_level": [
+          "random"
+        ],
+        "deduped_rows": 16382,
+        "original_rows": 16404,
+        "deduped": true,
+        "split_method": "block"
+      },
+      "feature_drops": {
+        "keyboard_events": [
+          "forced_drop",
+          "l2_separator_drop"
+        ],
+        "keyboard_to_process_ratio": [
+          "constant"
+        ],
+        "total_open_files": [
+          "l2_separator_drop"
+        ],
+        "process_count": [
+          "l2_separator_drop"
+        ],
+        "active_processes": [
+          "l2_separator_drop"
+        ],
+        "background_processes": [
+          "l2_separator_drop"
+        ]
+      },
+      "models": {
+        "random_forest": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260525_135030/level_2/random_forest/random_forest.joblib"
+        },
+        "extra_trees": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260525_135030/level_2/extra_trees/extra_trees.joblib"
+        },
+        "xgboost": {
+          "val_auc": 1.0,
+          "test_auc": 1.0,
+          "val_ap": 1.0,
+          "test_ap": 1.0,
+          "model_path": "/home/fyp/project/artifacts/run_20260525_135030/level_2/xgboost/xgboost.joblib"
+        }
+      }
+    }
+  }
+}

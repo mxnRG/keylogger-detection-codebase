@@ -1,0 +1,43 @@
+{
+  "strategy": "average",
+  "models": [
+    {
+      "level": "1",
+      "model": "random_forest",
+      "path": "/home/fyp/project/artifacts/run_20260524_183913/level_1/random_forest/random_forest.joblib"
+    },
+    {
+      "level": "1",
+      "model": "extra_trees",
+      "path": "/home/fyp/project/artifacts/run_20260524_183913/level_1/extra_trees/extra_trees.joblib"
+    },
+    {
+      "level": "1",
+      "model": "xgboost",
+      "path": "/home/fyp/project/artifacts/run_20260524_183913/level_1/xgboost/xgboost.joblib"
+    },
+    {
+      "level": "2",
+      "model": "random_forest",
+      "path": "/home/fyp/project/artifacts/run_20260524_183913/level_2/random_forest/random_forest.joblib"
+    },
+    {
+      "level": "2",
+      "model": "extra_trees",
+      "path": "/home/fyp/project/artifacts/run_20260524_183913/level_2/extra_trees/extra_trees.joblib"
+    },
+    {
+      "level": "2",
+      "model": "xgboost",
+      "path": "/home/fyp/project/artifacts/run_20260524_183913/level_2/xgboost/xgboost.joblib"
+    }
+  ],
+  "weights": [
+    0.16666666666666666,
+    0.16666666666666666,
+    0.16666666666666666,
+    0.16666666666666666,
+    0.16666666666666666,
+    0.16666666666666666
+  ]
+}

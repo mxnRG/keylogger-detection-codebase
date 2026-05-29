@@ -148,7 +148,47 @@ The system uses 3 rules (no machine learning):
    - Trigger: >100 events/second sustained
    - Indicates: Scripted input, automation
 
+## Live ML Demo Stack (v3.3+)
+
+One-command startup (kernel + LKM watchdog + daemon + ML API + eBPF collector + GUI):
+
+```bash
+cd /home/fyp/project
+sudo scripts/start_demo_stack.sh
+```
+
+**Manual pieces:**
+
+```bash
+# ML API
+export FYP_ARTIFACT_RUN=/home/fyp/project/artifacts/run_20260529_193015
+python3 scripts/ml_api.py
+
+# Live telemetry (root)
+sudo python3 scripts/collector_live.py --output /tmp/fyp_telemetry_live.csv
+
+# Health check
+curl -s http://127.0.0.1:8765/health | python3 -m json.tool
+```
+
+**Examiner demo — unseen keylogger simulators** (safe scripts, not in training data):
+
+```bash
+python3 "dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/unseen keyloggers/unseen_level3_agent_collector_queue.py"
+```
+
+Dashboard ML panel should turn red within a few seconds; stop script (Ctrl+C) to return green.
+
+See [docs/ML_API.md](docs/ML_API.md) and [docs/SESSION_RESUME.md](docs/SESSION_RESUME.md).
+
 ## Shutdown
+
+### Stop full demo stack
+
+```bash
+pkill -f 'collector_live|ml_api|fyp_daemon|lkm_watchdog|main_gui|fyp_gui'
+sudo rmmod fyp_kbd
+```
 
 ### Stop GUI
 - Click the window's close button, or press `Ctrl+C` in terminal
