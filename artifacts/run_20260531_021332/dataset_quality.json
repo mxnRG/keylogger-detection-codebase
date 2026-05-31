@@ -1,0 +1,248 @@
+{
+  "rows": 94155,
+  "label_counts": {
+    "1": 60373,
+    "0": 33782
+  },
+  "level_counts": {
+    "3": 41885,
+    "4": 26944,
+    "2": 25326
+  },
+  "os_counts": {
+    "linux": 94155
+  },
+  "missingness": {
+    "active_processes": 0.0,
+    "background_processes": 0.0,
+    "cpu_to_keyboard_ratio": 0.0,
+    "cpu_usage": 0.0,
+    "disk_usage_percent": 0.0,
+    "high_cpu_processes": 0.0,
+    "high_memory_processes": 0.0,
+    "kernel_connect_delta": 0.2660187987892305,
+    "kernel_context_switches_delta": 0.0,
+    "kernel_execve_delta": 0.2660187987892305,
+    "kernel_openat_delta": 0.2660187987892305,
+    "kernel_sys_read_delta": 0.0,
+    "kernel_sys_write_delta": 0.0,
+    "keyboard_hardware_interrupts": 0.0,
+    "keyboard_to_process_ratio": 0.0,
+    "memory_usage": 0.0,
+    "network_connections": 0.0,
+    "process_count": 0.0,
+    "python_processes": 0.0,
+    "shell_processes": 0.0,
+    "suspicious_process_names": 0.0,
+    "swap_memory": 0.0,
+    "system_uptime_minutes": 0.0,
+    "thread_to_process_ratio": 0.0,
+    "total_connections": 0.0,
+    "total_open_files": 0.0,
+    "total_threads": 0.0,
+    "zombie_processes": 0.0
+  },
+  "outliers": {
+    "active_processes": {
+      "count": 409,
+      "fraction": 0.004343901014284956
+    },
+    "background_processes": {
+      "count": 405,
+      "fraction": 0.0043014178747809466
+    },
+    "cpu_to_keyboard_ratio": {
+      "count": 2289,
+      "fraction": 0.024310976581169347
+    },
+    "cpu_usage": {
+      "count": 1608,
+      "fraction": 0.017078222080611757
+    },
+    "disk_usage_percent": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "high_cpu_processes": {
+      "count": 179,
+      "fraction": 0.0019011204928044182
+    },
+    "high_memory_processes": {
+      "count": 1080,
+      "fraction": 0.011470447666082524
+    },
+    "kernel_connect_delta": {
+      "count": 18181,
+      "fraction": 0.1930964898305985
+    },
+    "kernel_context_switches_delta": {
+      "count": 1969,
+      "fraction": 0.0209123254208486
+    },
+    "kernel_execve_delta": {
+      "count": 378,
+      "fraction": 0.0040146566831288834
+    },
+    "kernel_openat_delta": {
+      "count": 17,
+      "fraction": 0.00018055334289203973
+    },
+    "kernel_sys_read_delta": {
+      "count": 955,
+      "fraction": 0.01014284955658223
+    },
+    "kernel_sys_write_delta": {
+      "count": 143,
+      "fraction": 0.0015187722372683342
+    },
+    "keyboard_hardware_interrupts": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "keyboard_to_process_ratio": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "memory_usage": {
+      "count": 154,
+      "fraction": 0.0016356008709043598
+    },
+    "network_connections": {
+      "count": 9606,
+      "fraction": 0.10202325951887845
+    },
+    "process_count": {
+      "count": 416,
+      "fraction": 0.004418246508416972
+    },
+    "python_processes": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "shell_processes": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "suspicious_process_names": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "swap_memory": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "system_uptime_minutes": {
+      "count": 0,
+      "fraction": 0.0
+    },
+    "thread_to_process_ratio": {
+      "count": 20882,
+      "fraction": 0.2217832297806808
+    },
+    "total_connections": {
+      "count": 9606,
+      "fraction": 0.10202325951887845
+    },
+    "total_open_files": {
+      "count": 416,
+      "fraction": 0.004418246508416972
+    },
+    "total_threads": {
+      "count": 14482,
+      "fraction": 0.15381020657426583
+    },
+    "zombie_processes": {
+      "count": 4,
+      "fraction": 4.2483139504009344e-05
+    }
+  },
+  "cleaning_summary": [
+    {
+      "file": "level2.csv",
+      "rows_loaded": 8202,
+      "data_lines": 8202,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false,
+      "path": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Mamoon (ubuntu)/level2 benign/level2.csv",
+      "manifest_class": "benign",
+      "manifest_level": 2
+    },
+    {
+      "file": "level2_ebpf_keylogger.csv",
+      "rows_loaded": 16845,
+      "data_lines": 16845,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false,
+      "path": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 2_ Hook trap/level2_ebpf_keylogger.csv",
+      "manifest_class": "malicious",
+      "manifest_level": 2
+    },
+    {
+      "file": "level3_benign_ebpf.csv",
+      "rows_loaded": 12873,
+      "data_lines": 12873,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": true,
+      "path": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 3/level3_benign_ebpf.csv",
+      "manifest_class": "benign",
+      "manifest_level": 3
+    },
+    {
+      "file": "level3_ebpf_keylogger_v2.csv",
+      "rows_loaded": 29012,
+      "data_lines": 29012,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false,
+      "path": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 3_ RootKit/level3_ebpf_keylogger_v2.csv",
+      "manifest_class": "malicious",
+      "manifest_level": 3
+    },
+    {
+      "file": "level4_benign_ebpf.csv",
+      "rows_loaded": 12466,
+      "data_lines": 12466,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false,
+      "path": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 4/level4_benign_ebpf.csv",
+      "manifest_class": "benign",
+      "manifest_level": 4
+    },
+    {
+      "file": "level4_ebpf_kernel_behavior.csv",
+      "rows_loaded": 14478,
+      "data_lines": 14478,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": true,
+      "path": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 4_ kernel Level/level4_ebpf_kernel_behavior.csv",
+      "manifest_class": "malicious",
+      "manifest_level": 4
+    },
+    {
+      "file": "demo_vm_benign.csv",
+      "rows_loaded": 241,
+      "data_lines": 241,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false,
+      "path": "/home/fyp/project/dataset/l2_supplement/demo_vm_benign.csv",
+      "supplement": true
+    },
+    {
+      "file": "unseen_l2_device_scan_malicious.csv",
+      "rows_loaded": 30,
+      "data_lines": 30,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false,
+      "path": "/home/fyp/project/dataset/l2_supplement/unseen_l2_device_scan_malicious.csv",
+      "supplement": true
+    },
+    {
+      "file": "unseen_l2_fifo_malicious.csv",
+      "rows_loaded": 8,
+      "data_lines": 8,
+      "rows_dropped": 0,
+      "nul_bytes_stripped": false,
+      "path": "/home/fyp/project/dataset/l2_supplement/unseen_l2_fifo_malicious.csv",
+      "supplement": true
+    }
+  ]
+}

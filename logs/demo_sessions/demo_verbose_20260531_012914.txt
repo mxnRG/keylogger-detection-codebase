@@ -1,0 +1,2398 @@
+FYP Demo verbose session started: 2026-05-31T01:29:14+05:00
+Project: /home/fyp/project
+Artifact run: /home/fyp/project/artifacts/run_20260529_193015
+Component logs: /tmp/fyp-demo
+Combined log: /home/fyp/project/logs/demo_sessions/demo_verbose_20260531_012914.txt
+=========================================
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+#define __HAVE_BUILTIN_BSWAP16__ 1
+        ^
+3 warnings generated.
+[01:29:23] [COLLECTOR] INFO: row #1 cpu=0.0 mem=46.3 kb_irq=0 ctx=0 k_read=16 k_write=0 k_open=9 k_exec=0 k_conn=0 python=3 shell=9 suspicious=5
+[01:29:24] [COLLECTOR] INFO: row #2 cpu=30.8 mem=47.4 kb_irq=3 ctx=1443 k_read=4826 k_write=655 k_open=4070 k_exec=19 k_conn=10 python=4 shell=11 suspicious=5
+[01:29:24] [COLLECTOR] INFO: row #3 cpu=20.6 mem=47.4 kb_irq=3 ctx=2993 k_read=1916 k_write=487 k_open=1397 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:29:25] [COLLECTOR] INFO: row #4 cpu=61.8 mem=47.9 kb_irq=4 ctx=9349 k_read=5652 k_write=1766 k_open=3621 k_exec=23 k_conn=15 python=4 shell=12 suspicious=5
+[01:29:26] [COLLECTOR] INFO: row #5 cpu=84.8 mem=48.2 kb_irq=0 ctx=9374 k_read=6938 k_write=2346 k_open=3542 k_exec=12 k_conn=10 python=4 shell=12 suspicious=5
+[01:29:27] [COLLECTOR] INFO: row #6 cpu=73.0 mem=48.6 kb_irq=0 ctx=11232 k_read=5552 k_write=3947 k_open=2897 k_exec=16 k_conn=11 python=4 shell=11 suspicious=5
+[01:29:27] [COLLECTOR] INFO: row #7 cpu=57.1 mem=48.7 kb_irq=0 ctx=10502 k_read=3886 k_write=1293 k_open=2110 k_exec=2 k_conn=4 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:20] [ML-API] INFO: Models loaded from /home/fyp/project/artifacts/run_20260529_193015 | levels=[2, 3, 4] delta=0.050 idle=0.065 sim=0.025 calibrate=20 ignore=[2] connect=9 execve=20 read=4800 sim_detect=True streaks=3/3 verbose=True
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8765 (Press CTRL+C to quit)
+[01:29:25] [ML-API] INFO: CALIBRATING | L2=0.677 L3=0.216 L4=0.246
+INFO:     127.0.0.1:60572 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60582 - "GET /health HTTP/1.1" 200 OK
+[01:29:26] [ML-API] INFO: CALIBRATING | L2=0.675 L3=0.167 L4=0.243
+INFO:     127.0.0.1:60576 - "POST /predict HTTP/1.1" 200 OK
+[01:29:27] [ML-API] INFO: CALIBRATING | L2=0.645 L3=0.209 L4=0.238
+INFO:     127.0.0.1:60588 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:24] FYP-GUI [INFO]: Resource monitoring enabled (1s interval)
+[2026-05-31 01:29:24] FYP-GUI [INFO]: GUI initialization complete
+[2026-05-31 01:29:24] FYP-GUI [INFO]: Entering Qt event loop
+[2026-05-31 01:29:24] FYP-GUI [INFO]: ✓ Daemon connection established. Baseline: 6 events
+[2026-05-31 01:29:24] FYP-GUI [INFO]: ✓ Daemon connection established
+[2026-05-31 01:29:25] FYP-GUI [INFO]: Found daemon PID: 31221
+[2026-05-31 01:29:25] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.677 L3=0.216 L4=0.246
+[2026-05-31 01:29:25] FYP-GUI [WARNING]: ML UI state → System Clean | conf=0.000 | L2:0.68, L3:0.22, L4:0.25
+[2026-05-31 01:29:26] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.675 L3=0.167 L4=0.243
+[2026-05-31 01:29:27] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.645 L3=0.209 L4=0.238
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: ✓ Kernel module detected
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Starting daemon...
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Netlink socket created (PID 31222, protocol 31)
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Sent registration message to kernel (PID 31222)
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Netlink receiver started successfully
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Status writer thread started
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Daemon running. Press Ctrl+C to stop.
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Events will be delivered via Netlink (real-time, <1ms latency)
+[2026-05-31 01:29:16] FYP-Daemon [INFO]: Entering Netlink receive loop...
+[2026-05-31 01:29:26] FYP-Daemon [INFO]: Status: 12 events | 3 processes tracked | 3 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_lkm_watchdog.log <==
+[2026-05-31T01:29:15+05:00] LKM watchdog started (interval=5s)
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:28] [ML-API] INFO: CALIBRATING | L2=0.642 L3=0.210 L4=0.237
+INFO:     127.0.0.1:60594 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:28] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.642 L3=0.210 L4=0.237
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:28] [COLLECTOR] INFO: row #8 cpu=69.7 mem=48.9 kb_irq=0 ctx=9298 k_read=4042 k_write=1905 k_open=2578 k_exec=11 k_conn=2 python=4 shell=11 suspicious=5
+[01:29:29] [COLLECTOR] INFO: row #9 cpu=56.3 mem=49.1 kb_irq=0 ctx=7455 k_read=2274 k_write=643 k_open=1387 k_exec=2 k_conn=1 python=4 shell=10 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:29] [ML-API] INFO: CALIBRATING | L2=0.649 L3=0.196 L4=0.241
+INFO:     127.0.0.1:60600 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:29] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.649 L3=0.196 L4=0.241
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:29] [COLLECTOR] INFO: row #10 cpu=36.4 mem=49.1 kb_irq=0 ctx=9878 k_read=2126 k_write=517 k_open=1382 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:29:30] [COLLECTOR] INFO: row #11 cpu=35.0 mem=49.5 kb_irq=0 ctx=4592 k_read=2027 k_write=409 k_open=1380 k_exec=2 k_conn=0 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:30] [ML-API] INFO: CALIBRATING | L2=0.652 L3=0.204 L4=0.234
+INFO:     127.0.0.1:60602 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:30] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.652 L3=0.204 L4=0.234
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:31] [COLLECTOR] INFO: row #12 cpu=60.6 mem=49.6 kb_irq=0 ctx=4642 k_read=3461 k_write=473 k_open=2571 k_exec=25 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:31] [ML-API] INFO: CALIBRATING | L2=0.651 L3=0.239 L4=0.240
+INFO:     127.0.0.1:43532 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:31] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.651 L3=0.239 L4=0.240
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:32] [COLLECTOR] INFO: row #13 cpu=10.5 mem=49.7 kb_irq=3 ctx=12203 k_read=4782 k_write=1479 k_open=3060 k_exec=17 k_conn=6 python=4 shell=11 suspicious=5
+[01:29:32] [COLLECTOR] INFO: row #14 cpu=40.6 mem=49.7 kb_irq=5 ctx=6092 k_read=2082 k_write=442 k_open=1385 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:33] [ML-API] INFO: CALIBRATING | L2=0.651 L3=0.263 L4=0.240
+INFO:     127.0.0.1:43540 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:33] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.651 L3=0.263 L4=0.240
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:33] [COLLECTOR] INFO: row #15 cpu=17.9 mem=49.7 kb_irq=4 ctx=5173 k_read=1942 k_write=273 k_open=1384 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:29:33] FYP-Daemon [WARNING]: 🚨 ALERT: [HIGH] Rapid Input Stream Access: swapper/3 (PID 0) - Rapid fetching ratio: 100.0% (threshold: 50.0%) - Process is accessing keyboard events too quickly
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:34] [COLLECTOR] INFO: row #16 cpu=44.1 mem=49.7 kb_irq=8 ctx=5037 k_read=2088 k_write=436 k_open=1382 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:34] [ML-API] INFO: CALIBRATING | L2=0.661 L3=0.236 L4=0.244
+INFO:     127.0.0.1:43554 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:34] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.661 L3=0.236 L4=0.244
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:29:34] FYP-Daemon [INFO]: Writing 1 new alerts to status file
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:34] [COLLECTOR] INFO: row #17 cpu=27.3 mem=49.7 kb_irq=2 ctx=8063 k_read=2133 k_write=503 k_open=1400 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:34] FYP-GUI [WARNING]: Alert received: [HIGH] swapper/3 - Rapid Input Stream Access: Rapid fetching ratio: 100.0% (threshold: 50.0%) - Process is accessing keyboard events too quickly
+Failed to execute child process “dbus-launch” (No such file or directory)
+[2026-05-31 01:29:35] FYP-GUI [INFO]: Desktop notification sent for HIGH alert
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:35] [COLLECTOR] INFO: row #18 cpu=43.7 mem=49.7 kb_irq=4 ctx=4650 k_read=2209 k_write=542 k_open=1434 k_exec=21 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:35] [ML-API] INFO: CALIBRATING | L2=0.648 L3=0.227 L4=0.242
+INFO:     127.0.0.1:43568 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:35] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.648 L3=0.227 L4=0.242
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:36] [COLLECTOR] INFO: row #19 cpu=63.2 mem=49.5 kb_irq=7 ctx=7856 k_read=3619 k_write=676 k_open=2564 k_exec=25 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:29:36] FYP-Daemon [INFO]: Status: 48 events | 11 processes tracked | 9 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:36] [COLLECTOR] INFO: row #20 cpu=40.0 mem=49.5 kb_irq=3 ctx=10277 k_read=4530 k_write=1631 k_open=2752 k_exec=17 k_conn=6 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:37] [ML-API] INFO: CALIBRATING | L2=0.651 L3=0.269 L4=0.242
+INFO:     127.0.0.1:43576 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:37] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.651 L3=0.269 L4=0.242
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:37] [COLLECTOR] INFO: row #21 cpu=41.7 mem=49.5 kb_irq=6 ctx=6894 k_read=2265 k_write=648 k_open=1387 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:29:38] [COLLECTOR] INFO: row #22 cpu=41.9 mem=49.5 kb_irq=2 ctx=6801 k_read=2060 k_write=447 k_open=1380 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:38] [ML-API] INFO: CALIBRATING | L2=0.648 L3=0.255 L4=0.238
+INFO:     127.0.0.1:43592 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:38] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.648 L3=0.255 L4=0.238
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:39] [COLLECTOR] INFO: row #23 cpu=51.4 mem=49.3 kb_irq=0 ctx=5984 k_read=2382 k_write=944 k_open=1375 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:29:39] [COLLECTOR] INFO: row #24 cpu=25.0 mem=49.3 kb_irq=0 ctx=7288 k_read=2066 k_write=547 k_open=1390 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:40] [ML-API] INFO: CALIBRATING | L2=0.651 L3=0.223 L4=0.244
+INFO:     127.0.0.1:43602 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:40] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.651 L3=0.223 L4=0.244
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:40] [COLLECTOR] INFO: row #25 cpu=18.2 mem=49.3 kb_irq=0 ctx=5613 k_read=2064 k_write=463 k_open=1364 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:41] [ML-API] INFO: CALIBRATING | L2=0.648 L3=0.219 L4=0.243
+INFO:     127.0.0.1:49096 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:41] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.648 L3=0.219 L4=0.243
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:41] [COLLECTOR] INFO: row #26 cpu=74.3 mem=49.4 kb_irq=0 ctx=9274 k_read=3403 k_write=470 k_open=2834 k_exec=28 k_conn=5 python=4 shell=12 suspicious=5
+[01:29:41] [COLLECTOR] INFO: row #27 cpu=44.1 mem=49.4 kb_irq=0 ctx=9393 k_read=4710 k_write=1465 k_open=2747 k_exec=14 k_conn=3 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:42] [ML-API] INFO: CALIBRATING | L2=0.641 L3=0.259 L4=0.241
+INFO:     127.0.0.1:49108 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:42] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.641 L3=0.259 L4=0.241
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:42] [COLLECTOR] INFO: row #28 cpu=41.9 mem=49.4 kb_irq=0 ctx=7022 k_read=1969 k_write=346 k_open=1375 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:29:43] [COLLECTOR] INFO: row #29 cpu=45.9 mem=49.3 kb_irq=0 ctx=5331 k_read=2069 k_write=458 k_open=1376 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:43] [ML-API] INFO: CALIBRATING | L2=0.657 L3=0.220 L4=0.241
+INFO:     127.0.0.1:49110 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:43] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.657 L3=0.220 L4=0.241
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:43] [COLLECTOR] INFO: row #30 cpu=39.4 mem=49.3 kb_irq=0 ctx=8886 k_read=1982 k_write=380 k_open=1367 k_exec=3 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:44] [ML-API] INFO: CALIBRATING | L2=0.652 L3=0.223 L4=0.241
+INFO:     127.0.0.1:49120 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:44] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.652 L3=0.223 L4=0.241
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:44] [COLLECTOR] INFO: row #31 cpu=37.1 mem=49.4 kb_irq=0 ctx=9043 k_read=2146 k_write=523 k_open=1394 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:29:45] [COLLECTOR] INFO: row #32 cpu=41.2 mem=49.3 kb_irq=0 ctx=7408 k_read=2092 k_write=492 k_open=1380 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:45] [ML-API] INFO: CALIBRATING | L2=0.645 L3=0.218 L4=0.240
+INFO:     127.0.0.1:49134 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:45] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.645 L3=0.218 L4=0.240
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:46] [COLLECTOR] INFO: row #33 cpu=60.0 mem=49.3 kb_irq=0 ctx=11159 k_read=4246 k_write=1184 k_open=2902 k_exec=27 k_conn=5 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:29:46] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:47] [ML-API] INFO: CALIBRATING | L2=0.645 L3=0.220 L4=0.240
+INFO:     127.0.0.1:49150 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:47] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.645 L3=0.220 L4=0.240
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:47] [COLLECTOR] INFO: row #34 cpu=40.0 mem=49.3 kb_irq=0 ctx=10278 k_read=3831 k_write=1023 k_open=2385 k_exec=14 k_conn=2 python=4 shell=11 suspicious=5
+[01:29:47] [COLLECTOR] INFO: row #35 cpu=38.2 mem=49.3 kb_irq=0 ctx=7571 k_read=2153 k_write=532 k_open=1379 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:48] [ML-API] WARNING: Baseline calibrated (20 rows) | L2=0.650 L3=0.222 L4=0.241 | L2 ignored=True
+[01:29:48] [ML-API] INFO: BENIGN | raw L2=0.645 L3=0.252 L4=0.236 | adj L2=-0.005 L3=+0.030 L4=-0.006 | conf=0.030 raw=benign mode=delta
+INFO:     127.0.0.1:49164 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:48] FYP-GUI [INFO]: ML prediction → benign conf=0.030 | L2=0.645 L3=0.252 L4=0.236 | adj L2=-0.005 L3=+0.030 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:48] [COLLECTOR] INFO: row #36 cpu=44.4 mem=49.3 kb_irq=0 ctx=8313 k_read=1988 k_write=380 k_open=1374 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:29:49] [COLLECTOR] INFO: row #37 cpu=42.9 mem=49.3 kb_irq=0 ctx=8944 k_read=3187 k_write=501 k_open=1962 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:49] [ML-API] INFO: BENIGN | raw L2=0.640 L3=0.218 L4=0.240 | adj L2=-0.010 L3=-0.004 L4=-0.001 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:49176 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:49] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.640 L3=0.218 L4=0.240 | adj L2=-0.010 L3=-0.004 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:50] [COLLECTOR] INFO: row #38 cpu=43.3 mem=49.3 kb_irq=0 ctx=7098 k_read=2716 k_write=529 k_open=1712 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:50] [ML-API] INFO: BENIGN | raw L2=0.640 L3=0.226 L4=0.243 | adj L2=-0.010 L3=+0.004 L4=+0.002 | conf=0.004 raw=benign mode=delta
+INFO:     127.0.0.1:49192 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:50] FYP-GUI [INFO]: ML prediction → benign conf=0.004 | L2=0.640 L3=0.226 L4=0.243 | adj L2=-0.010 L3=+0.004 L4=+0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:50] [COLLECTOR] INFO: row #39 cpu=36.1 mem=49.2 kb_irq=0 ctx=8623 k_read=3584 k_write=466 k_open=2526 k_exec=20 k_conn=0 python=4 shell=12 suspicious=5
+[01:29:51] [COLLECTOR] INFO: row #40 cpu=48.6 mem=49.2 kb_irq=0 ctx=9603 k_read=4869 k_write=1625 k_open=3039 k_exec=13 k_conn=8 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:51] [ML-API] INFO: BENIGN | raw L2=0.645 L3=0.261 L4=0.238 | adj L2=-0.005 L3=+0.039 L4=-0.003 | conf=0.039 raw=malicious mode=execve
+INFO:     127.0.0.1:42204 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:51] FYP-GUI [INFO]: ML prediction → benign conf=0.039 | L2=0.645 L3=0.261 L4=0.238 | adj L2=-0.005 L3=+0.039 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:52] [COLLECTOR] INFO: row #41 cpu=51.4 mem=49.2 kb_irq=0 ctx=9242 k_read=3244 k_write=674 k_open=2122 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:52] [ML-API] INFO: BENIGN | raw L2=0.640 L3=0.251 L4=0.237 | adj L2=-0.010 L3=+0.029 L4=-0.004 | conf=0.029 raw=malicious mode=read_exec
+INFO:     127.0.0.1:42210 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:52] FYP-GUI [INFO]: ML prediction → benign conf=0.029 | L2=0.640 L3=0.251 L4=0.237 | adj L2=-0.010 L3=+0.029 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:53] [COLLECTOR] INFO: row #42 cpu=44.4 mem=49.2 kb_irq=0 ctx=10263 k_read=2660 k_write=446 k_open=1727 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:29:53] [COLLECTOR] INFO: row #43 cpu=41.2 mem=49.2 kb_irq=0 ctx=7077 k_read=2092 k_write=483 k_open=1388 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:53] [ML-API] INFO: BENIGN | raw L2=0.641 L3=0.244 L4=0.239 | adj L2=-0.009 L3=+0.022 L4=-0.002 | conf=0.022 raw=benign mode=delta
+INFO:     127.0.0.1:42226 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:53] FYP-GUI [INFO]: ML prediction → benign conf=0.022 | L2=0.641 L3=0.244 L4=0.239 | adj L2=-0.009 L3=+0.022 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:54] [COLLECTOR] INFO: row #44 cpu=39.4 mem=49.2 kb_irq=0 ctx=8241 k_read=2721 k_write=515 k_open=1742 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:54] [ML-API] INFO: BENIGN | raw L2=0.642 L3=0.219 L4=0.239 | adj L2=-0.008 L3=-0.003 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:42232 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:54] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.642 L3=0.219 L4=0.239 | adj L2=-0.008 L3=-0.003 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:55] [COLLECTOR] INFO: row #45 cpu=60.0 mem=49.2 kb_irq=0 ctx=9362 k_read=2726 k_write=512 k_open=1746 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:56] [ML-API] INFO: BENIGN | raw L2=0.642 L3=0.221 L4=0.237 | adj L2=-0.008 L3=-0.001 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:42236 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:56] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.642 L3=0.221 L4=0.237 | adj L2=-0.008 L3=-0.001 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:56] [COLLECTOR] INFO: row #46 cpu=51.5 mem=49.2 kb_irq=0 ctx=8491 k_read=3081 k_write=471 k_open=2485 k_exec=23 k_conn=4 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:29:56] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:57] [COLLECTOR] INFO: row #47 cpu=37.8 mem=49.2 kb_irq=0 ctx=11722 k_read=5546 k_write=1702 k_open=3160 k_exec=19 k_conn=3 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:57] [ML-API] INFO: BENIGN | raw L2=0.641 L3=0.252 L4=0.240 | adj L2=-0.009 L3=+0.030 L4=-0.001 | conf=0.030 raw=malicious mode=execve
+INFO:     127.0.0.1:42238 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:57] FYP-GUI [INFO]: ML prediction → benign conf=0.030 | L2=0.641 L3=0.252 L4=0.240 | adj L2=-0.009 L3=+0.030 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:57] [COLLECTOR] INFO: row #48 cpu=47.1 mem=49.2 kb_irq=0 ctx=7490 k_read=2773 k_write=565 k_open=1740 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:58] [ML-API] INFO: BENIGN | raw L2=0.645 L3=0.241 L4=0.232 | adj L2=-0.005 L3=+0.019 L4=-0.009 | conf=0.019 raw=malicious mode=read_exec
+INFO:     127.0.0.1:42248 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:58] FYP-GUI [INFO]: ML prediction → benign conf=0.019 | L2=0.645 L3=0.241 L4=0.232 | adj L2=-0.005 L3=+0.019 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:58] [COLLECTOR] INFO: row #49 cpu=50.0 mem=49.2 kb_irq=0 ctx=10262 k_read=2750 k_write=555 k_open=1739 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:29:59] [ML-API] INFO: BENIGN | raw L2=0.641 L3=0.217 L4=0.238 | adj L2=-0.009 L3=-0.005 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:42250 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:29:59] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.641 L3=0.217 L4=0.238 | adj L2=-0.009 L3=-0.005 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:29:59] [COLLECTOR] INFO: row #50 cpu=40.0 mem=49.2 kb_irq=0 ctx=8859 k_read=2125 k_write=520 k_open=1396 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:30:00] [COLLECTOR] INFO: row #51 cpu=54.3 mem=49.2 kb_irq=0 ctx=8336 k_read=2659 k_write=461 k_open=1723 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:00] [ML-API] INFO: BENIGN | raw L2=0.645 L3=0.213 L4=0.238 | adj L2=-0.005 L3=-0.008 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:42264 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:00] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.645 L3=0.213 L4=0.238 | adj L2=-0.005 L3=-0.008 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:00] [COLLECTOR] INFO: row #52 cpu=44.4 mem=49.1 kb_irq=0 ctx=6928 k_read=3684 k_write=499 k_open=2563 k_exec=20 k_conn=0 python=4 shell=12 suspicious=5
+[01:30:01] [COLLECTOR] INFO: row #53 cpu=36.4 mem=49.2 kb_irq=0 ctx=9458 k_read=4794 k_write=1542 k_open=3043 k_exec=13 k_conn=7 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:02] [ML-API] INFO: BENIGN | raw L2=0.642 L3=0.251 L4=0.237 | adj L2=-0.008 L3=+0.029 L4=-0.004 | conf=0.029 raw=malicious mode=execve
+INFO:     127.0.0.1:37616 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:02] FYP-GUI [INFO]: ML prediction → benign conf=0.029 | L2=0.642 L3=0.251 L4=0.237 | adj L2=-0.008 L3=+0.029 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:02] [COLLECTOR] INFO: row #54 cpu=38.2 mem=49.3 kb_irq=0 ctx=7827 k_read=2472 k_write=485 k_open=1759 k_exec=11 k_conn=0 python=4 shell=11 suspicious=5
+[01:30:03] [COLLECTOR] INFO: row #55 cpu=27.3 mem=49.3 kb_irq=0 ctx=6457 k_read=3546 k_write=379 k_open=2515 k_exec=17 k_conn=2 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:03] [ML-API] INFO: BENIGN | raw L2=0.642 L3=0.242 L4=0.237 | adj L2=-0.008 L3=+0.020 L4=-0.004 | conf=0.020 raw=benign mode=delta
+INFO:     127.0.0.1:37624 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:03] FYP-GUI [INFO]: ML prediction → benign conf=0.020 | L2=0.642 L3=0.242 L4=0.237 | adj L2=-0.008 L3=+0.020 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:03] [COLLECTOR] INFO: row #56 cpu=40.5 mem=49.3 kb_irq=0 ctx=7540 k_read=2778 k_write=553 k_open=1753 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:04] [ML-API] INFO: BENIGN | raw L2=0.640 L3=0.249 L4=0.240 | adj L2=-0.010 L3=+0.027 L4=-0.001 | conf=0.027 raw=benign mode=delta
+INFO:     127.0.0.1:37628 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:04] FYP-GUI [INFO]: ML prediction → benign conf=0.027 | L2=0.640 L3=0.249 L4=0.240 | adj L2=-0.010 L3=+0.027 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:04] [COLLECTOR] INFO: row #57 cpu=46.3 mem=49.3 kb_irq=0 ctx=8946 k_read=2777 k_write=537 k_open=1767 k_exec=5 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:05] [ML-API] INFO: BENIGN | raw L2=0.640 L3=0.216 L4=0.234 | adj L2=-0.010 L3=-0.006 L4=-0.007 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:37642 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:05] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.640 L3=0.216 L4=0.234 | adj L2=-0.010 L3=-0.006 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:05] [COLLECTOR] INFO: row #58 cpu=51.2 mem=49.3 kb_irq=0 ctx=8682 k_read=2226 k_write=625 k_open=1400 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:30:05] [COLLECTOR] INFO: row #59 cpu=50.0 mem=49.4 kb_irq=0 ctx=8963 k_read=3842 k_write=553 k_open=2635 k_exec=21 k_conn=2 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:06] [ML-API] INFO: BENIGN | raw L2=0.639 L3=0.213 L4=0.240 | adj L2=-0.011 L3=-0.008 L4=-0.001 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:37648 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:06] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.639 L3=0.213 L4=0.240 | adj L2=-0.011 L3=-0.008 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:06] [COLLECTOR] INFO: row #60 cpu=48.7 mem=49.5 kb_irq=0 ctx=11078 k_read=5797 k_write=1568 k_open=3876 k_exec=23 k_conn=6 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:30:06] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:07] [COLLECTOR] INFO: row #61 cpu=44.1 mem=49.5 kb_irq=0 ctx=5448 k_read=2869 k_write=599 k_open=1777 k_exec=11 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:07] [ML-API] INFO: BENIGN | raw L2=0.629 L3=0.245 L4=0.230 | adj L2=-0.021 L3=+0.024 L4=-0.011 | conf=0.024 raw=malicious mode=execve
+INFO:     127.0.0.1:37658 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:07] FYP-GUI [INFO]: ML prediction → benign conf=0.024 | L2=0.629 L3=0.245 L4=0.230 | adj L2=-0.021 L3=+0.024 L4=-0.011
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:08] [COLLECTOR] INFO: row #62 cpu=38.9 mem=49.5 kb_irq=0 ctx=7657 k_read=3622 k_write=448 k_open=2546 k_exec=15 k_conn=0 python=5 shell=12 suspicious=5
+[01:30:08] [COLLECTOR] INFO: row #63 cpu=42.4 mem=49.5 kb_irq=0 ctx=7231 k_read=2091 k_write=429 k_open=1416 k_exec=2 k_conn=2 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:09] [ML-API] INFO: BENIGN | raw L2=0.632 L3=0.246 L4=0.231 | adj L2=-0.018 L3=+0.025 L4=-0.010 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:37666 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:09] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.632 L3=0.246 L4=0.231 | adj L2=-0.018 L3=+0.025 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:09] [COLLECTOR] INFO: row #64 cpu=25.7 mem=49.7 kb_irq=0 ctx=6720 k_read=2719 k_write=508 k_open=1745 k_exec=5 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:10] [COLLECTOR] INFO: row #65 cpu=45.9 mem=49.7 kb_irq=0 ctx=6924 k_read=2018 k_write=403 k_open=1393 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:10] [ML-API] INFO: BENIGN | raw L2=0.630 L3=0.217 L4=0.231 | adj L2=-0.020 L3=-0.005 L4=-0.010 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:37672 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:10] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.630 L3=0.217 L4=0.231 | adj L2=-0.020 L3=-0.005 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:11] [COLLECTOR] INFO: row #66 cpu=52.6 mem=49.7 kb_irq=0 ctx=8204 k_read=3665 k_write=499 k_open=2555 k_exec=20 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:11] [ML-API] INFO: BENIGN | raw L2=0.630 L3=0.231 L4=0.233 | adj L2=-0.020 L3=+0.009 L4=-0.008 | conf=0.009 raw=benign mode=sim+ml
+INFO:     127.0.0.1:48300 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:11] FYP-GUI [INFO]: ML prediction → benign conf=0.009 | L2=0.630 L3=0.231 L4=0.233 | adj L2=-0.020 L3=+0.009 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:11] [COLLECTOR] INFO: row #67 cpu=44.4 mem=49.8 kb_irq=0 ctx=12293 k_read=5429 k_write=1562 k_open=3410 k_exec=13 k_conn=8 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:12] [ML-API] INFO: BENIGN | raw L2=0.382 L3=0.264 L4=0.232 | adj L2=-0.268 L3=+0.043 L4=-0.009 | conf=0.043 raw=malicious mode=execve
+INFO:     127.0.0.1:48302 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:12] FYP-GUI [INFO]: ML prediction → benign conf=0.043 | L2=0.382 L3=0.264 L4=0.232 | adj L2=-0.268 L3=+0.043 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:12] [COLLECTOR] INFO: row #68 cpu=39.5 mem=49.8 kb_irq=0 ctx=8817 k_read=2488 k_write=480 k_open=1769 k_exec=11 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:13] [COLLECTOR] INFO: row #69 cpu=41.4 mem=49.8 kb_irq=0 ctx=4317 k_read=2649 k_write=441 k_open=1728 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:14] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.249 L4=0.232 | adj L2=-0.266 L3=+0.027 L4=-0.009 | conf=0.027 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:48318 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:14] FYP-GUI [INFO]: ML prediction → benign conf=0.027 | L2=0.384 L3=0.249 L4=0.232 | adj L2=-0.266 L3=+0.027 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:14] [COLLECTOR] INFO: row #70 cpu=35.9 mem=49.8 kb_irq=0 ctx=9818 k_read=2072 k_write=430 k_open=1394 k_exec=3 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:14] [COLLECTOR] INFO: row #71 cpu=29.4 mem=49.8 kb_irq=0 ctx=4862 k_read=3629 k_write=469 k_open=2536 k_exec=12 k_conn=2 python=5 shell=12 suspicious=5
+[01:30:15] [COLLECTOR] INFO: row #72 cpu=44.4 mem=49.8 kb_irq=0 ctx=6043 k_read=1993 k_write=313 k_open=1406 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:15] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.227 L4=0.236 | adj L2=-0.266 L3=+0.005 L4=-0.006 | conf=0.005 raw=benign mode=sim+ml
+INFO:     127.0.0.1:48322 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:15] FYP-GUI [INFO]: ML prediction → benign conf=0.005 | L2=0.384 L3=0.227 L4=0.236 | adj L2=-0.266 L3=+0.005 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:16] [COLLECTOR] INFO: row #73 cpu=50.0 mem=49.8 kb_irq=0 ctx=9162 k_read=6052 k_write=1616 k_open=3889 k_exec=28 k_conn=7 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:16] [ML-API] INFO: BENIGN | raw L2=0.390 L3=0.229 L4=0.230 | adj L2=-0.260 L3=+0.007 L4=-0.011 | conf=0.007 raw=benign mode=sim+ml
+INFO:     127.0.0.1:48330 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:16] FYP-GUI [INFO]: ML prediction → benign conf=0.007 | L2=0.390 L3=0.229 L4=0.230 | adj L2=-0.260 L3=+0.007 L4=-0.011
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:30:16] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:16] [COLLECTOR] INFO: row #74 cpu=23.5 mem=49.9 kb_irq=0 ctx=8488 k_read=3104 k_write=441 k_open=2120 k_exec=16 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:17] [COLLECTOR] INFO: row #75 cpu=48.6 mem=49.9 kb_irq=0 ctx=8136 k_read=2105 k_write=482 k_open=1396 k_exec=2 k_conn=2 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:17] [ML-API] INFO: BENIGN | raw L2=0.388 L3=0.257 L4=0.237 | adj L2=-0.263 L3=+0.035 L4=-0.004 | conf=0.035 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:48346 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:17] FYP-GUI [INFO]: ML prediction → benign conf=0.035 | L2=0.388 L3=0.257 L4=0.237 | adj L2=-0.263 L3=+0.035 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:18] [COLLECTOR] INFO: row #76 cpu=47.1 mem=48.1 kb_irq=0 ctx=7243 k_read=2733 k_write=547 k_open=1734 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:18] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.232 L4=0.232 | adj L2=-0.271 L3=+0.011 L4=-0.009 | conf=0.011 raw=benign mode=sim+ml
+INFO:     127.0.0.1:48358 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:18] FYP-GUI [INFO]: ML prediction → benign conf=0.011 | L2=0.379 L3=0.232 L4=0.232 | adj L2=-0.271 L3=+0.011 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:19] [COLLECTOR] INFO: row #77 cpu=42.9 mem=48.9 kb_irq=0 ctx=10429 k_read=2803 k_write=587 k_open=1724 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:19] FYP-GUI [INFO]: Switching to page: alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:19] [COLLECTOR] INFO: row #78 cpu=37.1 mem=48.9 kb_irq=0 ctx=5346 k_read=2036 k_write=422 k_open=1400 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:19] [ML-API] INFO: BENIGN | raw L2=0.376 L3=0.171 L4=0.229 | adj L2=-0.274 L3=-0.051 L4=-0.012 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:48366 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:19] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.376 L3=0.171 L4=0.229 | adj L2=-0.274 L3=-0.051 L4=-0.012
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:20] [COLLECTOR] INFO: row #79 cpu=17.6 mem=48.9 kb_irq=0 ctx=9565 k_read=2740 k_write=529 k_open=1735 k_exec=2 k_conn=2 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:20] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.179 L4=0.232 | adj L2=-0.266 L3=-0.043 L4=-0.009 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:35394 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:20] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.384 L3=0.179 L4=0.232 | adj L2=-0.266 L3=-0.043 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:21] [COLLECTOR] INFO: row #80 cpu=27.3 mem=49.0 kb_irq=0 ctx=10917 k_read=6028 k_write=1585 k_open=3876 k_exec=25 k_conn=7 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:21] [ML-API] INFO: BENIGN | raw L2=0.380 L3=0.177 L4=0.237 | adj L2=-0.270 L3=-0.045 L4=-0.004 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:35396 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:21] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.380 L3=0.177 L4=0.237 | adj L2=-0.270 L3=-0.045 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:22] [COLLECTOR] INFO: row #81 cpu=35.9 mem=49.1 kb_irq=0 ctx=9184 k_read=2876 k_write=471 k_open=2119 k_exec=16 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:22] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.242 L4=0.233 | adj L2=-0.277 L3=+0.020 L4=-0.008 | conf=0.020 raw=malicious mode=execve
+INFO:     127.0.0.1:35408 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:22] FYP-GUI [INFO]: ML prediction → benign conf=0.020 | L2=0.373 L3=0.242 L4=0.233 | adj L2=-0.277 L3=+0.020 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:22] [COLLECTOR] INFO: row #82 cpu=34.3 mem=49.1 kb_irq=0 ctx=8355 k_read=3620 k_write=475 k_open=2527 k_exec=12 k_conn=1 python=5 shell=12 suspicious=5
+[01:30:23] [COLLECTOR] INFO: row #83 cpu=26.5 mem=49.1 kb_irq=0 ctx=8361 k_read=2740 k_write=517 k_open=1753 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:23] [ML-API] INFO: BENIGN | raw L2=0.377 L3=0.245 L4=0.236 | adj L2=-0.274 L3=+0.024 L4=-0.006 | conf=0.024 raw=benign mode=sim+ml
+INFO:     127.0.0.1:35420 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:23] FYP-GUI [INFO]: ML prediction → benign conf=0.024 | L2=0.377 L3=0.245 L4=0.236 | adj L2=-0.274 L3=+0.024 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:24] [COLLECTOR] INFO: row #84 cpu=23.1 mem=49.1 kb_irq=0 ctx=9187 k_read=2784 k_write=553 k_open=1762 k_exec=6 k_conn=2 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:24] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.206 L4=0.232 | adj L2=-0.273 L3=-0.016 L4=-0.009 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:35436 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:24] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.378 L3=0.206 L4=0.232 | adj L2=-0.273 L3=-0.016 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:25] [COLLECTOR] INFO: row #85 cpu=17.1 mem=49.1 kb_irq=0 ctx=10260 k_read=2615 k_write=383 k_open=1739 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:25] [COLLECTOR] INFO: row #86 cpu=50.0 mem=49.1 kb_irq=0 ctx=6914 k_read=2072 k_write=436 k_open=1398 k_exec=4 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:26] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.223 L4=0.230 | adj L2=-0.275 L3=+0.001 L4=-0.011 | conf=0.001 raw=benign mode=sim+ml
+INFO:     127.0.0.1:35444 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:26] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.375 L3=0.223 L4=0.230 | adj L2=-0.275 L3=+0.001 L4=-0.011
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:26] [COLLECTOR] INFO: row #87 cpu=15.2 mem=49.1 kb_irq=0 ctx=11719 k_read=6138 k_write=1738 k_open=3885 k_exec=23 k_conn=6 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:26] FYP-GUI [INFO]: Switching to page: dashboard
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:30:26] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:27] [COLLECTOR] INFO: row #88 cpu=50.0 mem=49.2 kb_irq=0 ctx=6134 k_read=2481 k_write=485 k_open=1786 k_exec=16 k_conn=2 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:27] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.234 L4=0.231 | adj L2=-0.277 L3=+0.012 L4=-0.010 | conf=0.012 raw=benign mode=sim+ml
+INFO:     127.0.0.1:35458 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:27] FYP-GUI [INFO]: ML prediction → benign conf=0.012 | L2=0.373 L3=0.234 L4=0.231 | adj L2=-0.277 L3=+0.012 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:28] [COLLECTOR] INFO: row #89 cpu=51.4 mem=49.2 kb_irq=0 ctx=7076 k_read=2828 k_write=657 k_open=1740 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:28] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.261 L4=0.239 | adj L2=-0.281 L3=+0.039 L4=-0.002 | conf=0.039 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:35466 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:28] FYP-GUI [INFO]: ML prediction → benign conf=0.039 | L2=0.369 L3=0.261 L4=0.239 | adj L2=-0.281 L3=+0.039 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:28] [COLLECTOR] INFO: row #90 cpu=36.1 mem=49.2 kb_irq=0 ctx=8713 k_read=2039 k_write=404 k_open=1379 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:29] [COLLECTOR] INFO: row #91 cpu=39.5 mem=49.2 kb_irq=0 ctx=6050 k_read=2742 k_write=537 k_open=1742 k_exec=2 k_conn=2 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:29] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.216 L4=0.234 | adj L2=-0.271 L3=-0.006 L4=-0.007 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:35470 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:29] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.379 L3=0.216 L4=0.234 | adj L2=-0.271 L3=-0.006 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:30] [COLLECTOR] INFO: row #92 cpu=43.8 mem=49.2 kb_irq=0 ctx=8046 k_read=2705 k_write=507 k_open=1736 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:30] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.222 L4=0.230 | adj L2=-0.277 L3=+0.001 L4=-0.011 | conf=0.001 raw=benign mode=sim+ml
+INFO:     127.0.0.1:47868 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:30] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.373 L3=0.222 L4=0.230 | adj L2=-0.277 L3=+0.001 L4=-0.011
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:31] [COLLECTOR] INFO: row #93 cpu=32.4 mem=49.2 kb_irq=0 ctx=13041 k_read=7042 k_write=1643 k_open=4678 k_exec=36 k_conn=6 python=5 shell=13 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:31] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.223 L4=0.230 | adj L2=-0.278 L3=+0.002 L4=-0.011 | conf=0.002 raw=benign mode=sim+ml
+INFO:     127.0.0.1:47870 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:31] FYP-GUI [INFO]: ML prediction → benign conf=0.002 | L2=0.372 L3=0.223 L4=0.230 | adj L2=-0.278 L3=+0.002 L4=-0.011
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:31] [COLLECTOR] INFO: row #94 cpu=44.1 mem=49.2 kb_irq=0 ctx=10035 k_read=2210 k_write=497 k_open=1457 k_exec=5 k_conn=1 python=5 shell=11 suspicious=5
+[01:30:32] [COLLECTOR] INFO: row #95 cpu=37.1 mem=49.2 kb_irq=0 ctx=5458 k_read=3409 k_write=471 k_open=2440 k_exec=17 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:33] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.236 L4=0.231 | adj L2=-0.277 L3=+0.015 L4=-0.010 | conf=0.015 raw=benign mode=sim+ml
+INFO:     127.0.0.1:47878 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:33] [COLLECTOR] INFO: row #96 cpu=42.9 mem=49.2 kb_irq=0 ctx=7123 k_read=1993 k_write=371 k_open=1377 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:33] FYP-GUI [INFO]: ML prediction → benign conf=0.015 | L2=0.373 L3=0.236 L4=0.231 | adj L2=-0.277 L3=+0.015 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:33] [COLLECTOR] INFO: row #97 cpu=41.7 mem=49.2 kb_irq=0 ctx=5943 k_read=2664 k_write=461 k_open=1732 k_exec=3 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:34] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.222 L4=0.234 | adj L2=-0.275 L3=+0.001 L4=-0.007 | conf=0.001 raw=benign mode=sim+ml
+INFO:     127.0.0.1:47884 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:34] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.375 L3=0.222 L4=0.234 | adj L2=-0.275 L3=+0.001 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:34] [COLLECTOR] INFO: row #98 cpu=22.9 mem=49.2 kb_irq=0 ctx=7905 k_read=2724 k_write=518 k_open=1744 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:35] [COLLECTOR] INFO: row #99 cpu=56.7 mem=49.2 kb_irq=0 ctx=7492 k_read=2060 k_write=439 k_open=1395 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:35] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.223 L4=0.233 | adj L2=-0.278 L3=+0.002 L4=-0.008 | conf=0.002 raw=benign mode=sim+ml
+INFO:     127.0.0.1:47892 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:35] FYP-GUI [INFO]: ML prediction → benign conf=0.002 | L2=0.372 L3=0.223 L4=0.233 | adj L2=-0.278 L3=+0.002 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:35] [COLLECTOR] INFO: row #100 cpu=22.9 mem=49.2 kb_irq=0 ctx=10315 k_read=6014 k_write=1574 k_open=3858 k_exec=26 k_conn=7 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:36] [ML-API] INFO: BENIGN | raw L2=0.370 L3=0.248 L4=0.234 | adj L2=-0.280 L3=+0.026 L4=-0.007 | conf=0.026 raw=malicious mode=execve
+INFO:     127.0.0.1:47896 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:36] FYP-GUI [INFO]: ML prediction → benign conf=0.026 | L2=0.370 L3=0.248 L4=0.234 | adj L2=-0.280 L3=+0.026 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:36] [COLLECTOR] INFO: row #101 cpu=45.5 mem=49.2 kb_irq=0 ctx=8191 k_read=2129 k_write=516 k_open=1412 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:30:36] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:37] [COLLECTOR] INFO: row #102 cpu=45.9 mem=49.3 kb_irq=0 ctx=6758 k_read=3179 k_write=598 k_open=2125 k_exec=17 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:37] [ML-API] INFO: BENIGN | raw L2=0.371 L3=0.221 L4=0.233 | adj L2=-0.279 L3=-0.001 L4=-0.008 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:47906 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:37] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.371 L3=0.221 L4=0.233 | adj L2=-0.279 L3=-0.001 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:38] [COLLECTOR] INFO: row #103 cpu=31.4 mem=49.3 kb_irq=0 ctx=7114 k_read=2767 k_write=567 k_open=1729 k_exec=2 k_conn=0 python=5 shell=10 suspicious=5
+[01:30:38] [COLLECTOR] INFO: row #104 cpu=32.4 mem=49.3 kb_irq=0 ctx=7695 k_read=2912 k_write=340 k_open=2183 k_exec=12 k_conn=2 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:38] [ML-API] INFO: BENIGN | raw L2=0.366 L3=0.259 L4=0.236 | adj L2=-0.284 L3=+0.037 L4=-0.005 | conf=0.037 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:47920 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:38] FYP-GUI [INFO]: ML prediction → benign conf=0.037 | L2=0.366 L3=0.259 L4=0.236 | adj L2=-0.284 L3=+0.037 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:39] [COLLECTOR] INFO: row #105 cpu=40.7 mem=49.3 kb_irq=0 ctx=6561 k_read=2673 k_write=422 k_open=1753 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:40] [ML-API] INFO: BENIGN | raw L2=0.371 L3=0.252 L4=0.238 | adj L2=-0.279 L3=+0.030 L4=-0.003 | conf=0.030 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:47932 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:40] FYP-GUI [INFO]: ML prediction → benign conf=0.030 | L2=0.371 L3=0.252 L4=0.238 | adj L2=-0.279 L3=+0.030 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:40] [COLLECTOR] INFO: row #106 cpu=28.3 mem=49.3 kb_irq=0 ctx=7064 k_read=2229 k_write=361 k_open=1546 k_exec=5 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:40] [COLLECTOR] INFO: row #107 cpu=32.4 mem=49.3 kb_irq=0 ctx=8993 k_read=5780 k_write=1567 k_open=3700 k_exec=22 k_conn=7 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:41] [ML-API] INFO: BENIGN | raw L2=0.370 L3=0.238 L4=0.232 | adj L2=-0.280 L3=+0.017 L4=-0.009 | conf=0.017 raw=benign mode=sim+ml
+INFO:     127.0.0.1:32846 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:41] FYP-GUI [INFO]: ML prediction → benign conf=0.017 | L2=0.370 L3=0.238 L4=0.232 | adj L2=-0.280 L3=+0.017 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:41] [COLLECTOR] INFO: row #108 cpu=45.2 mem=49.3 kb_irq=0 ctx=7090 k_read=2671 k_write=416 k_open=1761 k_exec=6 k_conn=1 python=5 shell=12 suspicious=5
+[01:30:42] [COLLECTOR] INFO: row #109 cpu=34.4 mem=49.3 kb_irq=0 ctx=7397 k_read=2809 k_write=445 k_open=2106 k_exec=16 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:42] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.252 L4=0.237 | adj L2=-0.281 L3=+0.030 L4=-0.004 | conf=0.030 raw=malicious mode=execve
+INFO:     127.0.0.1:32850 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:42] FYP-GUI [INFO]: ML prediction → benign conf=0.030 | L2=0.369 L3=0.252 L4=0.237 | adj L2=-0.281 L3=+0.030 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:43] [COLLECTOR] INFO: row #110 cpu=16.2 mem=49.3 kb_irq=0 ctx=4330 k_read=2612 k_write=384 k_open=1717 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:43] [COLLECTOR] INFO: row #111 cpu=50.0 mem=49.3 kb_irq=0 ctx=8009 k_read=2002 k_write=382 k_open=1392 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:43] [ML-API] INFO: BENIGN | raw L2=0.370 L3=0.249 L4=0.239 | adj L2=-0.280 L3=+0.027 L4=-0.002 | conf=0.027 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:32854 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:43] FYP-GUI [INFO]: ML prediction → benign conf=0.027 | L2=0.370 L3=0.249 L4=0.239 | adj L2=-0.280 L3=+0.027 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:44] [COLLECTOR] INFO: row #112 cpu=35.3 mem=49.3 kb_irq=0 ctx=9053 k_read=2661 k_write=435 k_open=1740 k_exec=3 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:44] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.218 L4=0.234 | adj L2=-0.281 L3=-0.004 L4=-0.007 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:32868 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:44] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.369 L3=0.218 L4=0.234 | adj L2=-0.281 L3=-0.004 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:45] [COLLECTOR] INFO: row #113 cpu=26.5 mem=49.3 kb_irq=0 ctx=6828 k_read=2554 k_write=331 k_open=1727 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+[01:30:45] [COLLECTOR] INFO: row #114 cpu=48.5 mem=49.3 kb_irq=0 ctx=8953 k_read=4113 k_write=1515 k_open=2584 k_exec=18 k_conn=5 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:46] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.220 L4=0.233 | adj L2=-0.281 L3=-0.002 L4=-0.008 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:32884 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:46] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.369 L3=0.220 L4=0.233 | adj L2=-0.281 L3=-0.002 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:46] [COLLECTOR] INFO: row #115 cpu=27.3 mem=49.3 kb_irq=0 ctx=6702 k_read=4043 k_write=662 k_open=2696 k_exec=9 k_conn=2 python=5 shell=13 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:30:47] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:47] [COLLECTOR] INFO: row #116 cpu=32.4 mem=49.3 kb_irq=0 ctx=5944 k_read=3386 k_write=358 k_open=2605 k_exec=27 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:47] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.252 L4=0.237 | adj L2=-0.281 L3=+0.030 L4=-0.004 | conf=0.030 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:32896 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:47] FYP-GUI [INFO]: ML prediction → benign conf=0.030 | L2=0.369 L3=0.252 L4=0.237 | adj L2=-0.281 L3=+0.030 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:48] [COLLECTOR] INFO: row #117 cpu=21.2 mem=49.3 kb_irq=0 ctx=6134 k_read=2736 k_write=467 k_open=1755 k_exec=5 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:48] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.260 L4=0.239 | adj L2=-0.278 L3=+0.038 L4=-0.002 | conf=0.038 raw=malicious mode=execve
+INFO:     127.0.0.1:32898 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:48] FYP-GUI [INFO]: ML prediction → benign conf=0.038 | L2=0.372 L3=0.260 L4=0.239 | adj L2=-0.278 L3=+0.038 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:48] [COLLECTOR] INFO: row #118 cpu=57.9 mem=49.3 kb_irq=0 ctx=10390 k_read=2009 k_write=344 k_open=1401 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+[01:30:49] [COLLECTOR] INFO: row #119 cpu=35.5 mem=49.3 kb_irq=0 ctx=4819 k_read=2671 k_write=474 k_open=1724 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:50] [ML-API] INFO: BENIGN | raw L2=0.370 L3=0.219 L4=0.237 | adj L2=-0.280 L3=-0.003 L4=-0.004 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:32904 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:50] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.370 L3=0.219 L4=0.237 | adj L2=-0.280 L3=-0.003 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:50] [COLLECTOR] INFO: row #120 cpu=37.1 mem=49.3 kb_irq=0 ctx=7914 k_read=1992 k_write=362 k_open=1387 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:50] [COLLECTOR] INFO: row #121 cpu=60.5 mem=49.3 kb_irq=0 ctx=7083 k_read=4475 k_write=1192 k_open=2877 k_exec=13 k_conn=6 python=5 shell=12 suspicious=5
+[01:30:51] [COLLECTOR] INFO: row #122 cpu=50.0 mem=49.3 kb_irq=0 ctx=10154 k_read=3618 k_write=813 k_open=2397 k_exec=15 k_conn=2 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:51] [ML-API] INFO: BENIGN | raw L2=0.370 L3=0.220 L4=0.234 | adj L2=-0.280 L3=-0.002 L4=-0.007 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:36088 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:51] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.370 L3=0.220 L4=0.234 | adj L2=-0.280 L3=-0.002 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:52] [COLLECTOR] INFO: row #123 cpu=42.9 mem=49.4 kb_irq=0 ctx=5577 k_read=3487 k_write=516 k_open=2450 k_exec=17 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:52] [ML-API] INFO: BENIGN | raw L2=0.362 L3=0.263 L4=0.237 | adj L2=-0.288 L3=+0.041 L4=-0.004 | conf=0.041 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:36096 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:52] FYP-GUI [INFO]: ML prediction → benign conf=0.041 | L2=0.362 L3=0.263 L4=0.237 | adj L2=-0.288 L3=+0.041 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:52] [COLLECTOR] INFO: row #124 cpu=43.2 mem=49.4 kb_irq=0 ctx=9375 k_read=2034 k_write=421 k_open=1383 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+[01:30:53] [COLLECTOR] INFO: row #125 cpu=41.0 mem=49.4 kb_irq=0 ctx=6578 k_read=2732 k_write=528 k_open=1733 k_exec=2 k_conn=2 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:53] [ML-API] INFO: BENIGN | raw L2=0.370 L3=0.217 L4=0.237 | adj L2=-0.280 L3=-0.005 L4=-0.004 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:36108 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:53] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.370 L3=0.217 L4=0.237 | adj L2=-0.280 L3=-0.005 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:54] [COLLECTOR] INFO: row #126 cpu=48.6 mem=49.4 kb_irq=0 ctx=9907 k_read=2740 k_write=506 k_open=1746 k_exec=3 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:54] [ML-API] INFO: BENIGN | raw L2=0.366 L3=0.223 L4=0.233 | adj L2=-0.284 L3=+0.002 L4=-0.008 | conf=0.002 raw=benign mode=sim+ml
+INFO:     127.0.0.1:36114 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:54] FYP-GUI [INFO]: ML prediction → benign conf=0.002 | L2=0.366 L3=0.223 L4=0.233 | adj L2=-0.284 L3=+0.002 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:55] [COLLECTOR] INFO: row #127 cpu=31.4 mem=49.4 kb_irq=0 ctx=7522 k_read=2941 k_write=360 k_open=2190 k_exec=12 k_conn=0 python=5 shell=12 suspicious=5
+[01:30:55] [COLLECTOR] INFO: row #128 cpu=73.5 mem=49.4 kb_irq=0 ctx=9599 k_read=3682 k_write=1262 k_open=2138 k_exec=9 k_conn=5 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:55] [ML-API] INFO: BENIGN | raw L2=0.358 L3=0.228 L4=0.237 | adj L2=-0.292 L3=+0.006 L4=-0.004 | conf=0.006 raw=benign mode=sim+ml
+INFO:     127.0.0.1:36126 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:55] FYP-GUI [INFO]: ML prediction → benign conf=0.006 | L2=0.358 L3=0.228 L4=0.237 | adj L2=-0.292 L3=+0.006 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:56] [ML-API] INFO: BENIGN | raw L2=0.360 L3=0.249 L4=0.237 | adj L2=-0.290 L3=+0.027 L4=-0.004 | conf=0.027 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:36138 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:56] FYP-GUI [INFO]: ML prediction → benign conf=0.027 | L2=0.360 L3=0.249 L4=0.237 | adj L2=-0.290 L3=+0.027 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:56] [COLLECTOR] INFO: row #129 cpu=56.2 mem=49.4 kb_irq=0 ctx=14444 k_read=5232 k_write=910 k_open=3525 k_exec=21 k_conn=5 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:30:57] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:57] [COLLECTOR] INFO: row #130 cpu=34.4 mem=49.4 kb_irq=0 ctx=4490 k_read=3131 k_write=497 k_open=2129 k_exec=17 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:57] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.232 L4=0.233 | adj L2=-0.281 L3=+0.010 L4=-0.008 | conf=0.010 raw=malicious mode=execve
+INFO:     127.0.0.1:36140 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:57] FYP-GUI [INFO]: ML prediction → benign conf=0.010 | L2=0.369 L3=0.232 L4=0.233 | adj L2=-0.281 L3=+0.010 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:58] [COLLECTOR] INFO: row #131 cpu=17.6 mem=49.4 kb_irq=0 ctx=7388 k_read=2855 k_write=647 k_open=1733 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:30:58] [COLLECTOR] INFO: row #132 cpu=57.6 mem=49.4 kb_irq=0 ctx=5879 k_read=2030 k_write=407 k_open=1381 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:58] [ML-API] INFO: BENIGN | raw L2=0.366 L3=0.255 L4=0.237 | adj L2=-0.284 L3=+0.034 L4=-0.004 | conf=0.034 raw=benign mode=delta
+INFO:     127.0.0.1:36150 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:58] FYP-GUI [INFO]: ML prediction → benign conf=0.034 | L2=0.366 L3=0.255 L4=0.237 | adj L2=-0.284 L3=+0.034 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:30:59] [COLLECTOR] INFO: row #133 cpu=54.1 mem=49.4 kb_irq=0 ctx=9228 k_read=2762 k_write=503 k_open=1739 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:30:59] [ML-API] INFO: BENIGN | raw L2=0.371 L3=0.221 L4=0.239 | adj L2=-0.279 L3=-0.001 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:36164 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:30:59] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.371 L3=0.221 L4=0.239 | adj L2=-0.279 L3=-0.001 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:00] [COLLECTOR] INFO: row #134 cpu=45.7 mem=49.4 kb_irq=0 ctx=6895 k_read=3663 k_write=521 k_open=2519 k_exec=11 k_conn=0 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:00] [ML-API] INFO: BENIGN | raw L2=0.363 L3=0.216 L4=0.239 | adj L2=-0.287 L3=-0.006 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:57646 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:00] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.363 L3=0.216 L4=0.239 | adj L2=-0.287 L3=-0.006 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:00] [COLLECTOR] INFO: row #135 cpu=54.5 mem=49.4 kb_irq=0 ctx=12665 k_read=5546 k_write=1638 k_open=3564 k_exec=28 k_conn=7 python=4 shell=12 suspicious=5
+[01:31:01] [COLLECTOR] INFO: row #136 cpu=43.6 mem=49.4 kb_irq=0 ctx=10985 k_read=3203 k_write=1029 k_open=1765 k_exec=2 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:01] [ML-API] INFO: BENIGN | raw L2=0.362 L3=0.243 L4=0.234 | adj L2=-0.288 L3=+0.021 L4=-0.007 | conf=0.021 raw=malicious mode=execve
+INFO:     127.0.0.1:57650 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:01] FYP-GUI [INFO]: ML prediction → benign conf=0.021 | L2=0.362 L3=0.243 L4=0.234 | adj L2=-0.288 L3=+0.021 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:02] [COLLECTOR] INFO: row #137 cpu=57.6 mem=49.4 kb_irq=0 ctx=8896 k_read=3829 k_write=1054 k_open=2392 k_exec=16 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:02] [ML-API] INFO: BENIGN | raw L2=0.359 L3=0.228 L4=0.237 | adj L2=-0.291 L3=+0.006 L4=-0.004 | conf=0.006 raw=benign mode=delta
+INFO:     127.0.0.1:57654 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:02] FYP-GUI [INFO]: ML prediction → benign conf=0.006 | L2=0.359 L3=0.228 L4=0.237 | adj L2=-0.291 L3=+0.006 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:02] [COLLECTOR] INFO: row #138 cpu=37.1 mem=49.4 kb_irq=0 ctx=10771 k_read=3036 k_write=789 k_open=1785 k_exec=9 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:03] [ML-API] INFO: BENIGN | raw L2=0.366 L3=0.239 L4=0.232 | adj L2=-0.284 L3=+0.017 L4=-0.009 | conf=0.017 raw=benign mode=delta
+INFO:     127.0.0.1:57670 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:03] FYP-GUI [INFO]: ML prediction → benign conf=0.017 | L2=0.366 L3=0.239 L4=0.232 | adj L2=-0.284 L3=+0.017 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:03] [COLLECTOR] INFO: row #139 cpu=60.0 mem=49.4 kb_irq=0 ctx=9169 k_read=2107 k_write=479 k_open=1393 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:31:04] [COLLECTOR] INFO: row #140 cpu=40.0 mem=49.4 kb_irq=0 ctx=6101 k_read=2652 k_write=441 k_open=1727 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:04] [ML-API] INFO: BENIGN | raw L2=0.364 L3=0.219 L4=0.240 | adj L2=-0.286 L3=-0.003 L4=-0.001 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:57680 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:04] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.364 L3=0.219 L4=0.240 | adj L2=-0.286 L3=-0.003 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:05] [COLLECTOR] INFO: row #141 cpu=31.4 mem=49.4 kb_irq=0 ctx=6166 k_read=3470 k_write=287 k_open=2532 k_exec=11 k_conn=0 python=4 shell=12 suspicious=5
+[01:31:05] [COLLECTOR] INFO: row #142 cpu=61.8 mem=49.4 kb_irq=0 ctx=12964 k_read=4704 k_write=1846 k_open=2720 k_exec=16 k_conn=7 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:05] [ML-API] INFO: BENIGN | raw L2=0.366 L3=0.222 L4=0.238 | adj L2=-0.284 L3=+0.001 L4=-0.003 | conf=0.001 raw=benign mode=delta
+INFO:     127.0.0.1:57692 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:05] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.366 L3=0.222 L4=0.238 | adj L2=-0.284 L3=+0.001 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:06] [COLLECTOR] INFO: row #143 cpu=38.2 mem=49.4 kb_irq=0 ctx=7672 k_read=3722 k_write=498 k_open=2579 k_exec=20 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:06] [ML-API] INFO: BENIGN | raw L2=0.360 L3=0.243 L4=0.239 | adj L2=-0.290 L3=+0.021 L4=-0.002 | conf=0.021 raw=benign mode=delta
+INFO:     127.0.0.1:57704 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:06] FYP-GUI [INFO]: ML prediction → benign conf=0.021 | L2=0.360 L3=0.243 L4=0.239 | adj L2=-0.290 L3=+0.021 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:31:07] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:07] [COLLECTOR] INFO: row #144 cpu=45.5 mem=49.4 kb_irq=0 ctx=8950 k_read=3226 k_write=599 k_open=2124 k_exec=16 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:07] [ML-API] INFO: BENIGN | raw L2=0.361 L3=0.251 L4=0.234 | adj L2=-0.289 L3=+0.029 L4=-0.007 | conf=0.029 raw=malicious mode=execve
+INFO:     127.0.0.1:57718 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:07] FYP-GUI [INFO]: ML prediction → benign conf=0.029 | L2=0.361 L3=0.251 L4=0.234 | adj L2=-0.289 L3=+0.029 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:08] [COLLECTOR] INFO: row #145 cpu=52.9 mem=49.4 kb_irq=0 ctx=10205 k_read=2733 k_write=539 k_open=1739 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+[01:31:08] [COLLECTOR] INFO: row #146 cpu=39.5 mem=49.4 kb_irq=0 ctx=7439 k_read=2014 k_write=371 k_open=1379 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:08] [ML-API] INFO: BENIGN | raw L2=0.360 L3=0.257 L4=0.240 | adj L2=-0.290 L3=+0.035 L4=-0.001 | conf=0.035 raw=benign mode=delta
+INFO:     127.0.0.1:57726 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:08] FYP-GUI [INFO]: ML prediction → benign conf=0.035 | L2=0.360 L3=0.257 L4=0.240 | adj L2=-0.290 L3=+0.035 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:09] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.220 L4=0.236 | adj L2=-0.281 L3=-0.002 L4=-0.006 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:57730 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:09] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.369 L3=0.220 L4=0.236 | adj L2=-0.281 L3=-0.002 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:09] [COLLECTOR] INFO: row #147 cpu=61.3 mem=49.4 kb_irq=0 ctx=10577 k_read=2632 k_write=390 k_open=1740 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:31:10] [COLLECTOR] INFO: row #148 cpu=39.4 mem=49.4 kb_irq=0 ctx=5369 k_read=2795 k_write=547 k_open=1734 k_exec=6 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:10] [ML-API] INFO: BENIGN | raw L2=0.361 L3=0.218 L4=0.238 | adj L2=-0.289 L3=-0.004 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:35954 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:10] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.361 L3=0.218 L4=0.238 | adj L2=-0.289 L3=-0.004 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:10] [COLLECTOR] INFO: row #149 cpu=52.6 mem=49.4 kb_irq=0 ctx=11844 k_read=5336 k_write=1468 k_open=3499 k_exec=26 k_conn=6 python=4 shell=12 suspicious=5
+[01:31:11] [COLLECTOR] INFO: row #150 cpu=65.5 mem=49.4 kb_irq=0 ctx=9037 k_read=2699 k_write=427 k_open=1760 k_exec=2 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:11] [ML-API] INFO: BENIGN | raw L2=0.365 L3=0.243 L4=0.234 | adj L2=-0.285 L3=+0.021 L4=-0.008 | conf=0.021 raw=benign mode=delta
+INFO:     127.0.0.1:35968 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:11] FYP-GUI [INFO]: ML prediction → benign conf=0.021 | L2=0.365 L3=0.243 L4=0.234 | adj L2=-0.285 L3=+0.021 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:12] [COLLECTOR] INFO: row #151 cpu=52.8 mem=49.4 kb_irq=0 ctx=7219 k_read=3444 k_write=570 k_open=2395 k_exec=16 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:12] [ML-API] INFO: BENIGN | raw L2=0.363 L3=0.227 L4=0.237 | adj L2=-0.287 L3=+0.005 L4=-0.004 | conf=0.005 raw=benign mode=delta
+INFO:     127.0.0.1:35984 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:12] FYP-GUI [INFO]: ML prediction → benign conf=0.005 | L2=0.363 L3=0.227 L4=0.237 | adj L2=-0.287 L3=+0.005 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:13] [COLLECTOR] INFO: row #152 cpu=44.4 mem=49.4 kb_irq=0 ctx=8136 k_read=2712 k_write=443 k_open=1770 k_exec=3 k_conn=0 python=4 shell=11 suspicious=5
+[01:31:13] [COLLECTOR] INFO: row #153 cpu=38.9 mem=49.4 kb_irq=0 ctx=9773 k_read=2179 k_write=570 k_open=1399 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:13] [ML-API] INFO: BENIGN | raw L2=0.363 L3=0.257 L4=0.240 | adj L2=-0.287 L3=+0.035 L4=-0.001 | conf=0.035 raw=benign mode=delta
+INFO:     127.0.0.1:35988 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:13] FYP-GUI [INFO]: ML prediction → benign conf=0.035 | L2=0.363 L3=0.257 L4=0.240 | adj L2=-0.287 L3=+0.035 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:14] [COLLECTOR] INFO: row #154 cpu=41.9 mem=49.4 kb_irq=0 ctx=8551 k_read=2678 k_write=457 k_open=1734 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:15] [ML-API] INFO: BENIGN | raw L2=0.362 L3=0.220 L4=0.239 | adj L2=-0.288 L3=-0.002 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:36002 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:15] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.362 L3=0.220 L4=0.239 | adj L2=-0.288 L3=-0.002 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:15] [COLLECTOR] INFO: row #155 cpu=60.5 mem=49.4 kb_irq=0 ctx=6144 k_read=2635 k_write=404 k_open=1733 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:31:16] [COLLECTOR] INFO: row #156 cpu=28.1 mem=49.4 kb_irq=0 ctx=7994 k_read=5378 k_write=1550 k_open=3496 k_exec=26 k_conn=7 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:16] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.221 L4=0.239 | adj L2=-0.281 L3=-0.001 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:36004 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:16] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.369 L3=0.221 L4=0.239 | adj L2=-0.281 L3=-0.001 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:16] [COLLECTOR] INFO: row #157 cpu=47.2 mem=49.4 kb_irq=0 ctx=7777 k_read=2022 k_write=371 k_open=1399 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:31:17] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:17] [COLLECTOR] INFO: row #158 cpu=48.5 mem=49.4 kb_irq=0 ctx=7908 k_read=3209 k_write=579 k_open=2127 k_exec=17 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:17] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.222 L4=0.237 | adj L2=-0.281 L3=+0.001 L4=-0.004 | conf=0.001 raw=benign mode=delta
+INFO:     127.0.0.1:36020 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:17] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.369 L3=0.222 L4=0.237 | adj L2=-0.281 L3=+0.001 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:18] [COLLECTOR] INFO: row #159 cpu=47.4 mem=49.4 kb_irq=0 ctx=6880 k_read=2704 k_write=482 k_open=1732 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:18] [ML-API] INFO: BENIGN | raw L2=0.361 L3=0.259 L4=0.240 | adj L2=-0.289 L3=+0.037 L4=-0.001 | conf=0.037 raw=benign mode=delta
+INFO:     127.0.0.1:36028 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:18] FYP-GUI [INFO]: ML prediction → benign conf=0.037 | L2=0.361 L3=0.259 L4=0.240 | adj L2=-0.289 L3=+0.037 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:19] [COLLECTOR] INFO: row #160 cpu=45.7 mem=49.4 kb_irq=0 ctx=9353 k_read=2033 k_write=419 k_open=1374 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:19] [ML-API] INFO: BENIGN | raw L2=0.362 L3=0.222 L4=0.238 | adj L2=-0.288 L3=+0.001 L4=-0.003 | conf=0.001 raw=benign mode=delta
+INFO:     127.0.0.1:36042 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:19] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.362 L3=0.222 L4=0.238 | adj L2=-0.288 L3=+0.001 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:19] [COLLECTOR] INFO: row #161 cpu=51.7 mem=49.4 kb_irq=0 ctx=7893 k_read=2781 k_write=566 k_open=1744 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:20] [ML-API] INFO: BENIGN | raw L2=0.363 L3=0.220 L4=0.238 | adj L2=-0.287 L3=-0.002 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:36324 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:20] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.363 L3=0.220 L4=0.238 | adj L2=-0.287 L3=-0.002 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:20] [COLLECTOR] INFO: row #162 cpu=64.7 mem=49.4 kb_irq=0 ctx=9582 k_read=2862 k_write=566 k_open=2024 k_exec=5 k_conn=5 python=4 shell=11 suspicious=5
+[01:31:21] [COLLECTOR] INFO: row #163 cpu=42.9 mem=49.4 kb_irq=0 ctx=12943 k_read=6226 k_write=1748 k_open=3641 k_exec=23 k_conn=3 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:21] [ML-API] INFO: BENIGN | raw L2=0.360 L3=0.241 L4=0.235 | adj L2=-0.290 L3=+0.019 L4=-0.006 | conf=0.019 raw=benign mode=sim+ml
+INFO:     127.0.0.1:36334 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:21] FYP-GUI [INFO]: ML prediction → benign conf=0.019 | L2=0.360 L3=0.241 L4=0.235 | adj L2=-0.290 L3=+0.019 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:22] [COLLECTOR] INFO: row #164 cpu=48.6 mem=49.4 kb_irq=0 ctx=6376 k_read=4174 k_write=599 k_open=3008 k_exec=30 k_conn=1 python=5 shell=12 suspicious=5
+[01:31:23] [COLLECTOR] INFO: row #165 cpu=46.9 mem=49.4 kb_irq=0 ctx=9015 k_read=2504 k_write=463 k_open=1806 k_exec=10 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:23] [ML-API] INFO: BENIGN | raw L2=0.363 L3=0.250 L4=0.232 | adj L2=-0.287 L3=+0.028 L4=-0.009 | conf=0.028 raw=malicious mode=execve
+INFO:     127.0.0.1:36336 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:23] FYP-GUI [INFO]: ML prediction → benign conf=0.028 | L2=0.363 L3=0.250 L4=0.232 | adj L2=-0.287 L3=+0.028 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:23] [COLLECTOR] INFO: row #166 cpu=67.6 mem=49.4 kb_irq=0 ctx=5920 k_read=2666 k_write=482 k_open=1772 k_exec=10 k_conn=1 python=6 shell=11 suspicious=5
+[01:31:24] [COLLECTOR] INFO: row #167 cpu=45.2 mem=49.5 kb_irq=0 ctx=7409 k_read=2590 k_write=467 k_open=1801 k_exec=8 k_conn=3 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:24] [ML-API] INFO: BENIGN | raw L2=0.358 L3=0.255 L4=0.239 | adj L2=-0.292 L3=+0.034 L4=-0.002 | conf=0.034 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:36342 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:24] FYP-GUI [INFO]: ML prediction → benign conf=0.034 | L2=0.358 L3=0.255 L4=0.239 | adj L2=-0.292 L3=+0.034 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:25] [COLLECTOR] INFO: row #168 cpu=64.7 mem=49.5 kb_irq=0 ctx=4489 k_read=2682 k_write=507 k_open=1779 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:25] [ML-API] WARNING: STATE CHANGE benign → malicious | raw L2=0.360 L3=0.251 L4=0.238 | adj L2=-0.290 L3=+0.029 L4=-0.003 | conf=0.029 mode=sim+ml streaks mal=3 ben=0
+INFO:     127.0.0.1:36350 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:25] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.029 | L2=0.360 L3=0.251 L4=0.238 | adj L2=-0.290 L3=+0.029 L4=-0.003
+[2026-05-31 01:31:25] FYP-GUI [WARNING]: ML UI state → Keylogger Detected — Level 3 | conf=0.029 | L2:0.36, L3:0.25, L4:0.24
+[2026-05-31 01:31:25] FYP-GUI [WARNING]: ML alert raised: Level 3 | python3 (PID 37471) | conf=0.029
+Failed to execute child process “dbus-launch” (No such file or directory)
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:26] [COLLECTOR] INFO: row #169 cpu=48.5 mem=49.5 kb_irq=0 ctx=14223 k_read=5995 k_write=1634 k_open=3919 k_exec=34 k_conn=7 python=5 shell=12 suspicious=5
+[01:31:26] [COLLECTOR] INFO: row #170 cpu=65.7 mem=49.5 kb_irq=0 ctx=6446 k_read=4513 k_write=611 k_open=3029 k_exec=38 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:31:27] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:27] [ML-API] INFO: MALICIOUS | raw L2=0.362 L3=0.230 L4=0.234 | adj L2=-0.288 L3=+0.008 L4=-0.007 | conf=0.008 raw=benign mode=sim+ml
+INFO:     127.0.0.1:36364 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:27] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.008 | L2=0.362 L3=0.230 L4=0.234 | adj L2=-0.288 L3=+0.008 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:27] [COLLECTOR] INFO: row #171 cpu=76.5 mem=49.5 kb_irq=0 ctx=8170 k_read=2891 k_write=580 k_open=1888 k_exec=15 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:28] [COLLECTOR] INFO: row #172 cpu=63.9 mem=49.5 kb_irq=0 ctx=6905 k_read=2441 k_write=508 k_open=1769 k_exec=7 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:28] [ML-API] INFO: MALICIOUS | raw L2=0.363 L3=0.253 L4=0.241 | adj L2=-0.287 L3=+0.031 L4=+0.000 | conf=0.031 raw=malicious mode=execve
+INFO:     127.0.0.1:36376 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:28] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.031 | L2=0.363 L3=0.253 L4=0.241 | adj L2=-0.287 L3=+0.031 L4=+0.000
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:28] [COLLECTOR] INFO: row #173 cpu=52.5 mem=49.4 kb_irq=0 ctx=6789 k_read=2047 k_write=444 k_open=1434 k_exec=10 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:29] [COLLECTOR] INFO: row #174 cpu=54.3 mem=49.4 kb_irq=0 ctx=7055 k_read=2744 k_write=566 k_open=1818 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:29] [ML-API] INFO: MALICIOUS | raw L2=0.365 L3=0.254 L4=0.239 | adj L2=-0.285 L3=+0.033 L4=-0.002 | conf=0.033 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:36392 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:29] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.033 | L2=0.365 L3=0.254 L4=0.239 | adj L2=-0.285 L3=+0.033 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:30] [COLLECTOR] INFO: row #175 cpu=70.3 mem=49.4 kb_irq=0 ctx=8168 k_read=2822 k_write=627 k_open=1777 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:31] [ML-API] INFO: MALICIOUS | raw L2=0.358 L3=0.227 L4=0.237 | adj L2=-0.292 L3=+0.005 L4=-0.004 | conf=0.005 raw=benign mode=sim+ml
+INFO:     127.0.0.1:39364 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:31] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.005 | L2=0.358 L3=0.227 L4=0.237 | adj L2=-0.292 L3=+0.005 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:31] [COLLECTOR] INFO: row #176 cpu=57.1 mem=49.4 kb_irq=0 ctx=13186 k_read=5501 k_write=1622 k_open=3583 k_exec=34 k_conn=6 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:31] FYP-GUI [INFO]: Switching to page: alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:31] [COLLECTOR] INFO: row #177 cpu=70.6 mem=49.4 kb_irq=0 ctx=5031 k_read=3147 k_write=619 k_open=2181 k_exec=12 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:32] [ML-API] INFO: MALICIOUS | raw L2=0.362 L3=0.243 L4=0.234 | adj L2=-0.288 L3=+0.021 L4=-0.008 | conf=0.021 raw=malicious mode=execve
+INFO:     127.0.0.1:39380 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:32] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.021 | L2=0.362 L3=0.243 L4=0.234 | adj L2=-0.288 L3=+0.021 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:32] [COLLECTOR] INFO: row #178 cpu=71.0 mem=49.4 kb_irq=0 ctx=7276 k_read=3199 k_write=616 k_open=2272 k_exec=28 k_conn=0 python=5 shell=12 suspicious=5
+[01:31:33] [COLLECTOR] INFO: row #179 cpu=48.5 mem=49.4 kb_irq=0 ctx=6122 k_read=3061 k_write=479 k_open=2124 k_exec=7 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:34] [ML-API] INFO: MALICIOUS | raw L2=0.362 L3=0.262 L4=0.240 | adj L2=-0.288 L3=+0.040 L4=-0.001 | conf=0.040 raw=malicious mode=execve
+INFO:     127.0.0.1:39390 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:34] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.040 | L2=0.362 L3=0.262 L4=0.240 | adj L2=-0.288 L3=+0.040 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:34] [COLLECTOR] INFO: row #180 cpu=38.2 mem=49.4 kb_irq=0 ctx=8655 k_read=2203 k_write=531 k_open=1462 k_exec=14 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:34] [COLLECTOR] INFO: row #181 cpu=59.4 mem=49.4 kb_irq=0 ctx=4303 k_read=2740 k_write=526 k_open=1807 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:35] [COLLECTOR] INFO: row #182 cpu=65.6 mem=49.4 kb_irq=0 ctx=7140 k_read=2569 k_write=835 k_open=1747 k_exec=13 k_conn=5 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:35] [ML-API] INFO: MALICIOUS | raw L2=0.362 L3=0.251 L4=0.238 | adj L2=-0.288 L3=+0.029 L4=-0.003 | conf=0.029 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:39406 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:35] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.029 | L2=0.362 L3=0.251 L4=0.238 | adj L2=-0.288 L3=+0.029 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:36] [COLLECTOR] INFO: row #183 cpu=54.3 mem=49.4 kb_irq=0 ctx=10263 k_read=6237 k_write=1796 k_open=3635 k_exec=23 k_conn=2 python=5 shell=12 suspicious=5
+[01:31:37] [COLLECTOR] INFO: row #184 cpu=71.1 mem=49.4 kb_irq=0 ctx=8553 k_read=2714 k_write=1033 k_open=1518 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:37] [ML-API] INFO: MALICIOUS | raw L2=0.364 L3=0.249 L4=0.236 | adj L2=-0.286 L3=+0.027 L4=-0.005 | conf=0.027 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:39420 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:37] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.027 | L2=0.364 L3=0.249 L4=0.236 | adj L2=-0.286 L3=+0.027 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:31:37] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:37] [COLLECTOR] INFO: row #185 cpu=61.1 mem=49.5 kb_irq=0 ctx=7996 k_read=3875 k_write=1235 k_open=2193 k_exec=16 k_conn=1 python=5 shell=11 suspicious=5
+[01:31:38] [COLLECTOR] INFO: row #186 cpu=58.8 mem=49.6 kb_irq=0 ctx=10298 k_read=2236 k_write=600 k_open=1511 k_exec=3 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:38] [ML-API] INFO: MALICIOUS | raw L2=0.366 L3=0.222 L4=0.233 | adj L2=-0.284 L3=+0.001 L4=-0.008 | conf=0.001 raw=benign mode=sim+ml
+INFO:     127.0.0.1:39424 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:38] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.001 | L2=0.366 L3=0.222 L4=0.233 | adj L2=-0.284 L3=+0.001 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:39] [COLLECTOR] INFO: row #187 cpu=78.6 mem=49.6 kb_irq=0 ctx=6525 k_read=2667 k_write=580 k_open=1787 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:40] [ML-API] INFO: MALICIOUS | raw L2=0.363 L3=0.226 L4=0.237 | adj L2=-0.287 L3=+0.004 L4=-0.004 | conf=0.004 raw=benign mode=sim+ml
+INFO:     127.0.0.1:39430 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:40] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.004 | L2=0.363 L3=0.226 L4=0.237 | adj L2=-0.287 L3=+0.004 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:40] [COLLECTOR] INFO: row #188 cpu=33.3 mem=49.6 kb_irq=0 ctx=6704 k_read=2085 k_write=414 k_open=1422 k_exec=10 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:40] [COLLECTOR] INFO: row #189 cpu=67.6 mem=49.6 kb_irq=0 ctx=9848 k_read=5988 k_write=1628 k_open=3829 k_exec=12 k_conn=7 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:41] [ML-API] INFO: MALICIOUS | raw L2=0.373 L3=0.252 L4=0.237 | adj L2=-0.277 L3=+0.030 L4=-0.004 | conf=0.030 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:49270 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:41] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.030 | L2=0.373 L3=0.252 L4=0.237 | adj L2=-0.277 L3=+0.030 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:41] [COLLECTOR] INFO: row #190 cpu=57.6 mem=49.6 kb_irq=0 ctx=8493 k_read=2228 k_write=537 k_open=1515 k_exec=24 k_conn=0 python=5 shell=12 suspicious=5
+[01:31:42] [COLLECTOR] INFO: row #191 cpu=40.6 mem=49.6 kb_irq=0 ctx=4381 k_read=3134 k_write=533 k_open=2165 k_exec=12 k_conn=1 python=5 shell=11 suspicious=5
+[01:31:43] [COLLECTOR] INFO: row #192 cpu=52.0 mem=49.6 kb_irq=0 ctx=7381 k_read=3378 k_write=459 k_open=2590 k_exec=33 k_conn=0 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:43] [ML-API] INFO: MALICIOUS | raw L2=0.369 L3=0.258 L4=0.238 | adj L2=-0.281 L3=+0.036 L4=-0.003 | conf=0.036 raw=malicious mode=execve
+INFO:     127.0.0.1:49286 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:43] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.036 | L2=0.369 L3=0.258 L4=0.238 | adj L2=-0.281 L3=+0.036 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:43] [COLLECTOR] INFO: row #193 cpu=36.7 mem=49.6 kb_irq=0 ctx=6197 k_read=2087 k_write=376 k_open=1503 k_exec=6 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:44] [COLLECTOR] INFO: row #194 cpu=40.0 mem=49.6 kb_irq=0 ctx=5770 k_read=2684 k_write=416 k_open=1760 k_exec=10 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:44] [ML-API] INFO: MALICIOUS | raw L2=0.378 L3=0.248 L4=0.235 | adj L2=-0.273 L3=+0.027 L4=-0.006 | conf=0.027 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:49298 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:44] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.027 | L2=0.378 L3=0.248 L4=0.235 | adj L2=-0.273 L3=+0.027 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:45] [COLLECTOR] INFO: row #195 cpu=42.4 mem=49.6 kb_irq=0 ctx=6675 k_read=2586 k_write=341 k_open=1770 k_exec=10 k_conn=1 python=5 shell=11 suspicious=5
+[01:31:46] [COLLECTOR] INFO: row #196 cpu=63.3 mem=49.6 kb_irq=0 ctx=10140 k_read=5399 k_write=1495 k_open=3553 k_exec=26 k_conn=6 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:46] [ML-API] INFO: MALICIOUS | raw L2=0.369 L3=0.253 L4=0.237 | adj L2=-0.281 L3=+0.031 L4=-0.004 | conf=0.031 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:49300 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:46] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.031 | L2=0.369 L3=0.253 L4=0.237 | adj L2=-0.281 L3=+0.031 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:46] [COLLECTOR] INFO: row #197 cpu=63.6 mem=49.6 kb_irq=0 ctx=4748 k_read=2653 k_write=392 k_open=1819 k_exec=2 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:31:47] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:47] [COLLECTOR] INFO: row #198 cpu=25.0 mem=49.7 kb_irq=0 ctx=7967 k_read=2096 k_write=376 k_open=1476 k_exec=20 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:47] [ML-API] INFO: MALICIOUS | raw L2=0.369 L3=0.251 L4=0.236 | adj L2=-0.281 L3=+0.029 L4=-0.005 | conf=0.029 raw=malicious mode=execve
+INFO:     127.0.0.1:49312 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:47] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.029 | L2=0.369 L3=0.251 L4=0.236 | adj L2=-0.281 L3=+0.029 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:48] [COLLECTOR] INFO: row #199 cpu=16.3 mem=49.7 kb_irq=0 ctx=4443 k_read=2974 k_write=385 k_open=2091 k_exec=7 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:49] [COLLECTOR] INFO: row #200 cpu=4.3 mem=49.7 kb_irq=0 ctx=4408 k_read=2026 k_write=375 k_open=1409 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:49] [ML-API] INFO: MALICIOUS | raw L2=0.372 L3=0.255 L4=0.242 | adj L2=-0.278 L3=+0.034 L4=+0.001 | conf=0.034 raw=malicious mode=execve
+INFO:     127.0.0.1:49320 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:49] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.034 | L2=0.372 L3=0.255 L4=0.242 | adj L2=-0.278 L3=+0.034 L4=+0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:49] [COLLECTOR] INFO: row #201 cpu=46.3 mem=49.7 kb_irq=0 ctx=6728 k_read=2052 k_write=422 k_open=1460 k_exec=10 k_conn=0 python=5 shell=11 suspicious=5
+[01:31:50] [COLLECTOR] INFO: row #202 cpu=65.8 mem=49.7 kb_irq=0 ctx=8577 k_read=2791 k_write=581 k_open=2070 k_exec=13 k_conn=5 python=5 shell=11 suspicious=5
+[01:31:51] [COLLECTOR] INFO: row #203 cpu=62.9 mem=49.6 kb_irq=0 ctx=10254 k_read=5303 k_write=1447 k_open=3320 k_exec=23 k_conn=2 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:51] [ML-API] INFO: MALICIOUS | raw L2=0.373 L3=0.258 L4=0.238 | adj L2=-0.277 L3=+0.036 L4=-0.003 | conf=0.036 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:45916 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:51] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.036 | L2=0.373 L3=0.258 L4=0.238 | adj L2=-0.277 L3=+0.036 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:51] [COLLECTOR] INFO: row #204 cpu=60.6 mem=49.6 kb_irq=0 ctx=6313 k_read=3260 k_write=596 k_open=2186 k_exec=16 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:52] [ML-API] INFO: MALICIOUS | raw L2=0.371 L3=0.252 L4=0.236 | adj L2=-0.279 L3=+0.030 L4=-0.005 | conf=0.030 raw=malicious mode=execve
+INFO:     127.0.0.1:45932 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:52] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.030 | L2=0.371 L3=0.252 L4=0.236 | adj L2=-0.279 L3=+0.030 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:52] [COLLECTOR] INFO: row #205 cpu=68.4 mem=49.6 kb_irq=0 ctx=6360 k_read=2880 k_write=587 k_open=1813 k_exec=5 k_conn=0 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:53] [ML-API] INFO: MALICIOUS | raw L2=0.374 L3=0.262 L4=0.238 | adj L2=-0.276 L3=+0.040 L4=-0.003 | conf=0.040 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:45934 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:53] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.040 | L2=0.374 L3=0.262 L4=0.238 | adj L2=-0.276 L3=+0.040 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:53] [COLLECTOR] INFO: row #206 cpu=66.7 mem=49.6 kb_irq=0 ctx=10091 k_read=3882 k_write=871 k_open=2649 k_exec=16 k_conn=1 python=5 shell=12 suspicious=5
+[01:31:54] [COLLECTOR] INFO: row #207 cpu=70.3 mem=49.6 kb_irq=0 ctx=6563 k_read=2998 k_write=729 k_open=1813 k_exec=7 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:54] [ML-API] INFO: MALICIOUS | raw L2=0.378 L3=0.251 L4=0.238 | adj L2=-0.273 L3=+0.029 L4=-0.003 | conf=0.029 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:45948 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:54] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.029 | L2=0.378 L3=0.251 L4=0.238 | adj L2=-0.273 L3=+0.029 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:55] [COLLECTOR] INFO: row #208 cpu=42.6 mem=49.6 kb_irq=0 ctx=6870 k_read=2111 k_write=439 k_open=1423 k_exec=2 k_conn=0 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:55] [ML-API] INFO: MALICIOUS | raw L2=0.373 L3=0.255 L4=0.231 | adj L2=-0.277 L3=+0.033 L4=-0.010 | conf=0.033 raw=malicious mode=sim+ml
+INFO:     127.0.0.1:45950 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:55] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.033 | L2=0.373 L3=0.255 L4=0.231 | adj L2=-0.277 L3=+0.033 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:56] [COLLECTOR] INFO: row #209 cpu=68.3 mem=49.7 kb_irq=0 ctx=8670 k_read=2712 k_write=493 k_open=1813 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+[01:31:56] [COLLECTOR] INFO: row #210 cpu=57.9 mem=49.5 kb_irq=0 ctx=13716 k_read=6256 k_write=1766 k_open=3973 k_exec=26 k_conn=7 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:57] [ML-API] INFO: MALICIOUS | raw L2=0.375 L3=0.228 L4=0.234 | adj L2=-0.275 L3=+0.006 L4=-0.007 | conf=0.006 raw=benign mode=delta
+INFO:     127.0.0.1:45958 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:57] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.006 | L2=0.375 L3=0.228 L4=0.234 | adj L2=-0.275 L3=+0.006 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:57] [COLLECTOR] INFO: row #211 cpu=30.8 mem=49.5 kb_irq=0 ctx=8232 k_read=2048 k_write=291 k_open=1442 k_exec=12 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:31:57] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:58] [COLLECTOR] INFO: row #212 cpu=51.5 mem=49.5 kb_irq=0 ctx=6464 k_read=3948 k_write=483 k_open=2820 k_exec=15 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:58] [ML-API] INFO: MALICIOUS | raw L2=0.380 L3=0.242 L4=0.239 | adj L2=-0.270 L3=+0.020 L4=-0.002 | conf=0.020 raw=benign mode=delta
+INFO:     127.0.0.1:45966 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:58] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.020 | L2=0.380 L3=0.242 L4=0.239 | adj L2=-0.270 L3=+0.020 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:58] [COLLECTOR] INFO: row #213 cpu=30.3 mem=49.5 kb_irq=0 ctx=5253 k_read=2813 k_write=474 k_open=1808 k_exec=5 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:31:59] [ML-API] WARNING: STATE CHANGE malicious → benign | raw L2=0.377 L3=0.254 L4=0.240 | adj L2=-0.274 L3=+0.033 L4=-0.001 | conf=0.033 mode=delta streaks mal=0 ben=3
+INFO:     127.0.0.1:45976 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:31:59] [COLLECTOR] INFO: row #214 cpu=45.5 mem=49.5 kb_irq=0 ctx=5755 k_read=1988 k_write=353 k_open=1372 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:31:59] FYP-GUI [INFO]: ML prediction → benign conf=0.033 | L2=0.377 L3=0.254 L4=0.240 | adj L2=-0.274 L3=+0.033 L4=-0.001
+[2026-05-31 01:31:59] FYP-GUI [WARNING]: ML UI state → System Clean | conf=0.033 | L2:0.38, L3:0.25, L4:0.24
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:00] [ML-API] INFO: BENIGN | raw L2=0.383 L3=0.222 L4=0.239 | adj L2=-0.267 L3=+0.001 L4=-0.002 | conf=0.001 raw=benign mode=delta
+INFO:     127.0.0.1:45980 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:00] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.383 L3=0.222 L4=0.239 | adj L2=-0.267 L3=+0.001 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:00] [COLLECTOR] INFO: row #215 cpu=48.6 mem=49.5 kb_irq=0 ctx=11362 k_read=2749 k_write=556 k_open=1741 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:00] FYP-GUI [INFO]: Switching to page: dashboard
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:00] [COLLECTOR] INFO: row #216 cpu=60.6 mem=49.6 kb_irq=0 ctx=4417 k_read=3554 k_write=417 k_open=2546 k_exec=17 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:01] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.222 L4=0.238 | adj L2=-0.273 L3=+0.001 L4=-0.003 | conf=0.001 raw=benign mode=delta
+INFO:     127.0.0.1:40842 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:01] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.378 L3=0.222 L4=0.238 | adj L2=-0.273 L3=+0.001 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:01] [COLLECTOR] INFO: row #217 cpu=47.2 mem=49.6 kb_irq=0 ctx=13132 k_read=4636 k_write=1743 k_open=2727 k_exec=11 k_conn=6 python=4 shell=12 suspicious=5
+[01:32:02] [COLLECTOR] INFO: row #218 cpu=22.5 mem=49.5 kb_irq=0 ctx=4316 k_read=2991 k_write=401 k_open=2114 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:03] [COLLECTOR] INFO: row #219 cpu=27.3 mem=49.5 kb_irq=0 ctx=6394 k_read=1990 k_write=361 k_open=1381 k_exec=8 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:03] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.240 L4=0.235 | adj L2=-0.273 L3=+0.018 L4=-0.007 | conf=0.018 raw=benign mode=delta
+INFO:     127.0.0.1:40858 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:03] FYP-GUI [INFO]: ML prediction → benign conf=0.018 | L2=0.378 L3=0.240 L4=0.235 | adj L2=-0.273 L3=+0.018 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:03] [COLLECTOR] INFO: row #220 cpu=24.2 mem=49.5 kb_irq=0 ctx=5083 k_read=3027 k_write=480 k_open=2060 k_exec=7 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:04] [ML-API] INFO: BENIGN | raw L2=0.381 L3=0.246 L4=0.240 | adj L2=-0.269 L3=+0.025 L4=-0.001 | conf=0.025 raw=benign mode=delta
+INFO:     127.0.0.1:40874 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:04] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.381 L3=0.246 L4=0.240 | adj L2=-0.269 L3=+0.025 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:04] [COLLECTOR] INFO: row #221 cpu=25.0 mem=49.5 kb_irq=0 ctx=5965 k_read=1964 k_write=311 k_open=1393 k_exec=3 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:05] [COLLECTOR] INFO: row #222 cpu=25.0 mem=49.5 kb_irq=0 ctx=7558 k_read=2677 k_write=468 k_open=1745 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:05] [ML-API] INFO: BENIGN | raw L2=0.389 L3=0.226 L4=0.240 | adj L2=-0.261 L3=+0.004 L4=-0.001 | conf=0.004 raw=benign mode=delta
+INFO:     127.0.0.1:40878 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:05] FYP-GUI [INFO]: ML prediction → benign conf=0.004 | L2=0.389 L3=0.226 L4=0.240 | adj L2=-0.261 L3=+0.004 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:06] [COLLECTOR] INFO: row #223 cpu=65.7 mem=49.5 kb_irq=0 ctx=12614 k_read=6328 k_write=1806 k_open=3942 k_exec=27 k_conn=7 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:06] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.218 L4=0.238 | adj L2=-0.273 L3=-0.004 L4=-0.003 | conf=0.025 raw=benign mode=sim+ml
+INFO:     127.0.0.1:40892 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:06] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.378 L3=0.218 L4=0.238 | adj L2=-0.273 L3=-0.004 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:07] [COLLECTOR] INFO: row #224 cpu=59.4 mem=49.6 kb_irq=0 ctx=10085 k_read=2892 k_write=597 k_open=1845 k_exec=20 k_conn=0 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:32:07] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:07] [COLLECTOR] INFO: row #225 cpu=55.6 mem=49.6 kb_irq=0 ctx=8404 k_read=3111 k_write=512 k_open=2265 k_exec=20 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:07] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.244 L4=0.231 | adj L2=-0.278 L3=+0.022 L4=-0.010 | conf=0.022 raw=malicious mode=execve
+INFO:     127.0.0.1:40906 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:07] FYP-GUI [INFO]: ML prediction → benign conf=0.022 | L2=0.372 L3=0.244 L4=0.231 | adj L2=-0.278 L3=+0.022 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:08] [COLLECTOR] INFO: row #226 cpu=54.1 mem=49.6 kb_irq=0 ctx=7008 k_read=3153 k_write=584 k_open=2126 k_exec=10 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:09] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.263 L4=0.235 | adj L2=-0.278 L3=+0.041 L4=-0.006 | conf=0.041 raw=malicious mode=execve
+INFO:     127.0.0.1:40922 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:09] FYP-GUI [INFO]: ML prediction → benign conf=0.041 | L2=0.372 L3=0.263 L4=0.235 | adj L2=-0.278 L3=+0.041 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:09] [COLLECTOR] INFO: row #227 cpu=56.2 mem=49.6 kb_irq=0 ctx=8288 k_read=2048 k_write=427 k_open=1436 k_exec=10 k_conn=0 python=5 shell=11 suspicious=5
+[01:32:09] [COLLECTOR] INFO: row #228 cpu=56.8 mem=49.6 kb_irq=0 ctx=5800 k_read=2680 k_write=491 k_open=1785 k_exec=2 k_conn=1 python=5 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:10] [ML-API] WARNING: STATE CHANGE benign → malicious | raw L2=0.373 L3=0.250 L4=0.234 | adj L2=-0.277 L3=+0.028 L4=-0.008 | conf=0.028 mode=sim+ml streaks mal=3 ben=0
+INFO:     127.0.0.1:40930 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:10] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.028 | L2=0.373 L3=0.250 L4=0.234 | adj L2=-0.277 L3=+0.028 L4=-0.008
+[2026-05-31 01:32:10] FYP-GUI [WARNING]: ML UI state → Keylogger Detected — Level 3 | conf=0.028 | L2:0.37, L3:0.25, L4:0.23
+[2026-05-31 01:32:10] FYP-GUI [WARNING]: ML alert raised: Level 3 | python3 (PID 39587) | conf=0.028
+Failed to execute child process “dbus-launch” (No such file or directory)
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:10] [COLLECTOR] INFO: row #229 cpu=50.0 mem=49.6 kb_irq=0 ctx=8657 k_read=4061 k_write=575 k_open=2554 k_exec=28 k_conn=1 python=5 shell=11 suspicious=5
+[01:32:11] [COLLECTOR] INFO: row #230 cpu=56.4 mem=49.6 kb_irq=0 ctx=13562 k_read=5612 k_write=1856 k_open=3628 k_exec=26 k_conn=6 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:11] [ML-API] INFO: MALICIOUS | raw L2=0.373 L3=0.232 L4=0.237 | adj L2=-0.277 L3=+0.011 L4=-0.004 | conf=0.011 raw=benign mode=sim+ml
+INFO:     127.0.0.1:39698 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:11] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.011 | L2=0.373 L3=0.232 L4=0.237 | adj L2=-0.277 L3=+0.011 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:12] [COLLECTOR] INFO: row #231 cpu=40.5 mem=49.6 kb_irq=0 ctx=7057 k_read=4163 k_write=607 k_open=3012 k_exec=30 k_conn=1 python=5 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:13] [ML-API] INFO: MALICIOUS | raw L2=0.371 L3=0.236 L4=0.230 | adj L2=-0.279 L3=+0.015 L4=-0.011 | conf=0.015 raw=malicious mode=execve
+INFO:     127.0.0.1:39700 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:13] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.015 | L2=0.371 L3=0.236 L4=0.230 | adj L2=-0.279 L3=+0.015 L4=-0.011
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:13] [COLLECTOR] INFO: row #232 cpu=40.4 mem=49.6 kb_irq=0 ctx=8089 k_read=2054 k_write=404 k_open=1468 k_exec=5 k_conn=0 python=5 shell=11 suspicious=5
+[01:32:13] [COLLECTOR] INFO: row #233 cpu=54.5 mem=49.6 kb_irq=0 ctx=5497 k_read=3029 k_write=484 k_open=2127 k_exec=15 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:14] [COLLECTOR] INFO: row #234 cpu=26.9 mem=49.6 kb_irq=0 ctx=6836 k_read=2119 k_write=452 k_open=1427 k_exec=3 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:14] [ML-API] INFO: MALICIOUS | raw L2=0.379 L3=0.242 L4=0.234 | adj L2=-0.271 L3=+0.020 L4=-0.008 | conf=0.020 raw=benign mode=delta
+INFO:     127.0.0.1:39708 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:14] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.020 | L2=0.379 L3=0.242 L4=0.234 | adj L2=-0.271 L3=+0.020 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:15] [COLLECTOR] INFO: row #235 cpu=48.4 mem=49.6 kb_irq=0 ctx=4844 k_read=3634 k_write=459 k_open=2548 k_exec=11 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:15] [ML-API] INFO: MALICIOUS | raw L2=0.379 L3=0.225 L4=0.239 | adj L2=-0.271 L3=+0.003 L4=-0.002 | conf=0.003 raw=benign mode=delta
+INFO:     127.0.0.1:39724 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:15] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.003 | L2=0.379 L3=0.225 L4=0.239 | adj L2=-0.271 L3=+0.003 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:15] [COLLECTOR] INFO: row #236 cpu=53.1 mem=49.6 kb_irq=0 ctx=9568 k_read=3474 k_write=595 k_open=2404 k_exec=21 k_conn=0 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:16] [ML-API] INFO: MALICIOUS | raw L2=0.378 L3=0.262 L4=0.235 | adj L2=-0.273 L3=+0.040 L4=-0.007 | conf=0.040 raw=malicious mode=execve
+INFO:     127.0.0.1:39740 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:16] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.040 | L2=0.378 L3=0.262 L4=0.235 | adj L2=-0.273 L3=+0.040 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:16] [COLLECTOR] INFO: row #237 cpu=24.1 mem=49.6 kb_irq=0 ctx=12650 k_read=4901 k_write=1618 k_open=2765 k_exec=8 k_conn=7 python=4 shell=11 suspicious=5
+[01:32:17] [COLLECTOR] INFO: row #238 cpu=25.9 mem=49.7 kb_irq=0 ctx=2702 k_read=3501 k_write=283 k_open=2566 k_exec=21 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:32:17] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:17] [ML-API] INFO: MALICIOUS | raw L2=0.380 L3=0.233 L4=0.231 | adj L2=-0.270 L3=+0.011 L4=-0.010 | conf=0.011 raw=benign mode=delta
+INFO:     127.0.0.1:39752 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:17] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.011 | L2=0.380 L3=0.233 L4=0.231 | adj L2=-0.270 L3=+0.011 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:17] [COLLECTOR] INFO: row #239 cpu=31.2 mem=49.7 kb_irq=0 ctx=6965 k_read=2552 k_write=302 k_open=1762 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:18] [ML-API] INFO: MALICIOUS | raw L2=0.381 L3=0.225 L4=0.237 | adj L2=-0.269 L3=+0.003 L4=-0.004 | conf=0.003 raw=benign mode=delta
+INFO:     127.0.0.1:39764 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:18] FYP-GUI [INFO]: ML prediction → malicious level=3 conf=0.003 | L2=0.381 L3=0.225 L4=0.237 | adj L2=-0.269 L3=+0.003 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:18] [COLLECTOR] INFO: row #240 cpu=34.4 mem=49.7 kb_irq=0 ctx=7164 k_read=2252 k_write=233 k_open=1734 k_exec=9 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:19] [COLLECTOR] INFO: row #241 cpu=39.4 mem=49.7 kb_irq=0 ctx=5077 k_read=2488 k_write=263 k_open=1727 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:19] [ML-API] WARNING: STATE CHANGE malicious → benign | raw L2=0.380 L3=0.245 L4=0.235 | adj L2=-0.270 L3=+0.023 L4=-0.006 | conf=0.023 mode=delta streaks mal=0 ben=3
+INFO:     127.0.0.1:39778 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:19] FYP-GUI [INFO]: ML prediction → benign conf=0.023 | L2=0.380 L3=0.245 L4=0.235 | adj L2=-0.270 L3=+0.023 L4=-0.006
+[2026-05-31 01:32:19] FYP-GUI [WARNING]: ML UI state → System Clean | conf=0.023 | L2:0.38, L3:0.25, L4:0.23
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:20] [COLLECTOR] INFO: row #242 cpu=34.2 mem=49.7 kb_irq=0 ctx=8134 k_read=2543 k_write=322 k_open=1729 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:20] [COLLECTOR] INFO: row #243 cpu=63.6 mem=49.7 kb_irq=0 ctx=8035 k_read=1926 k_write=297 k_open=1387 k_exec=2 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:20] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.231 L4=0.234 | adj L2=-0.271 L3=+0.009 L4=-0.007 | conf=0.009 raw=benign mode=delta
+INFO:     127.0.0.1:57462 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:20] FYP-GUI [INFO]: ML prediction → benign conf=0.009 | L2=0.379 L3=0.231 L4=0.234 | adj L2=-0.271 L3=+0.009 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:21] [COLLECTOR] INFO: row #244 cpu=43.8 mem=49.7 kb_irq=0 ctx=12642 k_read=5986 k_write=1574 k_open=3922 k_exec=26 k_conn=8 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:21] [ML-API] INFO: BENIGN | raw L2=0.387 L3=0.230 L4=0.234 | adj L2=-0.264 L3=+0.008 L4=-0.007 | conf=0.008 raw=benign mode=delta
+INFO:     127.0.0.1:57464 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:21] FYP-GUI [INFO]: ML prediction → benign conf=0.008 | L2=0.387 L3=0.230 L4=0.234 | adj L2=-0.264 L3=+0.008 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:22] [COLLECTOR] INFO: row #245 cpu=41.2 mem=49.7 kb_irq=0 ctx=6614 k_read=3052 k_write=419 k_open=2135 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:22] [ML-API] INFO: BENIGN | raw L2=0.377 L3=0.255 L4=0.231 | adj L2=-0.274 L3=+0.034 L4=-0.010 | conf=0.034 raw=malicious mode=execve
+INFO:     127.0.0.1:57476 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:22] FYP-GUI [INFO]: ML prediction → benign conf=0.034 | L2=0.377 L3=0.255 L4=0.231 | adj L2=-0.274 L3=+0.034 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:23] [COLLECTOR] INFO: row #246 cpu=40.0 mem=49.7 kb_irq=0 ctx=8266 k_read=1942 k_write=321 k_open=1375 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:23] [COLLECTOR] INFO: row #247 cpu=40.0 mem=49.7 kb_irq=0 ctx=7501 k_read=2909 k_write=355 k_open=2070 k_exec=7 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:24] [ML-API] INFO: BENIGN | raw L2=0.380 L3=0.260 L4=0.236 | adj L2=-0.270 L3=+0.038 L4=-0.005 | conf=0.038 raw=benign mode=delta
+INFO:     127.0.0.1:57490 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:24] FYP-GUI [INFO]: ML prediction → benign conf=0.038 | L2=0.380 L3=0.260 L4=0.236 | adj L2=-0.270 L3=+0.038 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:24] [COLLECTOR] INFO: row #248 cpu=13.3 mem=49.7 kb_irq=0 ctx=4649 k_read=2488 k_write=271 k_open=1722 k_exec=3 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:25] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.252 L4=0.234 | adj L2=-0.271 L3=+0.030 L4=-0.008 | conf=0.030 raw=benign mode=delta
+INFO:     127.0.0.1:57492 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:25] FYP-GUI [INFO]: ML prediction → benign conf=0.030 | L2=0.379 L3=0.252 L4=0.234 | adj L2=-0.271 L3=+0.030 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:25] [COLLECTOR] INFO: row #249 cpu=57.1 mem=49.7 kb_irq=0 ctx=10170 k_read=1957 k_write=274 k_open=1414 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:25] [COLLECTOR] INFO: row #250 cpu=51.5 mem=49.7 kb_irq=0 ctx=5282 k_read=3479 k_write=299 k_open=2537 k_exec=17 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:26] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.225 L4=0.240 | adj L2=-0.266 L3=+0.003 L4=-0.001 | conf=0.003 raw=benign mode=delta
+INFO:     127.0.0.1:57502 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:26] FYP-GUI [INFO]: ML prediction → benign conf=0.003 | L2=0.384 L3=0.225 L4=0.240 | adj L2=-0.266 L3=+0.003 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:26] [COLLECTOR] INFO: row #251 cpu=29.0 mem=49.7 kb_irq=0 ctx=10467 k_read=4920 k_write=1387 k_open=3065 k_exec=10 k_conn=6 python=4 shell=12 suspicious=5
+[01:32:27] [COLLECTOR] INFO: row #252 cpu=36.1 mem=49.7 kb_irq=0 ctx=7131 k_read=2020 k_write=304 k_open=1449 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:27] [ML-API] INFO: BENIGN | raw L2=0.377 L3=0.271 L4=0.238 | adj L2=-0.274 L3=+0.049 L4=-0.003 | conf=0.049 raw=benign mode=delta
+INFO:     127.0.0.1:57510 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:27] FYP-GUI [INFO]: ML prediction → benign conf=0.049 | L2=0.377 L3=0.271 L4=0.238 | adj L2=-0.274 L3=+0.049 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:32:27] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:27] [COLLECTOR] INFO: row #253 cpu=20.6 mem=49.7 kb_irq=0 ctx=8580 k_read=2523 k_write=292 k_open=1730 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:28] [ML-API] INFO: BENIGN | raw L2=0.380 L3=0.252 L4=0.238 | adj L2=-0.270 L3=+0.030 L4=-0.003 | conf=0.030 raw=benign mode=delta
+INFO:     127.0.0.1:57518 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:28] FYP-GUI [INFO]: ML prediction → benign conf=0.030 | L2=0.380 L3=0.252 L4=0.238 | adj L2=-0.270 L3=+0.030 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:28] [COLLECTOR] INFO: row #254 cpu=43.2 mem=49.7 kb_irq=0 ctx=4695 k_read=2208 k_write=219 k_open=1711 k_exec=7 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:29] [COLLECTOR] INFO: row #255 cpu=32.3 mem=49.7 kb_irq=0 ctx=3742 k_read=2481 k_write=249 k_open=1725 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:30] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.259 L4=0.238 | adj L2=-0.266 L3=+0.037 L4=-0.003 | conf=0.037 raw=benign mode=delta
+INFO:     127.0.0.1:57520 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:30] FYP-GUI [INFO]: ML prediction → benign conf=0.037 | L2=0.384 L3=0.259 L4=0.238 | adj L2=-0.266 L3=+0.037 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:30] [COLLECTOR] INFO: row #256 cpu=41.2 mem=49.7 kb_irq=0 ctx=5869 k_read=1866 k_write=237 k_open=1379 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:30] [COLLECTOR] INFO: row #257 cpu=32.3 mem=49.7 kb_irq=0 ctx=3977 k_read=2468 k_write=239 k_open=1726 k_exec=2 k_conn=1 python=4 shell=12 suspicious=5
+[01:32:31] [COLLECTOR] INFO: row #258 cpu=41.7 mem=49.7 kb_irq=0 ctx=8915 k_read=5256 k_write=1379 k_open=3532 k_exec=25 k_conn=6 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:31] [ML-API] INFO: BENIGN | raw L2=0.393 L3=0.231 L4=0.236 | adj L2=-0.257 L3=+0.009 L4=-0.006 | conf=0.009 raw=benign mode=delta
+INFO:     127.0.0.1:55858 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:31] FYP-GUI [INFO]: ML prediction → benign conf=0.009 | L2=0.393 L3=0.231 L4=0.236 | adj L2=-0.257 L3=+0.009 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:32] [COLLECTOR] INFO: row #259 cpu=39.3 mem=49.7 kb_irq=0 ctx=6707 k_read=2952 k_write=358 k_open=2099 k_exec=12 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:32] [COLLECTOR] INFO: row #260 cpu=40.5 mem=49.7 kb_irq=0 ctx=6272 k_read=1908 k_write=263 k_open=1392 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:32] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.257 L4=0.236 | adj L2=-0.275 L3=+0.035 L4=-0.005 | conf=0.035 raw=malicious mode=execve
+INFO:     127.0.0.1:55872 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:32] FYP-GUI [INFO]: ML prediction → benign conf=0.035 | L2=0.375 L3=0.257 L4=0.236 | adj L2=-0.275 L3=+0.035 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:33] [ML-API] INFO: BENIGN | raw L2=0.391 L3=0.226 L4=0.237 | adj L2=-0.259 L3=+0.004 L4=-0.004 | conf=0.004 raw=benign mode=delta
+INFO:     127.0.0.1:55874 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:33] FYP-GUI [INFO]: ML prediction → benign conf=0.004 | L2=0.391 L3=0.226 L4=0.237 | adj L2=-0.259 L3=+0.004 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:33] [COLLECTOR] INFO: row #261 cpu=55.3 mem=49.7 kb_irq=0 ctx=9524 k_read=2521 k_write=311 k_open=1729 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:34] [COLLECTOR] INFO: row #262 cpu=44.8 mem=49.7 kb_irq=0 ctx=4391 k_read=2868 k_write=309 k_open=2068 k_exec=8 k_conn=3 python=4 shell=11 suspicious=5
+[01:32:34] [COLLECTOR] INFO: row #263 cpu=36.1 mem=49.7 kb_irq=0 ctx=7409 k_read=1937 k_write=312 k_open=1410 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:35] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.219 L4=0.238 | adj L2=-0.271 L3=-0.003 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:55876 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:35] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.379 L3=0.219 L4=0.238 | adj L2=-0.271 L3=-0.003 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:35] [COLLECTOR] INFO: row #264 cpu=35.7 mem=49.7 kb_irq=0 ctx=5272 k_read=2493 k_write=287 k_open=1718 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:36] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.223 L4=0.236 | adj L2=-0.266 L3=+0.002 L4=-0.006 | conf=0.002 raw=benign mode=delta
+INFO:     127.0.0.1:55880 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:36] FYP-GUI [INFO]: ML prediction → benign conf=0.002 | L2=0.384 L3=0.223 L4=0.236 | adj L2=-0.266 L3=+0.002 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:36] [COLLECTOR] INFO: row #265 cpu=71.4 mem=49.5 kb_irq=0 ctx=12205 k_read=4011 k_write=1173 k_open=2621 k_exec=23 k_conn=5 python=4 shell=12 suspicious=5
+[01:32:37] [COLLECTOR] INFO: row #266 cpu=36.8 mem=49.5 kb_irq=0 ctx=4953 k_read=3877 k_write=484 k_open=2710 k_exec=15 k_conn=3 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:37] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.246 L4=0.237 | adj L2=-0.277 L3=+0.025 L4=-0.004 | conf=0.025 raw=malicious mode=execve
+INFO:     127.0.0.1:55894 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:37] FYP-GUI [INFO]: ML prediction → benign conf=0.025 | L2=0.373 L3=0.246 L4=0.237 | adj L2=-0.277 L3=+0.025 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:32:37] FYP-Daemon [INFO]: Status: 56 events | 12 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:37] [COLLECTOR] INFO: row #267 cpu=17.9 mem=49.5 kb_irq=0 ctx=7908 k_read=2553 k_write=342 k_open=1732 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:38] [COLLECTOR] INFO: row #268 cpu=30.0 mem=49.5 kb_irq=0 ctx=3923 k_read=1898 k_write=269 k_open=1383 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:39] [ML-API] INFO: BENIGN | raw L2=0.383 L3=0.216 L4=0.239 | adj L2=-0.267 L3=-0.006 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:55896 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:39] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.383 L3=0.216 L4=0.239 | adj L2=-0.267 L3=-0.006 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:39] [COLLECTOR] INFO: row #269 cpu=18.9 mem=49.5 kb_irq=0 ctx=7287 k_read=2879 k_write=328 k_open=2065 k_exec=7 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:40] [COLLECTOR] INFO: row #270 cpu=41.3 mem=49.5 kb_irq=0 ctx=6600 k_read=1943 k_write=306 k_open=1390 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:40] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.241 L4=0.237 | adj L2=-0.266 L3=+0.019 L4=-0.004 | conf=0.019 raw=benign mode=delta
+INFO:     127.0.0.1:55898 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:40] FYP-GUI [INFO]: ML prediction → benign conf=0.019 | L2=0.384 L3=0.241 L4=0.237 | adj L2=-0.266 L3=+0.019 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:41] [COLLECTOR] INFO: row #271 cpu=34.3 mem=49.5 kb_irq=0 ctx=5903 k_read=3529 k_write=335 k_open=2563 k_exec=20 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:41] [ML-API] INFO: BENIGN | raw L2=0.387 L3=0.220 L4=0.237 | adj L2=-0.264 L3=-0.002 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:50758 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:41] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.387 L3=0.220 L4=0.237 | adj L2=-0.264 L3=-0.002 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:42] [COLLECTOR] INFO: row #272 cpu=55.0 mem=49.5 kb_irq=0 ctx=13136 k_read=4794 k_write=1481 k_open=3098 k_exec=9 k_conn=6 python=4 shell=11 suspicious=5
+[01:32:42] [COLLECTOR] INFO: row #273 cpu=32.3 mem=49.5 kb_irq=0 ctx=6644 k_read=2553 k_write=367 k_open=1715 k_exec=10 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:42] [ML-API] INFO: BENIGN | raw L2=0.377 L3=0.255 L4=0.238 | adj L2=-0.274 L3=+0.034 L4=-0.003 | conf=0.034 raw=malicious mode=execve
+INFO:     127.0.0.1:50766 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:42] FYP-GUI [INFO]: ML prediction → benign conf=0.034 | L2=0.377 L3=0.255 L4=0.238 | adj L2=-0.274 L3=+0.034 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:43] [COLLECTOR] INFO: row #274 cpu=37.8 mem=49.5 kb_irq=0 ctx=8653 k_read=2614 k_write=442 k_open=1739 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:44] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.247 L4=0.236 | adj L2=-0.275 L3=+0.026 L4=-0.005 | conf=0.026 raw=benign mode=delta
+INFO:     127.0.0.1:50780 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:44] FYP-GUI [INFO]: ML prediction → benign conf=0.026 | L2=0.375 L3=0.247 L4=0.236 | adj L2=-0.275 L3=+0.026 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:44] [COLLECTOR] INFO: row #275 cpu=50.0 mem=49.4 kb_irq=0 ctx=7710 k_read=3097 k_write=588 k_open=2081 k_exec=8 k_conn=0 python=4 shell=11 suspicious=5
+[01:32:45] [COLLECTOR] INFO: row #276 cpu=32.4 mem=49.4 kb_irq=0 ctx=6811 k_read=2109 k_write=552 k_open=1391 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:45] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.251 L4=0.236 | adj L2=-0.278 L3=+0.029 L4=-0.005 | conf=0.029 raw=benign mode=delta
+INFO:     127.0.0.1:50782 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:45] FYP-GUI [INFO]: ML prediction → benign conf=0.029 | L2=0.372 L3=0.251 L4=0.236 | adj L2=-0.278 L3=+0.029 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:46] [COLLECTOR] INFO: row #277 cpu=26.8 mem=49.5 kb_irq=8 ctx=10140 k_read=3652 k_write=516 k_open=2569 k_exec=20 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:46] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.218 L4=0.237 | adj L2=-0.273 L3=-0.004 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:50798 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:46] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.378 L3=0.218 L4=0.237 | adj L2=-0.273 L3=-0.004 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:46] [COLLECTOR] INFO: row #278 cpu=30.6 mem=49.4 kb_irq=2 ctx=11393 k_read=5071 k_write=1585 k_open=3077 k_exec=9 k_conn=6 python=4 shell=12 suspicious=5
+[01:32:47] [COLLECTOR] INFO: row #279 cpu=32.5 mem=49.4 kb_irq=0 ctx=5617 k_read=2024 k_write=359 k_open=1439 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:32:47] FYP-Daemon [INFO]: Status: 60 events | 13 processes tracked | 3 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:47] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.242 L4=0.232 | adj L2=-0.271 L3=+0.020 L4=-0.009 | conf=0.020 raw=benign mode=delta
+INFO:     127.0.0.1:50814 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:47] FYP-GUI [INFO]: ML prediction → benign conf=0.020 | L2=0.379 L3=0.242 L4=0.232 | adj L2=-0.271 L3=+0.020 L4=-0.009
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:48] [COLLECTOR] INFO: row #280 cpu=54.1 mem=49.4 kb_irq=0 ctx=7243 k_read=2689 k_write=496 k_open=1734 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:48] [ML-API] INFO: BENIGN | raw L2=0.380 L3=0.250 L4=0.240 | adj L2=-0.270 L3=+0.028 L4=-0.001 | conf=0.028 raw=benign mode=delta
+INFO:     127.0.0.1:50830 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:48] FYP-GUI [INFO]: ML prediction → benign conf=0.028 | L2=0.380 L3=0.250 L4=0.240 | adj L2=-0.270 L3=+0.028 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:48] [COLLECTOR] INFO: row #281 cpu=36.8 mem=49.4 kb_irq=0 ctx=9593 k_read=2871 k_write=307 k_open=2058 k_exec=7 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:49] [ML-API] INFO: BENIGN | raw L2=0.380 L3=0.243 L4=0.234 | adj L2=-0.270 L3=+0.021 L4=-0.008 | conf=0.021 raw=benign mode=delta
+INFO:     127.0.0.1:50844 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:49] FYP-GUI [INFO]: ML prediction → benign conf=0.021 | L2=0.380 L3=0.243 L4=0.234 | adj L2=-0.270 L3=+0.021 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:49] [COLLECTOR] INFO: row #282 cpu=45.7 mem=49.4 kb_irq=0 ctx=9258 k_read=1932 k_write=291 k_open=1393 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:50] [COLLECTOR] INFO: row #283 cpu=32.4 mem=49.4 kb_irq=0 ctx=5972 k_read=2521 k_write=292 k_open=1738 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:50] [ML-API] INFO: BENIGN | raw L2=0.382 L3=0.220 L4=0.240 | adj L2=-0.268 L3=-0.002 L4=-0.001 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:58418 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:50] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.382 L3=0.220 L4=0.240 | adj L2=-0.268 L3=-0.002 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:51] [COLLECTOR] INFO: row #284 cpu=24.4 mem=49.4 kb_irq=0 ctx=6774 k_read=3518 k_write=348 k_open=2543 k_exec=20 k_conn=0 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:51] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.223 L4=0.237 | adj L2=-0.275 L3=+0.002 L4=-0.004 | conf=0.002 raw=benign mode=delta
+INFO:     127.0.0.1:58428 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:51] FYP-GUI [INFO]: ML prediction → benign conf=0.002 | L2=0.375 L3=0.223 L4=0.237 | adj L2=-0.275 L3=+0.002 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:51] [COLLECTOR] INFO: row #285 cpu=36.1 mem=49.4 kb_irq=0 ctx=11905 k_read=4357 k_write=1402 k_open=2727 k_exec=8 k_conn=7 python=4 shell=11 suspicious=5
+[01:32:52] [COLLECTOR] INFO: row #286 cpu=36.7 mem=49.4 kb_irq=0 ctx=8782 k_read=2933 k_write=324 k_open=2106 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:52] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.239 L4=0.234 | adj L2=-0.271 L3=+0.018 L4=-0.008 | conf=0.018 raw=benign mode=delta
+INFO:     127.0.0.1:58440 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:52] FYP-GUI [INFO]: ML prediction → benign conf=0.018 | L2=0.379 L3=0.239 L4=0.234 | adj L2=-0.271 L3=+0.018 L4=-0.008
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:53] [COLLECTOR] INFO: row #287 cpu=42.5 mem=49.4 kb_irq=0 ctx=4328 k_read=2481 k_write=272 k_open=1719 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:53] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.249 L4=0.236 | adj L2=-0.275 L3=+0.027 L4=-0.005 | conf=0.027 raw=benign mode=delta
+INFO:     127.0.0.1:58446 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:53] FYP-GUI [INFO]: ML prediction → benign conf=0.027 | L2=0.375 L3=0.249 L4=0.236 | adj L2=-0.275 L3=+0.027 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:54] [COLLECTOR] INFO: row #288 cpu=30.8 mem=49.4 kb_irq=0 ctx=8892 k_read=2860 k_write=269 k_open=2062 k_exec=7 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:54] [ML-API] INFO: BENIGN | raw L2=0.380 L3=0.227 L4=0.237 | adj L2=-0.270 L3=+0.005 L4=-0.004 | conf=0.005 raw=benign mode=delta
+INFO:     127.0.0.1:58456 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:54] FYP-GUI [INFO]: ML prediction → benign conf=0.005 | L2=0.380 L3=0.227 L4=0.237 | adj L2=-0.270 L3=+0.005 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:54] [COLLECTOR] INFO: row #289 cpu=25.6 mem=49.4 kb_irq=0 ctx=7252 k_read=1943 k_write=299 k_open=1405 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:55] [ML-API] INFO: BENIGN | raw L2=0.387 L3=0.216 L4=0.241 | adj L2=-0.264 L3=-0.006 L4=+0.000 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:58458 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:55] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.387 L3=0.216 L4=0.241 | adj L2=-0.264 L3=-0.006 L4=+0.000
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:55] [COLLECTOR] INFO: row #290 cpu=28.6 mem=49.4 kb_irq=0 ctx=9209 k_read=2569 k_write=348 k_open=1745 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:56] [COLLECTOR] INFO: row #291 cpu=30.0 mem=49.4 kb_irq=0 ctx=9618 k_read=4421 k_write=1076 k_open=2926 k_exec=23 k_conn=5 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:56] [ML-API] INFO: BENIGN | raw L2=0.377 L3=0.211 L4=0.238 | adj L2=-0.274 L3=-0.011 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:58462 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:56] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.377 L3=0.211 L4=0.238 | adj L2=-0.274 L3=-0.011 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:57] [COLLECTOR] INFO: row #292 cpu=31.4 mem=49.4 kb_irq=0 ctx=8582 k_read=4071 k_write=677 k_open=2724 k_exec=13 k_conn=2 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:32:57] FYP-Daemon [INFO]: Status: 60 events | 13 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:57] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.243 L4=0.237 | adj L2=-0.278 L3=+0.021 L4=-0.004 | conf=0.021 raw=malicious mode=execve
+INFO:     127.0.0.1:58466 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:57] FYP-GUI [INFO]: ML prediction → benign conf=0.021 | L2=0.372 L3=0.243 L4=0.237 | adj L2=-0.278 L3=+0.021 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:58] [COLLECTOR] INFO: row #293 cpu=31.0 mem=49.4 kb_irq=0 ctx=9117 k_read=1929 k_write=290 k_open=1390 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:58] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.240 L4=0.238 | adj L2=-0.278 L3=+0.018 L4=-0.003 | conf=0.018 raw=benign mode=delta
+INFO:     127.0.0.1:58470 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:58] FYP-GUI [INFO]: ML prediction → benign conf=0.018 | L2=0.372 L3=0.240 L4=0.238 | adj L2=-0.278 L3=+0.018 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:32:58] [COLLECTOR] INFO: row #294 cpu=21.1 mem=49.4 kb_irq=0 ctx=9267 k_read=2556 k_write=337 k_open=1740 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:32:59] [COLLECTOR] INFO: row #295 cpu=20.0 mem=49.4 kb_irq=0 ctx=7389 k_read=2903 k_write=344 k_open=2070 k_exec=7 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:32:59] [ML-API] INFO: BENIGN | raw L2=0.381 L3=0.209 L4=0.239 | adj L2=-0.269 L3=-0.013 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:58484 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:32:59] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.381 L3=0.209 L4=0.239 | adj L2=-0.269 L3=-0.013 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:00] [COLLECTOR] INFO: row #296 cpu=21.4 mem=49.4 kb_irq=0 ctx=7777 k_read=2597 k_write=406 k_open=1777 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:00] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.242 L4=0.235 | adj L2=-0.273 L3=+0.020 L4=-0.006 | conf=0.020 raw=benign mode=delta
+INFO:     127.0.0.1:49160 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:00] FYP-GUI [INFO]: ML prediction → benign conf=0.020 | L2=0.378 L3=0.242 L4=0.235 | adj L2=-0.273 L3=+0.020 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:01] [COLLECTOR] INFO: row #297 cpu=52.8 mem=49.4 kb_irq=0 ctx=10375 k_read=3850 k_write=611 k_open=2873 k_exec=23 k_conn=5 python=4 shell=12 suspicious=5
+[01:33:01] [COLLECTOR] INFO: row #298 cpu=13.3 mem=49.4 kb_irq=0 ctx=11489 k_read=4427 k_write=1155 k_open=2777 k_exec=15 k_conn=2 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:02] [ML-API] INFO: BENIGN | raw L2=0.376 L3=0.214 L4=0.238 | adj L2=-0.274 L3=-0.007 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:49174 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:02] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.376 L3=0.214 L4=0.238 | adj L2=-0.274 L3=-0.007 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:02] [COLLECTOR] INFO: row #299 cpu=21.9 mem=49.4 kb_irq=0 ctx=3019 k_read=2459 k_write=234 k_open=1717 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:33:03] [COLLECTOR] INFO: row #300 cpu=27.3 mem=49.4 kb_irq=0 ctx=7780 k_read=1879 k_write=232 k_open=1392 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:03] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.242 L4=0.239 | adj L2=-0.273 L3=+0.020 L4=-0.002 | conf=0.020 raw=benign mode=delta
+INFO:     127.0.0.1:49186 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:03] FYP-GUI [INFO]: ML prediction → benign conf=0.020 | L2=0.378 L3=0.242 L4=0.239 | adj L2=-0.273 L3=+0.020 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:04] [COLLECTOR] INFO: row #301 cpu=45.5 mem=49.4 kb_irq=0 ctx=7640 k_read=2822 k_write=236 k_open=2059 k_exec=8 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:04] [ML-API] INFO: BENIGN | raw L2=0.385 L3=0.213 L4=0.240 | adj L2=-0.265 L3=-0.008 L4=-0.001 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:49198 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:04] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.385 L3=0.213 L4=0.240 | adj L2=-0.265 L3=-0.008 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:04] [COLLECTOR] INFO: row #302 cpu=38.2 mem=49.4 kb_irq=0 ctx=5459 k_read=2537 k_write=296 k_open=1745 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:04] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.245 L4=0.238 | adj L2=-0.277 L3=+0.023 L4=-0.003 | conf=0.023 raw=benign mode=delta
+INFO:     127.0.0.1:49208 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:04] FYP-GUI [INFO]: ML prediction → benign conf=0.023 | L2=0.373 L3=0.245 L4=0.238 | adj L2=-0.277 L3=+0.023 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:05] [COLLECTOR] INFO: row #303 cpu=35.1 mem=49.4 kb_irq=0 ctx=13339 k_read=2594 k_write=367 k_open=1749 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:05] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.222 L4=0.237 | adj L2=-0.275 L3=+0.001 L4=-0.004 | conf=0.001 raw=benign mode=delta
+INFO:     127.0.0.1:49220 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:05] FYP-GUI [INFO]: ML prediction → benign conf=0.001 | L2=0.375 L3=0.222 L4=0.237 | adj L2=-0.275 L3=+0.001 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:06] [COLLECTOR] INFO: row #304 cpu=53.3 mem=49.4 kb_irq=0 ctx=10338 k_read=3529 k_write=344 k_open=2555 k_exec=20 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:06] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.216 L4=0.236 | adj L2=-0.277 L3=-0.006 L4=-0.006 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:49224 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:06] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.373 L3=0.216 L4=0.236 | adj L2=-0.277 L3=-0.006 L4=-0.006
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:06] [COLLECTOR] INFO: row #305 cpu=26.3 mem=49.4 kb_irq=0 ctx=9216 k_read=4938 k_write=1412 k_open=3066 k_exec=8 k_conn=7 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:07] [ML-API] INFO: BENIGN | raw L2=0.371 L3=0.256 L4=0.235 | adj L2=-0.279 L3=+0.035 L4=-0.007 | conf=0.035 raw=malicious mode=execve
+INFO:     127.0.0.1:49230 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:07] FYP-GUI [INFO]: ML prediction → benign conf=0.035 | L2=0.371 L3=0.256 L4=0.235 | adj L2=-0.279 L3=+0.035 L4=-0.007
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:07] [COLLECTOR] INFO: row #306 cpu=6.2 mem=49.4 kb_irq=0 ctx=8953 k_read=2661 k_write=367 k_open=1790 k_exec=12 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:33:07] FYP-Daemon [INFO]: Status: 60 events | 13 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:08] [COLLECTOR] INFO: row #307 cpu=31.6 mem=49.4 kb_irq=0 ctx=6457 k_read=1903 k_write=273 k_open=1380 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:08] [ML-API] INFO: BENIGN | raw L2=0.380 L3=0.240 L4=0.241 | adj L2=-0.270 L3=+0.018 L4=+0.000 | conf=0.018 raw=benign mode=delta
+INFO:     127.0.0.1:49246 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:08] FYP-GUI [INFO]: ML prediction → benign conf=0.018 | L2=0.380 L3=0.240 L4=0.241 | adj L2=-0.270 L3=+0.018 L4=+0.000
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:08] [COLLECTOR] INFO: row #308 cpu=18.2 mem=49.4 kb_irq=0 ctx=7809 k_read=2522 k_write=313 k_open=1728 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:09] [ML-API] INFO: BENIGN | raw L2=0.384 L3=0.219 L4=0.237 | adj L2=-0.266 L3=-0.003 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:49262 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:09] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.384 L3=0.219 L4=0.237 | adj L2=-0.266 L3=-0.003 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:09] [COLLECTOR] INFO: row #309 cpu=6.5 mem=49.4 kb_irq=0 ctx=5956 k_read=2861 k_write=289 k_open=2067 k_exec=7 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:10] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.211 L4=0.240 | adj L2=-0.273 L3=-0.011 L4=-0.001 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:49264 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:10] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.378 L3=0.211 L4=0.240 | adj L2=-0.273 L3=-0.011 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:10] [COLLECTOR] INFO: row #310 cpu=36.2 mem=49.4 kb_irq=0 ctx=8986 k_read=1914 k_write=280 k_open=1398 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:33:10] [COLLECTOR] INFO: row #311 cpu=30.0 mem=49.4 kb_irq=0 ctx=3722 k_read=3436 k_write=248 k_open=2533 k_exec=18 k_conn=1 python=4 shell=12 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:11] [ML-API] INFO: BENIGN | raw L2=0.388 L3=0.216 L4=0.237 | adj L2=-0.263 L3=-0.006 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:53944 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:11] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.388 L3=0.216 L4=0.237 | adj L2=-0.263 L3=-0.006 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:11] [COLLECTOR] INFO: row #312 cpu=21.9 mem=49.4 kb_irq=0 ctx=12951 k_read=4360 k_write=1415 k_open=2728 k_exec=10 k_conn=6 python=4 shell=12 suspicious=5
+[01:33:12] [COLLECTOR] INFO: row #313 cpu=30.3 mem=49.4 kb_irq=0 ctx=6549 k_read=2922 k_write=302 k_open=2112 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:12] [ML-API] INFO: BENIGN | raw L2=0.378 L3=0.259 L4=0.240 | adj L2=-0.273 L3=+0.037 L4=-0.001 | conf=0.037 raw=benign mode=delta
+INFO:     127.0.0.1:53954 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:12] FYP-GUI [INFO]: ML prediction → benign conf=0.037 | L2=0.378 L3=0.259 L4=0.240 | adj L2=-0.273 L3=+0.037 L4=-0.001
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:13] [COLLECTOR] INFO: row #314 cpu=38.7 mem=49.4 kb_irq=0 ctx=9408 k_read=2517 k_write=287 k_open=1727 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:13] [ML-API] INFO: BENIGN | raw L2=0.374 L3=0.251 L4=0.238 | adj L2=-0.276 L3=+0.029 L4=-0.003 | conf=0.029 raw=benign mode=delta
+INFO:     127.0.0.1:53962 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:13] FYP-GUI [INFO]: ML prediction → benign conf=0.029 | L2=0.374 L3=0.251 L4=0.238 | adj L2=-0.276 L3=+0.029 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:13] [COLLECTOR] INFO: row #315 cpu=37.8 mem=49.4 kb_irq=0 ctx=5419 k_read=2527 k_write=302 k_open=1730 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:14] [ML-API] INFO: BENIGN | raw L2=0.372 L3=0.216 L4=0.237 | adj L2=-0.278 L3=-0.006 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:53964 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:14] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.372 L3=0.216 L4=0.237 | adj L2=-0.278 L3=-0.006 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:14] [COLLECTOR] INFO: row #316 cpu=22.2 mem=49.3 kb_irq=0 ctx=9073 k_read=2892 k_write=322 k_open=2071 k_exec=8 k_conn=0 python=4 shell=11 suspicious=5
+[01:33:15] [COLLECTOR] INFO: row #317 cpu=38.9 mem=49.3 kb_irq=0 ctx=6782 k_read=1985 k_write=339 k_open=1395 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:15] [ML-API] INFO: BENIGN | raw L2=0.379 L3=0.239 L4=0.236 | adj L2=-0.272 L3=+0.018 L4=-0.005 | conf=0.018 raw=benign mode=delta
+INFO:     127.0.0.1:53974 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:15] FYP-GUI [INFO]: ML prediction → benign conf=0.018 | L2=0.379 L3=0.239 L4=0.236 | adj L2=-0.272 L3=+0.018 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:15] [COLLECTOR] INFO: row #318 cpu=28.6 mem=49.3 kb_irq=0 ctx=6179 k_read=2525 k_write=306 k_open=1735 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:16] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.225 L4=0.237 | adj L2=-0.275 L3=+0.003 L4=-0.004 | conf=0.003 raw=benign mode=delta
+INFO:     127.0.0.1:53984 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:16] FYP-GUI [INFO]: ML prediction → benign conf=0.003 | L2=0.375 L3=0.225 L4=0.237 | adj L2=-0.275 L3=+0.003 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:16] [COLLECTOR] INFO: row #319 cpu=24.3 mem=49.3 kb_irq=0 ctx=13424 k_read=5460 k_write=1481 k_open=3652 k_exec=26 k_conn=6 python=4 shell=12 suspicious=5
+[01:33:17] [COLLECTOR] INFO: row #320 cpu=23.5 mem=49.3 kb_irq=0 ctx=6783 k_read=2401 k_write=329 k_open=1599 k_exec=12 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:17] [ML-API] INFO: BENIGN | raw L2=0.375 L3=0.218 L4=0.237 | adj L2=-0.275 L3=-0.004 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:53998 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:17] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.375 L3=0.218 L4=0.237 | adj L2=-0.275 L3=-0.004 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:17] [COLLECTOR] INFO: row #321 cpu=12.5 mem=49.3 kb_irq=0 ctx=5338 k_read=2476 k_write=255 k_open=1719 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:33:17] FYP-Daemon [INFO]: Status: 60 events | 13 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:18] [COLLECTOR] INFO: row #322 cpu=31.4 mem=49.3 kb_irq=0 ctx=6420 k_read=1931 k_write=307 k_open=1390 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:18] [ML-API] INFO: BENIGN | raw L2=0.383 L3=0.218 L4=0.239 | adj L2=-0.267 L3=-0.004 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:54008 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:18] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.383 L3=0.218 L4=0.239 | adj L2=-0.267 L3=-0.004 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:19] [COLLECTOR] INFO: row #323 cpu=23.5 mem=49.3 kb_irq=0 ctx=6061 k_read=2863 k_write=303 k_open=2064 k_exec=7 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:19] [ML-API] INFO: BENIGN | raw L2=0.381 L3=0.220 L4=0.238 | adj L2=-0.269 L3=-0.002 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:54014 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:19] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.381 L3=0.220 L4=0.238 | adj L2=-0.269 L3=-0.002 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:19] [COLLECTOR] INFO: row #324 cpu=30.3 mem=49.3 kb_irq=0 ctx=8845 k_read=1899 k_write=271 k_open=1384 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+[01:33:20] [COLLECTOR] INFO: row #325 cpu=34.3 mem=49.3 kb_irq=0 ctx=4809 k_read=2484 k_write=256 k_open=1728 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:21] [ML-API] INFO: BENIGN | raw L2=0.389 L3=0.214 L4=0.238 | adj L2=-0.262 L3=-0.007 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:46256 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:21] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.389 L3=0.214 L4=0.238 | adj L2=-0.262 L3=-0.007 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:21] [COLLECTOR] INFO: row #326 cpu=33.3 mem=49.4 kb_irq=0 ctx=11430 k_read=5922 k_write=1473 k_open=3881 k_exec=26 k_conn=6 python=4 shell=12 suspicious=5
+[01:33:21] [COLLECTOR] INFO: row #327 cpu=46.9 mem=49.4 kb_irq=0 ctx=2434 k_read=2147 k_write=162 k_open=1701 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:22] [ML-API] INFO: BENIGN | raw L2=0.373 L3=0.245 L4=0.236 | adj L2=-0.277 L3=+0.024 L4=-0.005 | conf=0.024 raw=malicious mode=execve
+INFO:     127.0.0.1:46270 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:22] FYP-GUI [INFO]: ML prediction → benign conf=0.024 | L2=0.373 L3=0.245 L4=0.236 | adj L2=-0.277 L3=+0.024 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:22] [COLLECTOR] INFO: row #328 cpu=41.0 mem=49.4 kb_irq=0 ctx=8650 k_read=2626 k_write=337 k_open=1788 k_exec=12 k_conn=0 python=4 shell=11 suspicious=5
+[01:33:23] [COLLECTOR] INFO: row #329 cpu=25.0 mem=49.4 kb_irq=0 ctx=7522 k_read=1925 k_write=299 k_open=1386 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:23] [ML-API] INFO: BENIGN | raw L2=0.381 L3=0.225 L4=0.238 | adj L2=-0.269 L3=+0.003 L4=-0.003 | conf=0.003 raw=benign mode=delta
+INFO:     127.0.0.1:46280 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:23] FYP-GUI [INFO]: ML prediction → benign conf=0.003 | L2=0.381 L3=0.225 L4=0.238 | adj L2=-0.269 L3=+0.003 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:24] [COLLECTOR] INFO: row #330 cpu=34.3 mem=49.4 kb_irq=0 ctx=6813 k_read=2534 k_write=315 k_open=1728 k_exec=3 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:24] [ML-API] INFO: BENIGN | raw L2=0.382 L3=0.219 L4=0.239 | adj L2=-0.268 L3=-0.003 L4=-0.002 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:46290 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:24] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.382 L3=0.219 L4=0.239 | adj L2=-0.268 L3=-0.003 L4=-0.002
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:24] [COLLECTOR] INFO: row #331 cpu=31.4 mem=49.4 kb_irq=0 ctx=6472 k_read=2897 k_write=312 k_open=2074 k_exec=7 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:25] [ML-API] INFO: BENIGN | raw L2=0.374 L3=0.218 L4=0.238 | adj L2=-0.276 L3=-0.004 L4=-0.003 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:46294 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:25] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.374 L3=0.218 L4=0.238 | adj L2=-0.276 L3=-0.004 L4=-0.003
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:25] [COLLECTOR] INFO: row #332 cpu=37.5 mem=49.4 kb_irq=0 ctx=8626 k_read=1924 k_write=292 k_open=1400 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:26] [ML-API] INFO: BENIGN | raw L2=0.385 L3=0.214 L4=0.237 | adj L2=-0.265 L3=-0.007 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:46302 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:26] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.385 L3=0.214 L4=0.237 | adj L2=-0.265 L3=-0.007 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:26] [COLLECTOR] INFO: row #333 cpu=48.5 mem=49.4 kb_irq=0 ctx=9458 k_read=3644 k_write=437 k_open=2842 k_exec=23 k_conn=5 python=4 shell=12 suspicious=5
+[01:33:26] [COLLECTOR] INFO: row #334 cpu=37.1 mem=49.4 kb_irq=0 ctx=8124 k_read=4738 k_write=1232 k_open=2774 k_exec=5 k_conn=3 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:27] [ML-API] INFO: BENIGN | raw L2=0.369 L3=0.250 L4=0.236 | adj L2=-0.281 L3=+0.028 L4=-0.005 | conf=0.028 raw=malicious mode=execve
+INFO:     127.0.0.1:46314 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:27] FYP-GUI [INFO]: ML prediction → benign conf=0.028 | L2=0.369 L3=0.250 L4=0.236 | adj L2=-0.281 L3=+0.028 L4=-0.005
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:27] [COLLECTOR] INFO: row #335 cpu=18.2 mem=49.4 kb_irq=0 ctx=7889 k_read=2621 k_write=326 k_open=1787 k_exec=12 k_conn=0 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 01:33:27] FYP-Daemon [INFO]: Status: 60 events | 13 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:28] [ML-API] INFO: BENIGN | raw L2=0.374 L3=0.242 L4=0.231 | adj L2=-0.276 L3=+0.020 L4=-0.010 | conf=0.020 raw=benign mode=delta
+INFO:     127.0.0.1:46326 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:28] FYP-GUI [INFO]: ML prediction → benign conf=0.020 | L2=0.374 L3=0.242 L4=0.231 | adj L2=-0.276 L3=+0.020 L4=-0.010
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:28] [COLLECTOR] INFO: row #336 cpu=54.8 mem=49.4 kb_irq=0 ctx=8395 k_read=1902 k_write=264 k_open=1386 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+[01:33:29] [COLLECTOR] INFO: row #337 cpu=44.1 mem=49.4 kb_irq=0 ctx=6798 k_read=2571 k_write=323 k_open=1723 k_exec=2 k_conn=1 python=4 shell=11 suspicious=5
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[01:33:29] [ML-API] INFO: BENIGN | raw L2=0.385 L3=0.218 L4=0.237 | adj L2=-0.265 L3=-0.004 L4=-0.004 | conf=0.000 raw=benign mode=delta
+INFO:     127.0.0.1:46338 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 01:33:29] FYP-GUI [INFO]: ML prediction → benign conf=0.000 | L2=0.385 L3=0.218 L4=0.237 | adj L2=-0.265 L3=-0.004 L4=-0.004
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+[01:33:29] [COLLECTOR] INFO: row #338 cpu=29.3 mem=49.4 kb_irq=0 ctx=5482 k_read=2976 k_write=424 k_open=2073 k_exec=7 k_conn=1 python=4 shell=11 suspicious=5
+[01:33:30] [COLLECTOR] INFO: row #339 cpu=20.5 mem=49.4 kb_irq=16 ctx=6271 k_read=2046 k_write=487 k_open=1387 k_exec=2 k_conn=0 python=4 shell=11 suspicious=5
+                                                                                                                                                                                                                                                                                                                                                                                                                         

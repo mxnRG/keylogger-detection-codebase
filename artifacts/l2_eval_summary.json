@@ -1,0 +1,32 @@
+[
+  {
+    "set": "train_benign",
+    "baseline_mean": 0.0001,
+    "tuned_mean": 0.0001
+  },
+  {
+    "set": "train_malicious",
+    "baseline_mean": 0.9999,
+    "tuned_mean": 0.9999
+  },
+  {
+    "set": "demo_vm_live",
+    "baseline_mean": 0.6451,
+    "tuned_mean": 0.0733
+  },
+  {
+    "set": "demo_vm_benign",
+    "baseline_mean": 0.6451,
+    "tuned_mean": 0.0733
+  },
+  {
+    "set": "unseen_l2_device_scan_malicious",
+    "baseline_mean": 0.6433,
+    "tuned_mean": 0.4417
+  },
+  {
+    "set": "unseen_l2_fifo_malicious",
+    "baseline_mean": 0.6493,
+    "tuned_mean": 0.4696
+  }
+]

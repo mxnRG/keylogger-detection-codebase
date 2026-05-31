@@ -1,0 +1,47 @@
+# Canonical Linux telemetry CSVs for ML training (L2-L4).
+# Paths are relative to archive_root.
+
+archive_root: 3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon
+
+train_levels: [2, 3, 4]
+
+capture_groups:
+  L2_benign: mamoon_ubuntu
+  L2_malicious: hook_trap_vm
+  L3_benign: haider_ubuntu
+  L3_malicious: rootkit_vm
+  L4_benign: haider_ubuntu
+  L4_malicious: kernel_behavior_vm
+
+evaluation_policy:
+  primary_split: cross_level
+  exclude_combined: true  # all_levels_ebpf_keylogger.csv is malicious-only
+
+levels:
+  2:
+    malicious:
+      - Data/Level 2_ Hook trap/level2_ebpf_keylogger.csv
+    benign:
+      - Mamoon (ubuntu)/level2 benign/level2.csv
+  3:
+    malicious:
+      - Data/Level 3_ RootKit/level3_ebpf_keylogger_v2.csv
+    benign:
+      - haider ubuntu/Level 3/level3_benign_ebpf.csv
+  4:
+    malicious:
+      - Data/Level 4_ kernel Level/level4_ebpf_kernel_behavior.csv
+    benign:
+      - haider ubuntu/Level 4/level4_benign_ebpf.csv
+
+optional:
+  1:
+    malicious:
+      - Data/Level 1_ User-API/level1_api_keylogger.csv
+    benign:
+      - Mamoon (ubuntu)/level1 benign/benign_data.csv
+
+exclude:
+  - "**/with 6 features/**"
+  - "**/combined/**"
+  - "**/windows**"

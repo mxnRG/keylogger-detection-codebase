@@ -8,12 +8,31 @@ KERNEL_DIR="$PROJECT_DIR/kernel"
 DAEMON_DIR="$PROJECT_DIR/daemon"
 GUI_DIR="$PROJECT_DIR/gui"
 SCRIPTS_DIR="$PROJECT_DIR/scripts"
-ARTIFACT_RUN="${FYP_ARTIFACT_RUN:-$PROJECT_DIR/artifacts/run_20260529_193015}"
+ARTIFACT_RUN="${FYP_ARTIFACT_RUN:-$PROJECT_DIR/artifacts/run_20260531_l2_hybrid}"
+LOG_DIR="${FYP_DEMO_LOG_DIR:-/tmp/fyp-demo}"
 
 export FYP_PROJECT_DIR="$PROJECT_DIR"
+export FYP_DEMO_LOG_DIR="$LOG_DIR"
+export FYP_DEMO_VERBOSE="${FYP_DEMO_VERBOSE:-0}"
+export FYP_ML_DEEP_LOG="${FYP_ML_DEEP_LOG:-1}"
 export FYP_ARTIFACT_RUN="$ARTIFACT_RUN"
 export FYP_TELEMETRY_CSV="${FYP_TELEMETRY_CSV:-/tmp/fyp_telemetry_live.csv}"
 export FYP_ML_API_URL="${FYP_ML_API_URL:-http://127.0.0.1:8765/predict}"
+export FYP_ML_IGNORE_LEVELS="${FYP_ML_IGNORE_LEVELS:-2}"
+export FYP_ML_CALIBRATE_SAMPLES="${FYP_ML_CALIBRATE_SAMPLES:-20}"
+export FYP_ML_L2_THRESHOLD="${FYP_ML_L2_THRESHOLD:-0.45}"
+export FYP_ML_L3_THRESHOLD="${FYP_ML_L3_THRESHOLD:-0.40}"
+export FYP_ML_L2_DELTA="${FYP_ML_L2_DELTA:-0.55}"
+export FYP_ML_L3_DELTA="${FYP_ML_L3_DELTA:-0.20}"
+export FYP_ML_L2_SPIKES="${FYP_ML_L2_SPIKES:-0}"
+export FYP_ML_L3_SPIKES="${FYP_ML_L3_SPIKES:-0}"
+export FYP_ML_L3_ROLLING="${FYP_ML_L3_ROLLING:-0}"
+export FYP_ML_L4_SPIKES="${FYP_ML_L4_SPIKES:-1}"
+export FYP_ML_SIM_DETECT="${FYP_ML_SIM_DETECT:-1}"
+export FYP_ML_SIM_MALICIOUS_STREAK="${FYP_ML_SIM_MALICIOUS_STREAK:-1}"
+
+mkdir -p "$LOG_DIR"
+chmod 777 "$LOG_DIR" 2>/dev/null || true
 
 if [ "$EUID" -ne 0 ]; then
     echo "Re-running with sudo for kernel module and eBPF collector..."
@@ -26,9 +45,11 @@ echo "========================================="
 echo "FYP Demo Stack"
 echo "========================================="
 
-touch /tmp/fyp_daemon.log /tmp/fyp_gui.log /tmp/fyp_lkm_watchdog.log 2>/dev/null || true
-chmod 666 /tmp/fyp_daemon.log /tmp/fyp_gui.log 2>/dev/null || true
-chown "$ACTUAL_USER:$ACTUAL_USER" /tmp/fyp_daemon.log /tmp/fyp_gui.log 2>/dev/null || true
+touch "$LOG_DIR/fyp_daemon.log" "$LOG_DIR/fyp_gui.log" "$LOG_DIR/fyp_lkm_watchdog.log" \
+      "$LOG_DIR/fyp_ml_api.log" "$LOG_DIR/fyp_ml_decisions.log" \
+      "$LOG_DIR/fyp_collector_live.log" 2>/dev/null || true
+chmod 666 "$LOG_DIR"/*.log 2>/dev/null || true
+chown "$ACTUAL_USER:$ACTUAL_USER" "$LOG_DIR"/*.log 2>/dev/null || true
 
 # Initial LKM load
 if ! lsmod | grep -q '^fyp_kbd '; then
@@ -45,7 +66,7 @@ fi
 if ! pgrep -f "lkm_watchdog.sh" >/dev/null; then
     echo "[2/6] Starting LKM watchdog..."
     chmod +x "$SCRIPTS_DIR/lkm_watchdog.sh"
-    nohup bash "$SCRIPTS_DIR/lkm_watchdog.sh" >>/tmp/fyp_lkm_watchdog.log 2>&1 &
+    nohup bash "$SCRIPTS_DIR/lkm_watchdog.sh" >>"$LOG_DIR/fyp_lkm_watchdog.log" 2>&1 &
 else
     echo "[2/6] LKM watchdog already running"
 fi
@@ -53,7 +74,7 @@ fi
 # Daemon
 if ! pgrep -f "fyp_daemon.py" >/dev/null; then
     echo "[3/6] Starting daemon..."
-    sudo -u "$ACTUAL_USER" bash -c "cd '$DAEMON_DIR' && python3 fyp_daemon.py >> /tmp/fyp_daemon.log 2>&1 &"
+    sudo -u "$ACTUAL_USER" bash -c "cd '$DAEMON_DIR' && python3 fyp_daemon.py >> '$LOG_DIR/fyp_daemon.log' 2>&1 &"
     sleep 2
 else
     echo "[3/6] Daemon already running"
@@ -64,8 +85,22 @@ if ! pgrep -f "ml_api.py" >/dev/null; then
     echo "[4/6] Starting ML API..."
     sudo -u "$ACTUAL_USER" bash -c "
         cd '$SCRIPTS_DIR' &&
+        export FYP_DEMO_LOG_DIR='$LOG_DIR' &&
+        export FYP_DEMO_VERBOSE='${FYP_DEMO_VERBOSE}' &&
+        export FYP_ML_DEEP_LOG='${FYP_ML_DEEP_LOG}' &&
         export FYP_ARTIFACT_RUN='$ARTIFACT_RUN' &&
-        nohup python3 ml_api.py >> /tmp/fyp_ml_api.log 2>&1 &
+        export FYP_ML_IGNORE_LEVELS='${FYP_ML_IGNORE_LEVELS}' &&
+        export FYP_ML_CALIBRATE_SAMPLES='${FYP_ML_CALIBRATE_SAMPLES}' &&
+        export FYP_ML_L2_THRESHOLD='${FYP_ML_L2_THRESHOLD}' &&
+        export FYP_ML_L2_DELTA='${FYP_ML_L2_DELTA}' &&
+        export FYP_ML_L3_DELTA='${FYP_ML_L3_DELTA}' &&
+        export FYP_ML_L2_SPIKES='${FYP_ML_L2_SPIKES}' &&
+        export FYP_ML_L3_SPIKES='${FYP_ML_L3_SPIKES}' &&
+        export FYP_ML_L3_ROLLING='${FYP_ML_L3_ROLLING}' &&
+        export FYP_ML_L4_SPIKES='${FYP_ML_L4_SPIKES}' &&
+        export FYP_ML_SIM_DETECT='${FYP_ML_SIM_DETECT}' &&
+        export FYP_ML_SIM_MALICIOUS_STREAK='${FYP_ML_SIM_MALICIOUS_STREAK}' &&
+        nohup python3 ml_api.py >> '$LOG_DIR/fyp_ml_api.log' 2>&1 &
     "
     sleep 2
 else
@@ -75,7 +110,7 @@ fi
 # Live collector (truncate fresh session)
 if ! pgrep -f "collector_live.py" >/dev/null; then
     echo "[5/6] Starting live eBPF collector..."
-    nohup python3 "$SCRIPTS_DIR/collector_live.py" --truncate >>/tmp/fyp_collector_live.log 2>&1 &
+    nohup python3 "$SCRIPTS_DIR/collector_live.py" --truncate >>"$LOG_DIR/fyp_collector_live.log" 2>&1 &
     sleep 1
 else
     echo "[5/6] Live collector already running"
@@ -89,7 +124,7 @@ if ! pgrep -f "main_gui.py\|fyp_gui.py" >/dev/null; then
         DISPLAY='${DISPLAY:-:0}' \
         FYP_TELEMETRY_CSV='$FYP_TELEMETRY_CSV' \
         FYP_ML_API_URL='$FYP_ML_API_URL' \
-        nohup python3 main_gui.py >> /tmp/fyp_gui.log 2>&1 &
+        nohup python3 main_gui.py >> '$LOG_DIR/fyp_gui.log' 2>&1 &
     "
     sleep 2
 else
@@ -101,6 +136,7 @@ echo "Demo stack status:"
 echo "  LKM:       $(lsmod | grep -c '^fyp_kbd ' || echo 0) loaded"
 echo "  Watchdog:  $(pgrep -c -f lkm_watchdog.sh || echo 0) process(es)"
 echo "  Daemon:    $(pgrep -c -f fyp_daemon.py || echo 0) process(es)"
+echo "  Logs:      $LOG_DIR/"
 echo "  ML API:    $(pgrep -c -f ml_api.py || echo 0) process(es) — curl http://127.0.0.1:8765/health"
 echo "  Collector: $(pgrep -c -f collector_live.py || echo 0) process(es) — $FYP_TELEMETRY_CSV"
 echo "  GUI:       $(pgrep -c -f 'main_gui.py|fyp_gui.py' || echo 0) process(es)"
@@ -108,5 +144,7 @@ echo ""
 echo "Unseen keylogger demo (separate terminal, as user):"
 echo "  python3 \"$PROJECT_DIR/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/unseen keyloggers/unseen_level3_agent_collector_queue.py\""
 echo ""
-echo "Stop: pkill -f 'collector_live|ml_api|fyp_daemon|lkm_watchdog|main_gui|fyp_gui'; sudo rmmod fyp_kbd"
+echo "Verbose logs:  sudo scripts/run_demo_verbose.sh"
+echo "Decision log:  $LOG_DIR/fyp_ml_decisions.log"
+echo "Stop:          sudo scripts/stop_demo_stack.sh"
 echo "========================================="

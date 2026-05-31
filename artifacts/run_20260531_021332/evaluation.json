@@ -1,0 +1,50 @@
+{
+  "thesis_primary": "B",
+  "split_mode": "per_level",
+  "feature_policy": "l2_behavioral",
+  "tiers": {
+    "A": {
+      "name": "in_distribution_row_split",
+      "description": "Upper bound \u2014 same capture sessions in train and test",
+      "levels": {
+        "2": {
+          "split_method": "stratified_fallback",
+          "models": {
+            "random_forest": {
+              "in_distribution_auc": 0.9999956854180161,
+              "in_distribution_ap": 0.9999977932204054,
+              "val_auc": 0.9999855550998953,
+              "val_ap": 0.9999926805626402
+            },
+            "extra_trees": {
+              "in_distribution_auc": 0.9979026728923444,
+              "in_distribution_ap": 0.9980041264293071,
+              "val_auc": 0.9978882260676192,
+              "val_ap": 0.9982062002781675
+            },
+            "xgboost": {
+              "in_distribution_auc": 0.9999965659449517,
+              "in_distribution_ap": 0.9999982345811855,
+              "val_auc": 0.9999871405157605,
+              "val_ap": 0.999993468017918
+            }
+          }
+        }
+      },
+      "macro_avg": {
+        "random_forest": {
+          "test_auc": 0.9999956854180161,
+          "test_ap": 0.9999977932204054
+        },
+        "extra_trees": {
+          "test_auc": 0.9979026728923444,
+          "test_ap": 0.9980041264293071
+        },
+        "xgboost": {
+          "test_auc": 0.9999965659449517,
+          "test_ap": 0.9999982345811855
+        }
+      }
+    }
+  }
+}

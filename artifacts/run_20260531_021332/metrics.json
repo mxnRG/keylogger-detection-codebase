@@ -1,0 +1,96 @@
+{
+  "run_id": "20260531_021332",
+  "rows": 94155,
+  "ingestion": {
+    "archive_root": "/home/fyp/project/dataset/3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon",
+    "files_loaded": [
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Mamoon (ubuntu)/level2 benign/level2.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 2_ Hook trap/level2_ebpf_keylogger.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 3/level3_benign_ebpf.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 3_ RootKit/level3_ebpf_keylogger_v2.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/haider ubuntu/Level 4/level4_benign_ebpf.csv",
+      "3-natasha-mamoon-20260529T122553Z-3-001/3-natasha-mamoon/Data/Level 4_ kernel Level/level4_ebpf_kernel_behavior.csv"
+    ],
+    "files_skipped": [],
+    "train_levels": [
+      2,
+      3,
+      4
+    ],
+    "supplement_dir": "/home/fyp/project/dataset/l2_supplement",
+    "supplement_rows": 279
+  },
+  "split_mode": "per_level",
+  "feature_policy": "l2_behavioral",
+  "levels": {
+    "2": {
+      "level": "2",
+      "rows": 25326,
+      "features": [
+        "kernel_context_switches_delta",
+        "kernel_sys_read_delta",
+        "kernel_sys_write_delta",
+        "kernel_openat_delta",
+        "kernel_execve_delta",
+        "kernel_connect_delta",
+        "keyboard_hardware_interrupts",
+        "cpu_to_keyboard_ratio",
+        "thread_to_process_ratio",
+        "shell_processes",
+        "python_processes",
+        "suspicious_process_names",
+        "high_cpu_processes",
+        "high_memory_processes",
+        "zombie_processes",
+        "total_threads"
+      ],
+      "split": {
+        "train_levels": [
+          "random"
+        ],
+        "val_level": [
+          "random"
+        ],
+        "test_level": [
+          "random"
+        ],
+        "deduped_rows": 25253,
+        "original_rows": 25326,
+        "deduped": true,
+        "split_method": "stratified_fallback",
+        "train_rows": 15151,
+        "val_rows": 5051,
+        "test_rows": 5051,
+        "test_equals_val": false
+      },
+      "feature_drops": {},
+      "models": {
+        "random_forest": {
+          "val_auc": 0.9999855550998953,
+          "test_auc": 0.9999956854180161,
+          "val_ap": 0.9999926805626402,
+          "test_ap": 0.9999977932204054,
+          "in_distribution_auc": 0.9999956854180161,
+          "model_path": "/home/fyp/project/artifacts/run_20260531_021332/level_2/random_forest/random_forest.joblib"
+        },
+        "extra_trees": {
+          "val_auc": 0.9978882260676192,
+          "test_auc": 0.9979026728923444,
+          "val_ap": 0.9982062002781675,
+          "test_ap": 0.9980041264293071,
+          "in_distribution_auc": 0.9979026728923444,
+          "model_path": "/home/fyp/project/artifacts/run_20260531_021332/level_2/extra_trees/extra_trees.joblib"
+        },
+        "xgboost": {
+          "val_auc": 0.9999871405157605,
+          "test_auc": 0.9999965659449517,
+          "val_ap": 0.999993468017918,
+          "test_ap": 0.9999982345811855,
+          "in_distribution_auc": 0.9999965659449517,
+          "model_path": "/home/fyp/project/artifacts/run_20260531_021332/level_2/xgboost/xgboost.joblib"
+        }
+      },
+      "features_path": "/home/fyp/project/artifacts/run_20260531_021332/level_2/features.json"
+    }
+  }
+}
