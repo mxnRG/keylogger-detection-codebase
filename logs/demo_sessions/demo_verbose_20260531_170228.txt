@@ -1,0 +1,474 @@
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:03:22] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.055 L3=0.241 L4=0.231 | adj L2=+0.020 L3=-0.001 L4=+0.008 | cal=True
+INFO:     127.0.0.1:33020 - "POST /predict HTTP/1.1" 200 OK
+[17:03:23] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.006 L3=0.296 L4=0.231 | adj L2=-0.028 L3=+0.054 L4=+0.008 | cal=True
+INFO:     127.0.0.1:33034 - "POST /predict HTTP/1.1" 200 OK
+[17:03:24] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.002 L3=0.289 L4=0.236 | adj L2=-0.032 L3=+0.047 L4=+0.012 | cal=True
+INFO:     127.0.0.1:33038 - "POST /predict HTTP/1.1" 200 OK
+[17:03:25] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.056 L3=0.243 L4=0.234 | adj L2=+0.021 L3=+0.002 L4=+0.011 | cal=True
+INFO:     127.0.0.1:33050 - "POST /predict HTTP/1.1" 200 OK
+[17:03:26] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.180 L3=0.253 L4=0.239 | adj L2=+0.145 L3=+0.011 L4=+0.016 | cal=True
+INFO:     127.0.0.1:33064 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:16] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.004 L3=0.281 L4=0.232 | adj L2=-0.031 L3=+0.039 L4=+0.009 | cal=True
+[17:03:17] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.048 L3=0.266 L4=0.227 | adj L2=+0.014 L3=+0.024 L4=+0.003 | cal=True
+[17:03:18] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.001 L3=0.250 L4=0.239 | adj L2=-0.034 L3=+0.008 L4=+0.016 | cal=True
+[17:03:20] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.066 L3=0.247 L4=0.229 | adj L2=+0.031 L3=+0.005 L4=+0.006 | cal=True
+[17:03:21] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.000 L3=0.277 L4=0.235 | adj L2=-0.034 L3=+0.036 L4=+0.011 | cal=True
+[17:03:22] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.055 L3=0.241 L4=0.231 | adj L2=+0.020 L3=-0.001 L4=+0.008 | cal=True
+[17:03:23] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.006 L3=0.296 L4=0.231 | adj L2=-0.028 L3=+0.054 L4=+0.008 | cal=True
+[17:03:24] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.002 L3=0.289 L4=0.236 | adj L2=-0.032 L3=+0.047 L4=+0.012 | cal=True
+[17:03:25] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.056 L3=0.243 L4=0.234 | adj L2=+0.021 L3=+0.002 L4=+0.011 | cal=True
+[17:03:26] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.180 L3=0.253 L4=0.239 | adj L2=+0.145 L3=+0.011 L4=+0.016 | cal=True
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+In file included from include/linux/stddef.h:5:
+In file included from include/uapi/linux/stddef.h:5:
+In file included from include/linux/compiler_types.h:80:
+include/linux/compiler-clang.h:43:9: warning: '__HAVE_BUILTIN_BSWAP16__' macro redefined [-Wmacro-redefined]
+#define __HAVE_BUILTIN_BSWAP16__
+        ^
+<command line>:3:9: note: previous definition is here
+#define __HAVE_BUILTIN_BSWAP16__ 1
+        ^
+3 warnings generated.
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:02:29] FYP-Daemon [INFO]: Netlink receiver started successfully
+[2026-05-31 17:02:29] FYP-Daemon [INFO]: Status writer thread started
+[2026-05-31 17:02:29] FYP-Daemon [INFO]: Daemon running. Press Ctrl+C to stop.
+[2026-05-31 17:02:29] FYP-Daemon [INFO]: Events will be delivered via Netlink (real-time, <1ms latency)
+[2026-05-31 17:02:29] FYP-Daemon [INFO]: Entering Netlink receive loop...
+[2026-05-31 17:02:39] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-05-31 17:02:49] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+[2026-05-31 17:02:59] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+[2026-05-31 17:03:09] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+[2026-05-31 17:03:19] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 17:02:34] FYP-GUI [INFO]: Monitoring started with 500ms interval
+[2026-05-31 17:02:34] FYP-GUI [INFO]: LKM status monitor started (2000ms)
+[2026-05-31 17:02:34] FYP-GUI [INFO]: Telemetry ML monitor started → http://127.0.0.1:8765/predict
+[2026-05-31 17:02:34] FYP-GUI [INFO]: Live ML + LKM watchdog monitors enabled
+[2026-05-31 17:02:34] FYP-GUI [INFO]: Resource monitoring enabled (1s interval)
+[2026-05-31 17:02:34] FYP-GUI [INFO]: GUI initialization complete
+[2026-05-31 17:02:34] FYP-GUI [INFO]: Entering Qt event loop
+[2026-05-31 17:02:35] FYP-GUI [INFO]: ✓ Daemon connection established. Baseline: 0 events
+[2026-05-31 17:02:35] FYP-GUI [INFO]: ✓ Daemon connection established
+[2026-05-31 17:02:36] FYP-GUI [INFO]: Found daemon PID: 73041
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:03:27] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.095 L3=0.276 L4=0.223 | adj L2=+0.061 L3=+0.034 L4=-0.000 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:27] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.095 L3=0.276 L4=0.223 | adj L2=+0.061 L3=+0.034 L4=-0.000 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:33080 - "POST /predict HTTP/1.1" 200 OK
+[17:03:28] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.084 L3=0.292 L4=0.222 | adj L2=+0.050 L3=+0.050 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:28] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.084 L3=0.292 L4=0.222 | adj L2=+0.050 L3=+0.050 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:33082 - "POST /predict HTTP/1.1" 200 OK
+[17:03:29] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.245 L4=0.226 | adj L2=+0.025 L3=+0.003 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:29] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.245 L4=0.226 | adj L2=+0.025 L3=+0.003 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57466 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:03:29] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:03:31] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.235 L4=0.233 | adj L2=+0.024 L3=-0.007 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:31] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.235 L4=0.233 | adj L2=+0.024 L3=-0.007 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57478 - "POST /predict HTTP/1.1" 200 OK
+[17:03:32] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.064 L3=0.279 L4=0.227 | adj L2=+0.030 L3=+0.037 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:32] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.064 L3=0.279 L4=0.227 | adj L2=+0.030 L3=+0.037 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57486 - "POST /predict HTTP/1.1" 200 OK
+[17:03:33] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.057 L3=0.256 L4=0.230 | adj L2=+0.023 L3=+0.014 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:33] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.057 L3=0.256 L4=0.230 | adj L2=+0.023 L3=+0.014 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57500 - "POST /predict HTTP/1.1" 200 OK
+[17:03:34] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.232 L4=0.229 | adj L2=+0.025 L3=-0.009 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:34] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.232 L4=0.229 | adj L2=+0.025 L3=-0.009 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57514 - "POST /predict HTTP/1.1" 200 OK
+[17:03:35] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.231 L4=0.232 | adj L2=+0.024 L3=-0.011 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:35] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.231 L4=0.232 | adj L2=+0.024 L3=-0.011 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57520 - "POST /predict HTTP/1.1" 200 OK
+[17:03:37] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.061 L3=0.241 L4=0.229 | adj L2=+0.027 L3=-0.001 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:37] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.061 L3=0.241 L4=0.229 | adj L2=+0.027 L3=-0.001 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57526 - "POST /predict HTTP/1.1" 200 OK
+[17:03:38] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.061 L3=0.227 L4=0.231 | adj L2=+0.026 L3=-0.015 L4=+0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:38] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.061 L3=0.227 L4=0.231 | adj L2=+0.026 L3=-0.015 L4=+0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:57530 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:03:39] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:03:40] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.069 L3=0.234 L4=0.228 | adj L2=+0.035 L3=-0.008 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:40] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.069 L3=0.234 L4=0.228 | adj L2=+0.035 L3=-0.008 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59786 - "POST /predict HTTP/1.1" 200 OK
+[17:03:41] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.065 L3=0.232 L4=0.228 | adj L2=+0.031 L3=-0.009 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:41] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.065 L3=0.232 L4=0.228 | adj L2=+0.031 L3=-0.009 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59790 - "POST /predict HTTP/1.1" 200 OK
+[17:03:42] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.630 | raw L2=0.630 L3=0.274 L4=0.219 | adj L2=+0.596 L3=+0.033 L4=-0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:42] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.630 | raw L2=0.630 L3=0.274 L4=0.219 | adj L2=+0.596 L3=+0.033 L4=-0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59792 - "POST /predict HTTP/1.1" 200 OK
+[17:03:43] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.059 L3=0.232 L4=0.233 | adj L2=+0.025 L3=-0.009 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:43] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.059 L3=0.232 L4=0.233 | adj L2=+0.025 L3=-0.009 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59794 - "POST /predict HTTP/1.1" 200 OK
+[17:03:44] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.234 L4=0.229 | adj L2=+0.024 L3=-0.008 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:44] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.234 L4=0.229 | adj L2=+0.024 L3=-0.008 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59810 - "POST /predict HTTP/1.1" 200 OK
+[17:03:46] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.063 L3=0.232 L4=0.229 | adj L2=+0.028 L3=-0.009 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:46] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.063 L3=0.232 L4=0.229 | adj L2=+0.028 L3=-0.009 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59820 - "POST /predict HTTP/1.1" 200 OK
+[17:03:47] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.126 L3=0.276 L4=0.227 | adj L2=+0.092 L3=+0.034 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:47] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.126 L3=0.276 L4=0.227 | adj L2=+0.092 L3=+0.034 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59822 - "POST /predict HTTP/1.1" 200 OK
+[17:03:48] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.227 L3=0.255 L4=0.227 | adj L2=+0.193 L3=+0.013 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:48] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.227 L3=0.255 L4=0.227 | adj L2=+0.193 L3=+0.013 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:59828 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:03:49] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:03:50] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.065 L3=0.252 L4=0.232 | adj L2=+0.030 L3=+0.010 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:50] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.065 L3=0.252 L4=0.232 | adj L2=+0.030 L3=+0.010 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:45506 - "POST /predict HTTP/1.1" 200 OK
+[17:03:51] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.236 L4=0.229 | adj L2=+0.024 L3=-0.006 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:51] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.236 L4=0.229 | adj L2=+0.024 L3=-0.006 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:45510 - "POST /predict HTTP/1.1" 200 OK
+[17:03:52] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.066 L3=0.282 L4=0.222 | adj L2=+0.031 L3=+0.040 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:52] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.066 L3=0.282 L4=0.222 | adj L2=+0.031 L3=+0.040 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:45514 - "POST /predict HTTP/1.1" 200 OK
+[17:03:54] [ML-DEC] INFO: BENIGN | mode=delta level=None conf=0.273 | raw L2=0.308 L3=0.252 L4=0.225 | adj L2=+0.273 L3=+0.010 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:54] [ML-DEC] INFO: BENIGN | mode=delta level=None conf=0.273 | raw L2=0.308 L3=0.252 L4=0.225 | adj L2=+0.273 L3=+0.010 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:45522 - "POST /predict HTTP/1.1" 200 OK
+[17:03:55] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.256 L4=0.227 | adj L2=+0.026 L3=+0.014 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:55] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.256 L4=0.227 | adj L2=+0.026 L3=+0.014 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:45528 - "POST /predict HTTP/1.1" 200 OK
+[17:03:56] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.231 L4=0.232 | adj L2=+0.026 L3=-0.011 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:56] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.231 L4=0.232 | adj L2=+0.026 L3=-0.011 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:45530 - "POST /predict HTTP/1.1" 200 OK
+[17:03:57] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.116 L3=0.272 L4=0.224 | adj L2=+0.082 L3=+0.030 L4=+0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:57] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.116 L3=0.272 L4=0.224 | adj L2=+0.082 L3=+0.030 L4=+0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:45546 - "POST /predict HTTP/1.1" 200 OK
+[17:03:58] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.095 L3=0.251 L4=0.223 | adj L2=+0.060 L3=+0.009 L4=-0.000 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:58] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.095 L3=0.251 L4=0.223 | adj L2=+0.060 L3=+0.009 L4=-0.000 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40002 - "POST /predict HTTP/1.1" 200 OK
+[17:03:59] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.079 L3=0.257 L4=0.224 | adj L2=+0.045 L3=+0.015 L4=+0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:03:59] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.079 L3=0.257 L4=0.224 | adj L2=+0.045 L3=+0.015 L4=+0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40012 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:04:00] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:04:01] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.070 L3=0.227 L4=0.233 | adj L2=+0.036 L3=-0.015 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:01] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.070 L3=0.227 L4=0.233 | adj L2=+0.036 L3=-0.015 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40028 - "POST /predict HTTP/1.1" 200 OK
+[17:04:02] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.067 L3=0.284 L4=0.222 | adj L2=+0.033 L3=+0.043 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:02] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.067 L3=0.284 L4=0.222 | adj L2=+0.033 L3=+0.043 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40038 - "POST /predict HTTP/1.1" 200 OK
+[17:04:04] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.061 L3=0.259 L4=0.230 | adj L2=+0.027 L3=+0.017 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:04] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.061 L3=0.259 L4=0.230 | adj L2=+0.027 L3=+0.017 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40044 - "POST /predict HTTP/1.1" 200 OK
+[17:04:05] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.106 L3=0.250 L4=0.227 | adj L2=+0.072 L3=+0.008 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:05] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.106 L3=0.250 L4=0.227 | adj L2=+0.072 L3=+0.008 L4=+0.003 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40048 - "POST /predict HTTP/1.1" 200 OK
+[17:04:06] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.234 L4=0.230 | adj L2=+0.025 L3=-0.008 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:06] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.234 L4=0.230 | adj L2=+0.025 L3=-0.008 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40064 - "POST /predict HTTP/1.1" 200 OK
+[17:04:07] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.109 L3=0.279 L4=0.224 | adj L2=+0.075 L3=+0.037 L4=+0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:07] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.109 L3=0.279 L4=0.224 | adj L2=+0.075 L3=+0.037 L4=+0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40074 - "POST /predict HTTP/1.1" 200 OK
+[17:04:08] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.057 L3=0.253 L4=0.230 | adj L2=+0.022 L3=+0.011 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:08] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.057 L3=0.253 L4=0.230 | adj L2=+0.022 L3=+0.011 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:40082 - "POST /predict HTTP/1.1" 200 OK
+[17:04:09] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.067 L3=0.228 L4=0.236 | adj L2=+0.033 L3=-0.014 L4=+0.012 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:09] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.067 L3=0.228 L4=0.236 | adj L2=+0.033 L3=-0.014 L4=+0.012 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60770 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:04:10] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:04:10] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.602 | raw L2=0.602 L3=0.261 L4=0.228 | adj L2=+0.567 L3=+0.019 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:10] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.602 | raw L2=0.602 L3=0.261 L4=0.228 | adj L2=+0.567 L3=+0.019 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60778 - "POST /predict HTTP/1.1" 200 OK
+[17:04:11] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.067 L3=0.229 L4=0.230 | adj L2=+0.033 L3=-0.013 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:11] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.067 L3=0.229 L4=0.230 | adj L2=+0.033 L3=-0.013 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60782 - "POST /predict HTTP/1.1" 200 OK
+[17:04:13] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.066 L3=0.282 L4=0.225 | adj L2=+0.032 L3=+0.040 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:13] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.066 L3=0.282 L4=0.225 | adj L2=+0.032 L3=+0.040 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60792 - "POST /predict HTTP/1.1" 200 OK
+[17:04:14] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.231 L4=0.230 | adj L2=+0.023 L3=-0.011 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:14] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.231 L4=0.230 | adj L2=+0.023 L3=-0.011 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60806 - "POST /predict HTTP/1.1" 200 OK
+[17:04:15] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.063 L3=0.252 L4=0.228 | adj L2=+0.029 L3=+0.010 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:15] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.063 L3=0.252 L4=0.228 | adj L2=+0.029 L3=+0.010 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60816 - "POST /predict HTTP/1.1" 200 OK
+[17:04:17] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.063 L3=0.229 L4=0.230 | adj L2=+0.029 L3=-0.013 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:17] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.063 L3=0.229 L4=0.230 | adj L2=+0.029 L3=-0.013 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60818 - "POST /predict HTTP/1.1" 200 OK
+[17:04:17] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.106 L3=0.274 L4=0.225 | adj L2=+0.072 L3=+0.033 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:17] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.106 L3=0.274 L4=0.225 | adj L2=+0.072 L3=+0.033 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:60822 - "POST /predict HTTP/1.1" 200 OK
+[17:04:18] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.064 L3=0.227 L4=0.236 | adj L2=+0.029 L3=-0.015 L4=+0.012 | cal=True
+INFO:     127.0.0.1:41992 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:18] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.064 L3=0.227 L4=0.236 | adj L2=+0.029 L3=-0.015 L4=+0.012 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:04:20] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.059 L3=0.229 L4=0.232 | adj L2=+0.025 L3=-0.013 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:20] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.059 L3=0.229 L4=0.232 | adj L2=+0.025 L3=-0.013 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42006 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:04:20] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:04:21] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.089 L3=0.246 L4=0.228 | adj L2=+0.055 L3=+0.004 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:21] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.089 L3=0.246 L4=0.228 | adj L2=+0.055 L3=+0.004 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42016 - "POST /predict HTTP/1.1" 200 OK
+[17:04:22] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.594 | raw L2=0.594 L3=0.264 L4=0.222 | adj L2=+0.560 L3=+0.023 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:22] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.594 | raw L2=0.594 L3=0.264 L4=0.222 | adj L2=+0.560 L3=+0.023 L4=-0.001 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42018 - "POST /predict HTTP/1.1" 200 OK
+[17:04:23] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.062 L3=0.258 L4=0.232 | adj L2=+0.028 L3=+0.016 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:23] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.062 L3=0.258 L4=0.232 | adj L2=+0.028 L3=+0.016 L4=+0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42034 - "POST /predict HTTP/1.1" 200 OK
+[17:04:24] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.229 L4=0.233 | adj L2=+0.024 L3=-0.013 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:24] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.229 L4=0.233 | adj L2=+0.024 L3=-0.013 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42046 - "POST /predict HTTP/1.1" 200 OK
+[17:04:25] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.253 L4=0.228 | adj L2=+0.026 L3=+0.011 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:25] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.060 L3=0.253 L4=0.228 | adj L2=+0.026 L3=+0.011 L4=+0.004 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42062 - "POST /predict HTTP/1.1" 200 OK
+[17:04:27] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.066 L3=0.234 L4=0.229 | adj L2=+0.032 L3=-0.008 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:27] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.066 L3=0.234 L4=0.229 | adj L2=+0.032 L3=-0.008 L4=+0.006 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42074 - "POST /predict HTTP/1.1" 200 OK
+[17:04:27] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.363 | raw L2=0.363 L3=0.271 L4=0.225 | adj L2=+0.329 L3=+0.029 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:27] [ML-DEC] INFO: BENIGN | mode=ml-L2 level=None conf=0.363 | raw L2=0.363 L3=0.271 L4=0.225 | adj L2=+0.329 L3=+0.029 L4=+0.002 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:42084 - "POST /predict HTTP/1.1" 200 OK
+[17:04:28] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.069 L3=0.230 L4=0.234 | adj L2=+0.035 L3=-0.012 L4=+0.011 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:28] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.069 L3=0.230 L4=0.234 | adj L2=+0.035 L3=-0.012 L4=+0.011 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:34682 - "POST /predict HTTP/1.1" 200 OK
+[17:04:30] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.234 L4=0.230 | adj L2=+0.024 L3=-0.008 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:30] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.058 L3=0.234 L4=0.230 | adj L2=+0.024 L3=-0.008 L4=+0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:34684 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 17:04:30] FYP-Daemon [INFO]: Status: 12 events | 4 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[17:04:31] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.062 L3=0.278 L4=0.229 | adj L2=+0.028 L3=+0.036 L4=+0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[17:04:31] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.062 L3=0.278 L4=0.229 | adj L2=+0.028 L3=+0.036 L4=+0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:34696 - "POST /predict HTTP/1.1" 200 OK

@@ -15,10 +15,16 @@ chmod 777 "$LOG_DIR" 2>/dev/null || true
 export FYP_DEMO_VERBOSE=1
 export FYP_DEMO_LOG_DIR="$LOG_DIR"
 export FYP_ML_DEEP_LOG=1
-export FYP_ML_L2_SPIKE_STREAK="${FYP_ML_L2_SPIKE_STREAK:-2}"
-export FYP_ML_L3_SPIKE_STREAK="${FYP_ML_L3_SPIKE_STREAK:-2}"
-export FYP_ML_L2_OPENAT_MARGIN="${FYP_ML_L2_OPENAT_MARGIN:-2200}"
-export FYP_ML_L2_READ_MARGIN="${FYP_ML_L2_READ_MARGIN:-2800}"
+
+DEMO_PROFILE="${FYP_DEMO_PROFILE:-ml}"
+if [ "$DEMO_PROFILE" = "safe" ]; then
+    # shellcheck source=scripts/demo_safe.env
+    source "$PROJECT_DIR/scripts/demo_safe.env"
+else
+    # shellcheck source=scripts/demo_ml.env
+    source "$PROJECT_DIR/scripts/demo_ml.env"
+fi
+echo "  Demo profile: $DEMO_PROFILE (ml=telemetry+ensembles, safe=sim-assist)"
 
 STAMP="$(date +%Y%m%d_%H%M%S)"
 SESSION_FILE="$SESSION_DIR/demo_verbose_${STAMP}.txt"
@@ -30,6 +36,13 @@ echo "  Latest:      $LATEST"
 echo ""
 
 bash "$PROJECT_DIR/scripts/start_demo_stack.sh"
+
+echo ""
+echo "Running demo smoke test..."
+sleep 12
+if ! bash "$PROJECT_DIR/scripts/demo_smoke_test.sh"; then
+    echo "WARNING: smoke test failed — check ML API logs before examiner demo"
+fi
 
 echo ""
 echo "Tailing logs (Ctrl+C stops tail only; use stop_demo_stack.sh to tear down)..."

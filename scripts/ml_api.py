@@ -37,8 +37,10 @@ THRESHOLD = float(os.environ.get("FYP_ML_THRESHOLD", "0.5"))
 L2_THRESHOLD = float(os.environ.get("FYP_ML_L2_THRESHOLD", "0.35"))
 L3_THRESHOLD = float(os.environ.get("FYP_ML_L3_THRESHOLD", "0.40"))
 MALICIOUS_STREAK = int(os.environ.get("FYP_ML_MALICIOUS_STREAK", "3"))
+RULE_MALICIOUS_STREAK = int(os.environ.get("FYP_ML_RULE_STREAK", "1"))
 SIM_MALICIOUS_STREAK = int(os.environ.get("FYP_ML_SIM_MALICIOUS_STREAK", "1"))
 BENIGN_STREAK = int(os.environ.get("FYP_ML_BENIGN_STREAK", "3"))
+MALICIOUS_HOLD_TICKS = int(os.environ.get("FYP_ML_HOLD_TICKS", "8"))
 CALIBRATE_SAMPLES = int(os.environ.get("FYP_ML_CALIBRATE_SAMPLES", "20"))
 SCORE_DELTA_IDLE = float(os.environ.get("FYP_ML_DELTA_IDLE", "0.065"))
 SIM_SCORE_DELTA = float(os.environ.get("FYP_ML_SIM_DELTA", "0.025"))
@@ -71,10 +73,15 @@ ROLL_OPENAT_L3 = float(os.environ.get("FYP_ML_ROLL_OPENAT_L3", "25"))
 ROLL_WRITE_L3 = float(os.environ.get("FYP_ML_ROLL_WRITE_L3", "15"))
 ROLL_READ_L3 = float(os.environ.get("FYP_ML_ROLL_READ_L3", "8000"))
 
-SIM_DETECT = os.environ.get("FYP_ML_SIM_DETECT", "1").lower() in ("1", "true", "yes")
+SIM_DETECT = os.environ.get("FYP_ML_SIM_DETECT", "0").lower() in ("1", "true", "yes")
+SPIKES_REQUIRE_SIM = os.environ.get("FYP_ML_SPIKES_REQUIRE_SIM", "0").lower() in (
+    "1",
+    "true",
+    "yes",
+)
 IGNORE_LEVELS = {
     int(x.strip())
-    for x in os.environ.get("FYP_ML_IGNORE_LEVELS", "2").split(",")
+    for x in os.environ.get("FYP_ML_IGNORE_LEVELS", "").split(",")
     if x.strip()
 }
 
@@ -97,6 +104,8 @@ _rolling: Deque[Dict[str, float]] = deque(maxlen=max(ROLLING_TICKS, 4))
 _l2_spike_streak = 0
 _l3_spike_streak = 0
 _prev_label = "benign"
+_hold_ticks_remaining = 0
+_sticky_detection: Optional[Tuple[str, Optional[int], float]] = None
 
 app = FastAPI(title="FYP ML Inference API", version="2.0.0")
 
@@ -112,8 +121,12 @@ class PredictResponse(BaseModel):
     per_level: Dict[str, float]
     raw_label: str
     calibrated: bool = False
+    calibrating: bool = False
+    calibration_progress: Optional[str] = None
     per_level_adjusted: Optional[Dict[str, float]] = None
     detection_mode: Optional[str] = None
+    l2_display: Optional[str] = None
+    l2_note: Optional[str] = None
 
 
 class EnsembleLevel:
@@ -334,6 +347,41 @@ def _rolling_spike_level(totals: Dict[str, float]) -> Optional[int]:
     return None
 
 
+def _calibration_progress_str() -> str:
+    return f"{min(_calibration_count, CALIBRATE_SAMPLES)}/{CALIBRATE_SAMPLES}"
+
+
+def _l2_response_fields(
+    per_level: Dict[str, float], label: str
+) -> Tuple[Optional[str], Optional[str]]:
+    if 2 not in IGNORE_LEVELS:
+        return None, None
+    l2_display = "informational"
+    l2_note = "score only; detection via sim-L2"
+    if label == "benign" and per_level.get("2", 0.0) > 0.4:
+        l2_note = "high L2 score (informational); detection via sim-L2"
+    return l2_display, l2_note
+
+
+def _spike_rule_allowed(
+    level: int,
+    sim_active: bool,
+    adjusted: Dict[str, float],
+) -> bool:
+    if not SPIKES_REQUIRE_SIM:
+        return True
+    if sim_active:
+        return True
+    adj = adjusted.get(str(level), 0.0)
+    if level == 2:
+        return adj >= L2_SCORE_DELTA * 2
+    if level == 3:
+        return adj >= L3_SCORE_DELTA * 2
+    if level == 4:
+        return adj >= THRESHOLD * 2
+    return False
+
+
 def _confirm_spike_level(instant: Optional[int]) -> Optional[int]:
     """Require consecutive spike ticks for L2/L3 to avoid idle false positives."""
     global _l2_spike_streak, _l3_spike_streak
@@ -392,17 +440,37 @@ def _adjusted_scores(per_level: Dict[str, float]) -> Dict[str, float]:
     return adj
 
 
+def _per_level_delta_floor(level: int, sim_active: bool) -> float:
+    """Delta fallback must respect per-level ML bars (avoids idle L2/L3 flicker)."""
+    base = SIM_SCORE_DELTA if sim_active else SCORE_DELTA_IDLE
+    if level == 2:
+        return max(base, L2_SCORE_DELTA)
+    if level == 3:
+        return max(base, L3_SCORE_DELTA)
+    return base
+
+
 def _ml_level_from_scores(
     per_level: Dict[str, float],
     adjusted: Dict[str, float],
+    row: Dict[str, Any],
 ) -> Optional[Tuple[int, float, str]]:
-    """Return (level, confidence, mode) from ML scores."""
+    """Return (level, confidence, mode) from ML scores + syscall context."""
     candidates: List[Tuple[int, float, str]] = []
 
     l2 = per_level.get("2", 0.0)
     l2_adj = adjusted.get("2", 0.0)
     if 2 not in IGNORE_LEVELS and l2_adj >= L2_SCORE_DELTA and l2 >= L2_THRESHOLD:
         candidates.append((2, l2, "ml-L2"))
+    elif 2 not in IGNORE_LEVELS and l2 >= L2_THRESHOLD:
+        kb = _kernel_baseline or {}
+        openat_d = _f(row, "kernel_openat_delta")
+        read_d = _f(row, "kernel_sys_read_delta")
+        if (
+            openat_d >= kb.get("kernel_openat_delta", 0) + L2_OPENAT_MARGIN * 0.2
+            and read_d >= kb.get("kernel_sys_read_delta", 0) + L2_READ_MARGIN * 0.2
+        ):
+            candidates.append((2, l2, "ml-L2"))
 
     l3 = per_level.get("3", 0.0)
     l3_adj = adjusted.get("3", 0.0)
@@ -427,7 +495,53 @@ def _ml_level_from_scores(
     return candidates[0]
 
 
-def _apply_hysteresis(raw_malicious: bool, sim_active: bool = False) -> str:
+def _is_rule_detection(mode: str) -> bool:
+    return mode.startswith(("ml-L", "spike-L", "roll-L", "sim-L"))
+
+
+def _clear_detection_hold() -> None:
+    global _hold_ticks_remaining, _sticky_detection
+    _hold_ticks_remaining = 0
+    _sticky_detection = None
+
+
+def _apply_detection_hold(
+    raw_malicious: bool,
+    detection_mode: str,
+    reported_level: Optional[int],
+    confidence: float,
+) -> Tuple[bool, str, Optional[int], float]:
+    """Keep ml/spike context across ticks when the sim only hits one CSV window."""
+    global _hold_ticks_remaining, _sticky_detection
+
+    if raw_malicious and _is_rule_detection(detection_mode):
+        _sticky_detection = (detection_mode, reported_level, confidence)
+        _hold_ticks_remaining = max(_hold_ticks_remaining, MALICIOUS_HOLD_TICKS)
+        return raw_malicious, detection_mode, reported_level, confidence
+
+    if _hold_ticks_remaining > 0 and _sticky_detection is not None:
+        _hold_ticks_remaining -= 1
+        mode, level, conf = _sticky_detection
+        return True, mode, level, conf
+
+    if not raw_malicious:
+        _hold_ticks_remaining = 0
+    return raw_malicious, detection_mode, reported_level, confidence
+
+
+def _hysteresis_streak_needed(detection_mode: str, sim_active: bool) -> int:
+    if sim_active:
+        return SIM_MALICIOUS_STREAK
+    if detection_mode.startswith(("ml-L", "spike-L", "roll-L")):
+        return RULE_MALICIOUS_STREAK
+    return MALICIOUS_STREAK
+
+
+def _apply_hysteresis(
+    raw_malicious: bool,
+    sim_active: bool = False,
+    detection_mode: str = "idle",
+) -> str:
     global _malicious_streak, _benign_streak, _last_label
     if raw_malicious:
         _malicious_streak += 1
@@ -436,7 +550,7 @@ def _apply_hysteresis(raw_malicious: bool, sim_active: bool = False) -> str:
         _benign_streak += 1
         _malicious_streak = 0
 
-    need = SIM_MALICIOUS_STREAK if sim_active else MALICIOUS_STREAK
+    need = _hysteresis_streak_needed(detection_mode, sim_active)
     if _malicious_streak >= need:
         _last_label = "malicious"
     elif _benign_streak >= BENIGN_STREAK:
@@ -454,9 +568,12 @@ def health() -> dict:
         "l2_threshold": L2_THRESHOLD,
         "l3_threshold": L3_THRESHOLD,
         "calibrated": _calibration_done,
+        "calibrating": not _calibration_done,
+        "calibration_progress": _calibration_progress_str(),
         "ignore_levels": sorted(IGNORE_LEVELS),
         "rolling_ticks": ROLLING_TICKS,
         "sim_detect": SIM_DETECT,
+        "spikes_require_sim": SPIKES_REQUIRE_SIM,
     }
 
 
@@ -478,19 +595,54 @@ def predict(body: PredictRequest) -> PredictResponse:
         raise HTTPException(status_code=503, detail="Models not loaded")
 
     row = dict(body.features)
-    sim_active, sim_level = _scan_simulators()
+    calibrating = not _calibration_done
+    sim_active, sim_level = (False, None) if calibrating else _scan_simulators()
     totals = _push_rolling(row)
 
     per_level_scores: Dict[str, float] = {}
     for level, ens in sorted(_ensembles.items()):
         per_level_scores[str(level)] = round(ens.score(row), 4)
 
-    if not sim_active and not _calibration_done:
+    if not sim_active and calibrating:
         _record_calibration(per_level_scores, row)
 
     adjusted = _adjusted_scores(per_level_scores)
+    l2_display, l2_note = _l2_response_fields(per_level_scores, "benign")
+
+    if calibrating:
+        label = _apply_hysteresis(False, False, "calibrating")
+        if deep_log_enabled() or demo_verbose():
+            decision_logger.info(
+                "BENIGN | mode=calibrating level=None conf=0.000 | raw %s | cal=%s (%s)",
+                " ".join(f"L{k}={v:.3f}" for k, v in sorted(per_level_scores.items())),
+                False,
+                _calibration_progress_str(),
+            )
+        return PredictResponse(
+            label=label,
+            level=None,
+            confidence=0.0,
+            per_level=per_level_scores,
+            raw_label="benign",
+            calibrated=False,
+            calibrating=True,
+            calibration_progress=_calibration_progress_str(),
+            per_level_adjusted=None,
+            detection_mode="calibrating",
+            l2_display=l2_display,
+            l2_note=l2_note,
+        )
+
     spike_level = _confirm_spike_level(_instant_spike_level(row))
     roll_level = _rolling_spike_level(totals)
+    if spike_level is not None and not _spike_rule_allowed(
+        spike_level, sim_active, adjusted
+    ):
+        spike_level = None
+    if roll_level is not None and not _spike_rule_allowed(
+        roll_level, sim_active, adjusted
+    ):
+        roll_level = None
 
     detection_mode = "idle"
     reported_level: Optional[int] = None
@@ -513,7 +665,7 @@ def predict(body: PredictRequest) -> PredictResponse:
         confidence = max(per_level_scores.get(str(roll_level), 0.0), L3_THRESHOLD)
         detection_mode = f"roll-L{roll_level}"
     else:
-        ml_hit = _ml_level_from_scores(per_level_scores, adjusted)
+        ml_hit = _ml_level_from_scores(per_level_scores, adjusted, row)
         if ml_hit is not None:
             reported_level, confidence, detection_mode = ml_hit
             raw_malicious = True
@@ -523,7 +675,8 @@ def predict(body: PredictRequest) -> PredictResponse:
             for k, adj in adjusted.items():
                 if int(k) in IGNORE_LEVELS:
                     continue
-                idle_floor = SIM_SCORE_DELTA if sim_active else SCORE_DELTA_IDLE
+                lvl = int(k)
+                idle_floor = _per_level_delta_floor(lvl, sim_active)
                 if adj > max_adj and adj >= idle_floor:
                     max_adj = adj
                     max_adj_lvl = int(k)
@@ -533,9 +686,19 @@ def predict(body: PredictRequest) -> PredictResponse:
                 confidence = max_adj
                 detection_mode = "delta"
 
-    label = _apply_hysteresis(raw_malicious, sim_active)
-    if label != "malicious":
+    raw_malicious, detection_mode, reported_level, confidence = _apply_detection_hold(
+        raw_malicious, detection_mode, reported_level, confidence
+    )
+
+    label = _apply_hysteresis(raw_malicious, sim_active, detection_mode)
+    if label == "malicious":
+        if (reported_level is None or detection_mode == "idle") and _sticky_detection:
+            detection_mode, reported_level, confidence = _sticky_detection
+    elif label != "malicious":
+        _clear_detection_hold()
         reported_level = None
+
+    l2_display, l2_note = _l2_response_fields(per_level_scores, label)
 
     global _prev_label
     if deep_log_enabled() or demo_verbose():
@@ -558,6 +721,13 @@ def predict(body: PredictRequest) -> PredictResponse:
             reported_level,
             confidence,
         )
+        if label == "malicious":
+            decision_logger.warning(
+                "ALERT | mode=%s level=%s conf=%.3f",
+                detection_mode,
+                reported_level,
+                confidence,
+            )
         _prev_label = label
 
     return PredictResponse(
@@ -567,8 +737,12 @@ def predict(body: PredictRequest) -> PredictResponse:
         per_level=per_level_scores,
         raw_label="malicious" if raw_malicious else "benign",
         calibrated=_calibration_done,
-        per_level_adjusted=adjusted if _calibration_done else None,
+        calibrating=False,
+        calibration_progress=_calibration_progress_str(),
+        per_level_adjusted=adjusted,
         detection_mode=detection_mode,
+        l2_display=l2_display,
+        l2_note=l2_note,
     )
 
 

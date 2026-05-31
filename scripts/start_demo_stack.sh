@@ -8,28 +8,24 @@ KERNEL_DIR="$PROJECT_DIR/kernel"
 DAEMON_DIR="$PROJECT_DIR/daemon"
 GUI_DIR="$PROJECT_DIR/gui"
 SCRIPTS_DIR="$PROJECT_DIR/scripts"
-ARTIFACT_RUN="${FYP_ARTIFACT_RUN:-$PROJECT_DIR/artifacts/run_20260531_l2_hybrid}"
 LOG_DIR="${FYP_DEMO_LOG_DIR:-/tmp/fyp-demo}"
 
 export FYP_PROJECT_DIR="$PROJECT_DIR"
 export FYP_DEMO_LOG_DIR="$LOG_DIR"
-export FYP_DEMO_VERBOSE="${FYP_DEMO_VERBOSE:-0}"
+export FYP_DEMO_VERBOSE="${FYP_DEMO_VERBOSE:-1}"
 export FYP_ML_DEEP_LOG="${FYP_ML_DEEP_LOG:-1}"
-export FYP_ARTIFACT_RUN="$ARTIFACT_RUN"
 export FYP_TELEMETRY_CSV="${FYP_TELEMETRY_CSV:-/tmp/fyp_telemetry_live.csv}"
 export FYP_ML_API_URL="${FYP_ML_API_URL:-http://127.0.0.1:8765/predict}"
-export FYP_ML_IGNORE_LEVELS="${FYP_ML_IGNORE_LEVELS:-2}"
-export FYP_ML_CALIBRATE_SAMPLES="${FYP_ML_CALIBRATE_SAMPLES:-20}"
-export FYP_ML_L2_THRESHOLD="${FYP_ML_L2_THRESHOLD:-0.45}"
-export FYP_ML_L3_THRESHOLD="${FYP_ML_L3_THRESHOLD:-0.40}"
-export FYP_ML_L2_DELTA="${FYP_ML_L2_DELTA:-0.55}"
-export FYP_ML_L3_DELTA="${FYP_ML_L3_DELTA:-0.20}"
-export FYP_ML_L2_SPIKES="${FYP_ML_L2_SPIKES:-0}"
-export FYP_ML_L3_SPIKES="${FYP_ML_L3_SPIKES:-0}"
-export FYP_ML_L3_ROLLING="${FYP_ML_L3_ROLLING:-0}"
-export FYP_ML_L4_SPIKES="${FYP_ML_L4_SPIKES:-1}"
-export FYP_ML_SIM_DETECT="${FYP_ML_SIM_DETECT:-1}"
-export FYP_ML_SIM_MALICIOUS_STREAK="${FYP_ML_SIM_MALICIOUS_STREAK:-1}"
+
+# ML-first by default (FYP thesis demo). FYP_DEMO_PROFILE=safe → sim-assist fallback.
+DEMO_PROFILE="${FYP_DEMO_PROFILE:-ml}"
+if [ "$DEMO_PROFILE" = "safe" ]; then
+    # shellcheck source=scripts/demo_safe.env
+    source "$SCRIPTS_DIR/demo_safe.env"
+else
+    # shellcheck source=scripts/demo_ml.env
+    source "$SCRIPTS_DIR/demo_ml.env"
+fi
 
 mkdir -p "$LOG_DIR"
 chmod 777 "$LOG_DIR" 2>/dev/null || true
@@ -88,10 +84,11 @@ if ! pgrep -f "ml_api.py" >/dev/null; then
         export FYP_DEMO_LOG_DIR='$LOG_DIR' &&
         export FYP_DEMO_VERBOSE='${FYP_DEMO_VERBOSE}' &&
         export FYP_ML_DEEP_LOG='${FYP_ML_DEEP_LOG}' &&
-        export FYP_ARTIFACT_RUN='$ARTIFACT_RUN' &&
+        export FYP_ARTIFACT_RUN='${FYP_ARTIFACT_RUN}' &&
         export FYP_ML_IGNORE_LEVELS='${FYP_ML_IGNORE_LEVELS}' &&
         export FYP_ML_CALIBRATE_SAMPLES='${FYP_ML_CALIBRATE_SAMPLES}' &&
         export FYP_ML_L2_THRESHOLD='${FYP_ML_L2_THRESHOLD}' &&
+        export FYP_ML_L3_THRESHOLD='${FYP_ML_L3_THRESHOLD}' &&
         export FYP_ML_L2_DELTA='${FYP_ML_L2_DELTA}' &&
         export FYP_ML_L3_DELTA='${FYP_ML_L3_DELTA}' &&
         export FYP_ML_L2_SPIKES='${FYP_ML_L2_SPIKES}' &&
@@ -100,6 +97,15 @@ if ! pgrep -f "ml_api.py" >/dev/null; then
         export FYP_ML_L4_SPIKES='${FYP_ML_L4_SPIKES}' &&
         export FYP_ML_SIM_DETECT='${FYP_ML_SIM_DETECT}' &&
         export FYP_ML_SIM_MALICIOUS_STREAK='${FYP_ML_SIM_MALICIOUS_STREAK}' &&
+        export FYP_ML_MALICIOUS_STREAK='${FYP_ML_MALICIOUS_STREAK}' &&
+        export FYP_ML_RULE_STREAK='${FYP_ML_RULE_STREAK}' &&
+        export FYP_ML_HOLD_TICKS='${FYP_ML_HOLD_TICKS}' &&
+        export FYP_ML_BENIGN_STREAK='${FYP_ML_BENIGN_STREAK}' &&
+        export FYP_ML_SPIKES_REQUIRE_SIM='${FYP_ML_SPIKES_REQUIRE_SIM}' &&
+        export FYP_ML_L2_SPIKE_STREAK='${FYP_ML_L2_SPIKE_STREAK}' &&
+        export FYP_ML_L3_SPIKE_STREAK='${FYP_ML_L3_SPIKE_STREAK}' &&
+        export FYP_ML_L2_OPENAT_MARGIN='${FYP_ML_L2_OPENAT_MARGIN}' &&
+        export FYP_ML_L2_READ_MARGIN='${FYP_ML_L2_READ_MARGIN}' &&
         nohup python3 ml_api.py >> '$LOG_DIR/fyp_ml_api.log' 2>&1 &
     "
     sleep 2

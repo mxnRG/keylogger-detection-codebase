@@ -1,0 +1,277 @@
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[16:40:46] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.006 L3=0.296 L4=0.231 | adj L2=-0.028 L3=+0.015 L4=+0.002 | cal=True
+INFO:     127.0.0.1:57016 - "POST /predict HTTP/1.1" 200 OK
+[16:40:47] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.541 L3=0.475 L4=0.212 | adj L2=+0.508 L3=+0.195 L4=-0.017 | cal=True
+INFO:     127.0.0.1:57030 - "POST /predict HTTP/1.1" 200 OK
+[16:40:48] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.002 L3=0.289 L4=0.236 | adj L2=-0.031 L3=+0.009 L4=+0.007 | cal=True
+INFO:     127.0.0.1:57046 - "POST /predict HTTP/1.1" 200 OK
+[16:40:48] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.048 L3=0.276 L4=0.222 | adj L2=+0.014 L3=-0.004 L4=-0.007 | cal=True
+INFO:     127.0.0.1:57048 - "POST /predict HTTP/1.1" 200 OK
+[16:40:49] [ML-DEC] INFO: BENIGN | mode=delta level=None conf=0.146 | raw L2=0.180 L3=0.253 L4=0.239 | adj L2=+0.146 L3=-0.028 L4=+0.010 | cal=True
+INFO:     127.0.0.1:53392 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:42] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.004 L3=0.281 L4=0.232 | adj L2=-0.030 L3=+0.001 L4=+0.003 | cal=True
+[16:40:43] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.046 L3=0.271 L4=0.225 | adj L2=+0.013 L3=-0.009 L4=-0.004 | cal=True
+[16:40:44] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.001 L3=0.250 L4=0.239 | adj L2=-0.033 L3=-0.030 L4=+0.010 | cal=True
+[16:40:44] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.000 L3=0.277 L4=0.235 | adj L2=-0.033 L3=-0.003 L4=+0.006 | cal=True
+[16:40:45] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.053 L3=0.277 L4=0.222 | adj L2=+0.019 L3=-0.003 L4=-0.007 | cal=True
+[16:40:46] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.006 L3=0.296 L4=0.231 | adj L2=-0.028 L3=+0.015 L4=+0.002 | cal=True
+[16:40:47] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.541 L3=0.475 L4=0.212 | adj L2=+0.508 L3=+0.195 L4=-0.017 | cal=True
+[16:40:48] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.002 L3=0.289 L4=0.236 | adj L2=-0.031 L3=+0.009 L4=+0.007 | cal=True
+[16:40:48] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.048 L3=0.276 L4=0.222 | adj L2=+0.014 L3=-0.004 L4=-0.007 | cal=True
+[16:40:49] [ML-DEC] INFO: BENIGN | mode=delta level=None conf=0.146 | raw L2=0.180 L3=0.253 L4=0.239 | adj L2=+0.146 L3=-0.028 L4=+0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+In file included from include/linux/stddef.h:5:
+In file included from include/uapi/linux/stddef.h:5:
+In file included from include/linux/compiler_types.h:80:
+include/linux/compiler-clang.h:43:9: warning: '__HAVE_BUILTIN_BSWAP16__' macro redefined [-Wmacro-redefined]
+#define __HAVE_BUILTIN_BSWAP16__
+        ^
+<command line>:3:9: note: previous definition is here
+#define __HAVE_BUILTIN_BSWAP16__ 1
+        ^
+3 warnings generated.
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 16:39:59] FYP-Daemon [INFO]: Netlink receiver started successfully
+[2026-05-31 16:39:59] FYP-Daemon [INFO]: Status writer thread started
+[2026-05-31 16:39:59] FYP-Daemon [INFO]: Daemon running. Press Ctrl+C to stop.
+[2026-05-31 16:39:59] FYP-Daemon [INFO]: Events will be delivered via Netlink (real-time, <1ms latency)
+[2026-05-31 16:39:59] FYP-Daemon [INFO]: Entering Netlink receive loop...
+[2026-05-31 16:40:09] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-05-31 16:40:19] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-05-31 16:40:29] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-05-31 16:40:39] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-05-31 16:40:49] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 16:40:06] FYP-GUI [INFO]: Monitoring started with 500ms interval
+[2026-05-31 16:40:06] FYP-GUI [INFO]: LKM status monitor started (2000ms)
+[2026-05-31 16:40:06] FYP-GUI [INFO]: Telemetry ML monitor started → http://127.0.0.1:8765/predict
+[2026-05-31 16:40:06] FYP-GUI [INFO]: Live ML + LKM watchdog monitors enabled
+[2026-05-31 16:40:06] FYP-GUI [INFO]: Resource monitoring enabled (1s interval)
+[2026-05-31 16:40:06] FYP-GUI [INFO]: GUI initialization complete
+[2026-05-31 16:40:07] FYP-GUI [INFO]: Entering Qt event loop
+[2026-05-31 16:40:07] FYP-GUI [INFO]: ✓ Daemon connection established. Baseline: 0 events
+[2026-05-31 16:40:07] FYP-GUI [INFO]: ✓ Daemon connection established
+[2026-05-31 16:40:07] FYP-GUI [INFO]: Found daemon PID: 3433
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[16:40:50] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.067 L3=0.276 L4=0.220 | adj L2=+0.033 L3=-0.004 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:50] [ML-DEC] INFO: BENIGN | mode=idle level=None conf=0.000 | raw L2=0.067 L3=0.276 L4=0.220 | adj L2=+0.033 L3=-0.004 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:53402 - "POST /predict HTTP/1.1" 200 OK
+[16:40:51] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.650 L3=0.478 L4=0.206 | adj L2=+0.616 L3=+0.198 L4=-0.022 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:51] [ML-DEC] INFO: BENIGN | mode=spike-L4 level=None conf=0.500 | raw L2=0.650 L3=0.478 L4=0.206 | adj L2=+0.616 L3=+0.198 L4=-0.022 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:53404 - "POST /predict HTTP/1.1" 200 OK
+[16:40:52] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.468 | raw L2=0.333 L3=0.468 L4=0.219 | adj L2=+0.299 L3=+0.188 L4=-0.010 | cal=True
+[16:40:52] [ML-API] INFO: STATE CHANGE benign → malicious | mode=ml-L3 level=3 conf=0.468
+[16:40:52] [ML-API] INFO: STATE CHANGE benign → malicious | mode=ml-L3 level=3 conf=0.468
+INFO:     127.0.0.1:53418 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:52] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.468 | raw L2=0.333 L3=0.468 L4=0.219 | adj L2=+0.299 L3=+0.188 L4=-0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[16:40:53] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.339 L3=0.269 L4=0.221 | adj L2=+0.306 L3=-0.012 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:53] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.339 L3=0.269 L4=0.221 | adj L2=+0.306 L3=-0.012 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:53424 - "POST /predict HTTP/1.1" 200 OK
+[16:40:54] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.340 L3=0.267 L4=0.221 | adj L2=+0.306 L3=-0.013 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:54] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.340 L3=0.267 L4=0.221 | adj L2=+0.306 L3=-0.013 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:53440 - "POST /predict HTTP/1.1" 200 OK
+[16:40:55] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.407 L3=0.484 L4=0.211 | adj L2=+0.373 L3=+0.203 L4=-0.018 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:55] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.407 L3=0.484 L4=0.211 | adj L2=+0.373 L3=+0.203 L4=-0.018 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:53450 - "POST /predict HTTP/1.1" 200 OK
+[16:40:56] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.473 | raw L2=0.339 L3=0.473 L4=0.215 | adj L2=+0.305 L3=+0.192 L4=-0.013 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:56] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.473 | raw L2=0.339 L3=0.473 L4=0.215 | adj L2=+0.305 L3=+0.192 L4=-0.013 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:53460 - "POST /predict HTTP/1.1" 200 OK
+[16:40:58] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.301 | raw L2=0.334 L3=0.432 L4=0.214 | adj L2=+0.301 L3=+0.151 L4=-0.015 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:58] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.301 | raw L2=0.334 L3=0.432 L4=0.214 | adj L2=+0.301 L3=+0.151 L4=-0.015 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:53466 - "POST /predict HTTP/1.1" 200 OK
+[16:40:59] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.340 L3=0.264 L4=0.220 | adj L2=+0.306 L3=-0.016 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:40:59] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.340 L3=0.264 L4=0.220 | adj L2=+0.306 L3=-0.016 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58926 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 16:40:59] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[16:41:00] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.351 | raw L2=0.351 L3=0.272 L4=0.214 | adj L2=+0.318 L3=-0.008 L4=-0.014 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:00] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.351 | raw L2=0.351 L3=0.272 L4=0.214 | adj L2=+0.318 L3=-0.008 L4=-0.014 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58934 - "POST /predict HTTP/1.1" 200 OK
+[16:41:01] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.496 | raw L2=0.496 L3=0.442 L4=0.214 | adj L2=+0.462 L3=+0.162 L4=-0.015 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:01] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.496 | raw L2=0.496 L3=0.442 L4=0.214 | adj L2=+0.462 L3=+0.162 L4=-0.015 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58946 - "POST /predict HTTP/1.1" 200 OK
+[16:41:02] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.470 | raw L2=0.333 L3=0.470 L4=0.217 | adj L2=+0.299 L3=+0.190 L4=-0.012 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:02] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.470 | raw L2=0.333 L3=0.470 L4=0.217 | adj L2=+0.299 L3=+0.190 L4=-0.012 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58948 - "POST /predict HTTP/1.1" 200 OK
+[16:41:04] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.309 | raw L2=0.342 L3=0.271 L4=0.221 | adj L2=+0.309 L3=-0.009 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:04] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.309 | raw L2=0.342 L3=0.271 L4=0.221 | adj L2=+0.309 L3=-0.009 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58952 - "POST /predict HTTP/1.1" 200 OK
+[16:41:05] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.523 L3=0.477 L4=0.213 | adj L2=+0.489 L3=+0.197 L4=-0.016 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:05] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.523 L3=0.477 L4=0.213 | adj L2=+0.489 L3=+0.197 L4=-0.016 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58962 - "POST /predict HTTP/1.1" 200 OK
+[16:41:06] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.810 L3=0.447 L4=0.214 | adj L2=+0.777 L3=+0.167 L4=-0.015 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:06] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.810 L3=0.447 L4=0.214 | adj L2=+0.777 L3=+0.167 L4=-0.015 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58966 - "POST /predict HTTP/1.1" 200 OK
+[16:41:07] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.367 | raw L2=0.367 L3=0.265 L4=0.220 | adj L2=+0.334 L3=-0.015 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:07] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.367 | raw L2=0.367 L3=0.265 L4=0.220 | adj L2=+0.334 L3=-0.015 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58978 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 16:41:08] FYP-GUI [INFO]: Switching to page: alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[16:41:08] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.313 | raw L2=0.347 L3=0.269 L4=0.219 | adj L2=+0.313 L3=-0.012 L4=-0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:08] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.313 | raw L2=0.347 L3=0.269 L4=0.219 | adj L2=+0.313 L3=-0.012 L4=-0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:58980 - "POST /predict HTTP/1.1" 200 OK
+[16:41:09] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.311 | raw L2=0.345 L3=0.266 L4=0.219 | adj L2=+0.311 L3=-0.014 L4=-0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:09] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.311 | raw L2=0.345 L3=0.266 L4=0.219 | adj L2=+0.311 L3=-0.014 L4=-0.010 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36790 - "POST /predict HTTP/1.1" 200 OK
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-05-31 16:41:09] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-05-31 16:41:09] FYP-GUI [INFO]: Switching to page: dashboard
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[16:41:10] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.374 | raw L2=0.374 L3=0.264 L4=0.220 | adj L2=+0.340 L3=-0.016 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:10] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.374 | raw L2=0.374 L3=0.264 L4=0.220 | adj L2=+0.340 L3=-0.016 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36792 - "POST /predict HTTP/1.1" 200 OK
+[16:41:11] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.772 | raw L2=0.772 L3=0.443 L4=0.215 | adj L2=+0.738 L3=+0.163 L4=-0.013 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:11] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.772 | raw L2=0.772 L3=0.443 L4=0.215 | adj L2=+0.738 L3=+0.163 L4=-0.013 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36794 - "POST /predict HTTP/1.1" 200 OK
+[16:41:12] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.470 | raw L2=0.342 L3=0.470 L4=0.212 | adj L2=+0.308 L3=+0.190 L4=-0.017 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:12] [ML-DEC] INFO: MALICIOUS | mode=ml-L3 level=3 conf=0.470 | raw L2=0.342 L3=0.470 L4=0.212 | adj L2=+0.308 L3=+0.190 L4=-0.017 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36800 - "POST /predict HTTP/1.1" 200 OK
+[16:41:13] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.308 | raw L2=0.341 L3=0.270 L4=0.222 | adj L2=+0.308 L3=-0.011 L4=-0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:13] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.308 | raw L2=0.341 L3=0.270 L4=0.222 | adj L2=+0.308 L3=-0.011 L4=-0.007 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36808 - "POST /predict HTTP/1.1" 200 OK
+[16:41:14] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.368 L3=0.271 L4=0.221 | adj L2=+0.335 L3=-0.009 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:14] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.368 L3=0.271 L4=0.221 | adj L2=+0.335 L3=-0.009 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36818 - "POST /predict HTTP/1.1" 200 OK
+[16:41:15] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.339 L3=0.264 L4=0.220 | adj L2=+0.306 L3=-0.016 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:15] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.306 | raw L2=0.339 L3=0.264 L4=0.220 | adj L2=+0.306 L3=-0.016 L4=-0.009 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36832 - "POST /predict HTTP/1.1" 200 OK
+[16:41:16] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.376 | raw L2=0.376 L3=0.286 L4=0.223 | adj L2=+0.342 L3=+0.006 L4=-0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:16] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.376 | raw L2=0.376 L3=0.286 L4=0.223 | adj L2=+0.342 L3=+0.006 L4=-0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36836 - "POST /predict HTTP/1.1" 200 OK
+[16:41:17] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.767 L3=0.467 L4=0.209 | adj L2=+0.734 L3=+0.187 L4=-0.020 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:17] [ML-DEC] INFO: MALICIOUS | mode=spike-L4 level=4 conf=0.500 | raw L2=0.767 L3=0.467 L4=0.209 | adj L2=+0.734 L3=+0.187 L4=-0.020 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36848 - "POST /predict HTTP/1.1" 200 OK
+[16:41:18] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.308 | raw L2=0.341 L3=0.264 L4=0.221 | adj L2=+0.308 L3=-0.016 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:18] [ML-DEC] INFO: MALICIOUS | mode=delta level=2 conf=0.308 | raw L2=0.341 L3=0.264 L4=0.221 | adj L2=+0.308 L3=-0.016 L4=-0.008 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:36864 - "POST /predict HTTP/1.1" 200 OK
+[16:41:19] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.369 | raw L2=0.369 L3=0.271 L4=0.223 | adj L2=+0.336 L3=-0.009 L4=-0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[16:41:19] [ML-DEC] INFO: MALICIOUS | mode=ml-L2 level=2 conf=0.369 | raw L2=0.369 L3=0.271 L4=0.223 | adj L2=+0.336 L3=-0.009 L4=-0.005 | cal=True
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+INFO:     127.0.0.1:39182 - "POST /predict HTTP/1.1" 200 OK

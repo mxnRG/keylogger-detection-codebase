@@ -1,6 +1,6 @@
 # ML Live Detection — Work Log
 
-**Last updated:** 2026-05-31  
+**Last updated:** 2026-05-30 (guardrails)  
 **Artifacts:** `run_20260531_l2_hybrid` (live) | `run_20260531_021332` (L2 tune) | `run_20260529_193015` (baseline)  
 **Quick resume:** [`SESSION_RESUME.md`](SESSION_RESUME.md)
 
@@ -109,20 +109,48 @@ From `artifacts/l2_eval_summary.json`:
 
 ## 6. Detection priority (ml_api.py v2)
 
+0. **calibrating** — no alerts until 20 benign rows (`detection_mode=calibrating`)
 1. **sim-LN** — unseen script process running (primary for L2/L3 demo)
-2. **spike-L4** — heavy syscall patterns (if `FYP_ML_L4_SPIKES=1`)
+2. **spike-L4** — heavy syscall patterns (if `FYP_ML_L4_SPIKES=1`; sim-gated when `FYP_ML_SPIKES_REQUIRE_SIM=1`)
 3. **ml-LN** — adjusted score delta above threshold (L2 ignored for alerts)
 4. **delta** — generic adjusted max (respects `IGNORE_LEVELS`)
 
+### 6.1 Guardrails session (2026-05-30)
+
+| Change | File |
+|--------|------|
+| Demo-safe env profile | `scripts/demo_safe.env` |
+| Calibration lockout (no FP during warmup) | `scripts/ml_api.py` |
+| GUI: calibrating panel, detection subtitle, info scores | `gui/fyp_gui.py` |
+| Startup smoke test | `scripts/demo_smoke_test.sh` |
+| Sim-gated spikes (`FYP_ML_SPIKES_REQUIRE_SIM`) | `scripts/ml_api.py` |
+| Offline L2 eval helper | `scripts/evaluate_l2.py` |
+
 ---
 
-## 7. Related files
+## 7. Backlog (post-demo)
+
+| Item | Effort | Needs capture? |
+|------|--------|----------------|
+| L3 `l3_behavioral` retrain + supplement | ½ day | Optional bootstrap from live CSV |
+| eBPF `stat()` / UDP DNS probes | 1–2 days | No for stat; yes to validate DNS |
+| `capture_l2_unseen.py` + sudo capture | ½ day | Yes |
+| ML Insights score history in GUI | 1 day | No |
+| Unit tests for `predict()` with fixture rows | ½ day | No |
+| Auto-threshold from calibration percentiles (p95 + margin) | ½ day | No |
+
+---
+
+## 8. Related files
 
 | File | Purpose |
 |------|---------|
 | `scripts/ml_api.py` | Live inference v2 |
-| `scripts/start_demo_stack.sh` | Demo startup + env defaults |
-| `scripts/run_demo_verbose.sh` | Verbose log multiplex |
+| `scripts/demo_safe.env` | Demo-safe ML defaults |
+| `scripts/start_demo_stack.sh` | Demo startup (sources demo_safe.env) |
+| `scripts/run_demo_verbose.sh` | Verbose log multiplex + smoke test |
+| `scripts/demo_smoke_test.sh` | Pre-flight API checks |
+| `scripts/evaluate_l2.py` | Offline L2 baseline vs tuned |
 | `scripts/collector_live.py` | eBPF collector |
 | `scripts/train_ml.py` | Offline training |
 | `dataset/l2_supplement/` | Demo VM benign + proxy malicious rows |

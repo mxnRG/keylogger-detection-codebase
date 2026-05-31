@@ -1013,7 +1013,12 @@ class FYPMainWindow(QMainWindow):
         logger.info("=" * 80)
         
         self.alerts = []
+        self._ml_alert_active = False
         self.current_page = "dashboard"
+
+        if os.environ.get("FYP_DEMO_VERBOSE", "").lower() in ("1", "true", "yes"):
+            logger.setLevel(logging.DEBUG)
+            logger.info("Verbose demo logging enabled (FYP_DEMO_VERBOSE)")
         
         # Resource monitoring
         self.gui_pid = os.getpid()
@@ -1386,9 +1391,12 @@ class FYPMainWindow(QMainWindow):
         self.ml_status_title.setStyleSheet(
             "font-size: 18px; font-weight: 700; color: #3fb950;"
         )
+        self.ml_status_mode = QLabel("Detection: —")
+        self.ml_status_mode.setStyleSheet("font-size: 13px; color: #8b949e;")
         self.ml_status_detail = QLabel("ML: waiting for telemetry API…")
         self.ml_status_detail.setStyleSheet("font-size: 12px; color: #8b949e;")
         ml_text_layout.addWidget(self.ml_status_title)
+        ml_text_layout.addWidget(self.ml_status_mode)
         ml_text_layout.addWidget(self.ml_status_detail)
         ml_panel_layout.addWidget(self.ml_status_indicator)
         ml_panel_layout.addLayout(ml_text_layout, 1)
@@ -2327,38 +2335,98 @@ class FYPMainWindow(QMainWindow):
             self.kernel_indicator.set_status("warning")
             self.kernel_label.setText(f"Kernel: {message[:36]}")
 
+    def _ml_alert_severity(self, level: Optional[int], detection_mode: str) -> str:
+        if level is not None and level >= 3:
+            return "HIGH"
+        if "L4" in (detection_mode or ""):
+            return "HIGH"
+        return "MEDIUM"
+
+    def _raise_ml_alert(
+        self,
+        level: Optional[int],
+        detection_mode: str,
+        confidence: float,
+        per_level: dict,
+    ) -> None:
+        """Push ML detection into the Alerts tab (daemon heuristics do not cover ML)."""
+        lvl = level if level is not None else "?"
+        scores = ", ".join(f"L{k}:{float(v):.2f}" for k, v in sorted(per_level.items()))
+        message = f"{detection_mode}: Level {lvl} (confidence {confidence:.2f}) | {scores}"
+        alert = Alert(
+            timestamp=datetime.now().isoformat(timespec="seconds"),
+            severity=self._ml_alert_severity(level, detection_mode),
+            message=message,
+            process_name="ML / eBPF telemetry",
+            pid=0,
+        )
+        logger.warning("ML alert: [%s] %s", alert.severity, message)
+        self.on_alert_received(alert)
+
     def on_ml_prediction(self, data: dict):
         label = data.get("label", "benign")
         level = data.get("level")
         confidence = float(data.get("confidence", 0.0))
         per_level = data.get("per_level", {})
+        detection_mode = data.get("detection_mode") or "idle"
+        calibrating = data.get("calibrating", False)
+        cal_progress = data.get("calibration_progress", "")
+        l2_note = data.get("l2_note")
+        l2_display = data.get("l2_display")
 
-        if label == "malicious":
+        if calibrating:
+            self.ml_status_indicator.set_status("warning", pulse=True)
+            prog = cal_progress or "…"
+            self.ml_status_title.setText(f"Calibrating… ({prog})")
+            self.ml_status_title.setStyleSheet(
+                "font-size: 18px; font-weight: 700; color: #d29922;"
+            )
+            self.ml_status_mode.setText("Detection: calibrating (no alerts yet)")
+            self.ml_panel.setStyleSheet(
+                "#mlStatusPanel { border: 2px solid #9e6a03; border-radius: 8px; "
+                "background-color: #1c1810; }"
+            )
+        elif label == "malicious":
             self.ml_status_indicator.set_status("error", pulse=True)
             lvl_text = level if level is not None else "?"
             self.ml_status_title.setText(f"Keylogger Detected — Level {lvl_text}")
             self.ml_status_title.setStyleSheet(
                 "font-size: 18px; font-weight: 700; color: #ff7b72;"
             )
+            self.ml_status_mode.setText(f"Detection: {detection_mode}")
             self.ml_panel.setStyleSheet(
                 "#mlStatusPanel { border: 2px solid #da3633; border-radius: 8px; "
                 "background-color: #1c1214; }"
             )
             self.set_tray_status("error")
+            if not self._ml_alert_active:
+                self._ml_alert_active = True
+                self._raise_ml_alert(level, detection_mode, confidence, per_level)
+            elif detection_mode.startswith(("ml-L", "spike-L")) and level is not None:
+                self.ml_status_mode.setText(f"Detection: {detection_mode}")
         else:
+            if self._ml_alert_active:
+                logger.info("ML detection cleared (returned to benign)")
+            self._ml_alert_active = False
             self.ml_status_indicator.set_status("success", pulse=True)
             self.ml_status_title.setText("System Clean")
             self.ml_status_title.setStyleSheet(
                 "font-size: 18px; font-weight: 700; color: #3fb950;"
             )
+            self.ml_status_mode.setText(f"Detection: {detection_mode}")
             self.ml_panel.setStyleSheet(
                 "#mlStatusPanel { border: 2px solid #238636; border-radius: 8px; "
                 "background-color: #0d1f12; }"
             )
 
-        detail = f"Confidence: {confidence:.2f}"
-        if per_level:
-            detail += " | " + ", ".join(f"L{k}:{v:.2f}" for k, v in per_level.items())
+        score_parts = [f"L{k}:{float(v):.2f}" for k, v in sorted(per_level.items())]
+        detail = "Model scores (info): " + (", ".join(score_parts) if score_parts else "—")
+        if l2_note and label == "benign" and l2_display == "informational":
+            detail += f" | {l2_note}"
+        elif label == "benign" and per_level.get("2", 0) and float(per_level.get("2", 0)) > 0.4:
+            detail += " | elevated L2 score (ML)"
+        if label == "malicious":
+            detail = f"Confidence: {confidence:.2f} | " + detail
         self.ml_status_detail.setText(detail)
 
     def on_ml_api_error(self, message: str):
@@ -2367,6 +2435,7 @@ class FYPMainWindow(QMainWindow):
         self.ml_status_title.setStyleSheet(
             "font-size: 18px; font-weight: 700; color: #d29922;"
         )
+        self.ml_status_mode.setText("Detection: —")
         self.ml_status_detail.setText(message)
         self.ml_panel.setStyleSheet(
             "#mlStatusPanel { border: 2px solid #9e6a03; border-radius: 8px; "
@@ -2424,7 +2493,9 @@ class FYPMainWindow(QMainWindow):
     def on_alert_received(self, alert: Alert):
         self.alerts.append(alert)
         self.update_alerts_table()
-        
+        if hasattr(self, "alerts_card"):
+            self.alerts_card.value_label.setText(str(len(self.alerts)))
+
         if alert.severity == "HIGH":
             self.set_tray_status('error')
         elif alert.severity == "MEDIUM" and self.tray_icon.icon().pixmap(16, 16).toImage().pixel(8, 8) != QColor(218, 54, 51).rgb():
