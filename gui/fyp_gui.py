@@ -45,6 +45,11 @@ except ImportError:
     logger.warning("psutil not available - resource monitoring disabled. Install with: pip3 install psutil")
 
 try:
+    from ml_insights_loader import load_ml_insights
+except ImportError:
+    load_ml_insights = None  # type: ignore[misc, assignment]
+
+try:
     from lkm_status_monitor import LkmStatusMonitor
     from telemetry_ml_monitor import TelemetryMlMonitor
     ML_INTEGRATION_AVAILABLE = True
@@ -1258,7 +1263,6 @@ class FYPMainWindow(QMainWindow):
             ("alerts", "⚠️", "Alerts"),
             ("processes", "⚙️", "Processes"),
             ("stream", "📋", "Event Stream"),
-            ("ai_assistant", "💬", "AI Assistant"),
             ("ml_insights", "🤖", "ML Insights"),
             ("config", "⚙", "Configuration")
         ]
@@ -1317,7 +1321,6 @@ class FYPMainWindow(QMainWindow):
             "alerts": self.create_alerts_page(),
             "processes": self.create_processes_page(),
             "stream": self.create_stream_page(),
-            "ai_assistant": self.create_ai_assistant_page(),
             "ml_insights": self.create_ml_insights_page(),
             "config": self.create_config_page()
         }
@@ -1875,113 +1878,172 @@ class FYPMainWindow(QMainWindow):
         return page
     
     def create_ml_insights_page(self):
-        """ML model logs, training metrics, and predictions (placeholder)"""
+        """ML model metrics from deployed artifacts and live inference."""
         page = QWidget()
-        layout = QVBoxLayout(page)
-        layout.setContentsMargins(20, 20, 20, 20)
+        outer = QVBoxLayout(page)
+        outer.setContentsMargins(20, 20, 20, 20)
+        outer.setSpacing(16)
+
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.NoFrame)
+        content = QWidget()
+        layout = QVBoxLayout(content)
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(16)
-        
-        # Header
+
         header = QWidget()
         header_layout = QVBoxLayout(header)
         header_layout.setContentsMargins(0, 0, 0, 0)
         header_layout.setSpacing(4)
-        
+
         title = QLabel("🤖 ML Insights")
         title.setObjectName("sectionTitle")
-        subtitle = QLabel("Machine learning model performance and predictions")
+        subtitle = QLabel("Deployed ensemble metrics and live detection scores")
         subtitle.setObjectName("sectionSubtitle")
-        
         header_layout.addWidget(title)
         header_layout.addWidget(subtitle)
         layout.addWidget(header)
-        
-        # Feature description
-        feature_card = QGroupBox("Planned Features")
-        feature_layout = QVBoxLayout(feature_card)
-        
-        desc_label = QLabel(
-            "The ML Insights dashboard will include:\n\n"
-            "• Real-time model predictions and confidence scores\n"
-            "• Training metrics visualization (accuracy, precision, recall, F1)\n"
-            "• Feature importance analysis\n"
-            "• Model version comparison and A/B testing results\n"
-            "• Confusion matrix and ROC curves\n"
-            "• False positive/negative rate tracking\n"
-            "• Anomaly detection patterns\n"
-            "• Model retraining triggers and status"
+
+        insights = load_ml_insights() if load_ml_insights else {}
+        tier_b = insights.get("tier_b") or {}
+
+        deploy_card = QGroupBox("Deployed Model")
+        deploy_layout = QVBoxLayout(deploy_card)
+        deploy_lines = [
+            f"Run: {insights.get('run_id', '—')}",
+            f"Strategy: {insights.get('strategy', '—')}",
+            f"Artifact path: {insights.get('run_dir', '—')}",
+        ]
+        if insights.get("notes"):
+            deploy_lines.append(f"Notes: {insights['notes']}")
+        if insights.get("evaluation_run_id"):
+            deploy_lines.append(
+                f"Evaluation: tier {tier_b.get('tier', 'B')} from {insights['evaluation_run_id']}"
+            )
+        deploy_label = QLabel("\n".join(deploy_lines))
+        deploy_label.setWordWrap(True)
+        deploy_label.setStyleSheet("color: #c9d1d9; font-size: 13px; line-height: 1.5;")
+        deploy_layout.addWidget(deploy_label)
+        layout.addWidget(deploy_card)
+
+        live_card = QGroupBox("Live Inference")
+        live_layout = QVBoxLayout(live_card)
+        self.ml_insights_live_title = QLabel("Waiting for telemetry…")
+        self.ml_insights_live_title.setStyleSheet(
+            "font-size: 16px; font-weight: 700; color: #8b949e;"
         )
-        desc_label.setWordWrap(True)
-        desc_label.setStyleSheet("color: #c9d1d9; font-size: 13px; line-height: 1.6;")
-        feature_layout.addWidget(desc_label)
-        layout.addWidget(feature_card)
-        
-        # Placeholder metrics grid
-        metrics_container = QGroupBox("Model Performance Metrics")
+        self.ml_insights_live_detail = QLabel(
+            "Start the demo stack (ML API + collector) to stream predictions."
+        )
+        self.ml_insights_live_detail.setWordWrap(True)
+        self.ml_insights_live_detail.setStyleSheet("color: #8b949e; font-size: 13px;")
+        live_layout.addWidget(self.ml_insights_live_title)
+        live_layout.addWidget(self.ml_insights_live_detail)
+        layout.addWidget(live_card)
+
+        metrics_container = QGroupBox("Evaluation Metrics (Tier B — cross-level holdout)")
         metrics_layout = QGridLayout(metrics_container)
         metrics_layout.setSpacing(12)
-        
+
+        self.ml_insights_metric_labels = {}
         metric_cards = [
-            ("Accuracy", "0.00%"),
-            ("Precision", "0.00%"),
-            ("Recall", "0.00%"),
-            ("F1 Score", "0.00"),
-            ("False Positives", "0"),
-            ("True Positives", "0")
+            ("cross_auc", "Cross-level AUC", f"{tier_b.get('ensemble_auc', 0) * 100:.2f}%"),
+            ("cross_ap", "Cross-level AP", f"{tier_b.get('ensemble_ap', 0) * 100:.2f}%"),
         ]
-        
-        for i, (metric_name, metric_value) in enumerate(metric_cards):
+        for lvl in insights.get("per_level") or []:
+            n = lvl["level"]
+            metric_cards.append(
+                (f"l{n}_auc", f"L{n} ensemble AUC", f"{lvl['ensemble_auc'] * 100:.2f}%")
+            )
+            metric_cards.append(
+                (f"l{n}_ap", f"L{n} ensemble AP", f"{lvl['ensemble_ap'] * 100:.2f}%")
+            )
+
+        for i, (key, metric_name, metric_value) in enumerate(metric_cards):
             card = QGroupBox()
-            card.setStyleSheet("""
-                QGroupBox {
-                    background-color: #161b22;
-                    border: 1px solid #30363d;
-                    border-radius: 8px;
-                    padding: 16px;
-                }
-            """)
+            card.setStyleSheet(
+                "QGroupBox { background-color: #161b22; border: 1px solid #30363d; "
+                "border-radius: 8px; padding: 16px; }"
+            )
             card_layout = QVBoxLayout(card)
-            card_layout.setSpacing(8)
-            
             label_widget = QLabel(metric_name)
-            label_widget.setStyleSheet("font-size: 11px; color: #8b949e; font-weight: 600; text-transform: uppercase;")
-            
+            label_widget.setStyleSheet(
+                "font-size: 11px; color: #8b949e; font-weight: 600;"
+            )
             value_widget = QLabel(metric_value)
-            value_widget.setStyleSheet("font-size: 32px; color: #c9d1d9; font-weight: 700;")
-            
+            value_widget.setStyleSheet("font-size: 28px; color: #c9d1d9; font-weight: 700;")
             card_layout.addWidget(label_widget)
             card_layout.addWidget(value_widget)
-            card_layout.addStretch()
-            
+            self.ml_insights_metric_labels[key] = value_widget
             metrics_layout.addWidget(card, i // 3, i % 3)
-        
+
         layout.addWidget(metrics_container)
-        
-        # Charts placeholder
-        charts_card = QGroupBox("Visualizations")
-        charts_layout = QVBoxLayout(charts_card)
-        
-        chart_placeholder = QLabel(
-            "📊 Training curves, confusion matrix, and feature importance charts\n"
-            "will be displayed here once ML training is implemented."
+
+        levels_card = QGroupBox("Per-level ensemble (deployed)")
+        levels_layout = QVBoxLayout(levels_card)
+        levels_table = QTableWidget()
+        levels_table.setColumnCount(4)
+        levels_table.setHorizontalHeaderLabels(
+            ["Level", "Models", "Features", "Test AUC / AP"]
         )
-        chart_placeholder.setAlignment(Qt.AlignCenter)
-        chart_placeholder.setStyleSheet(
-            "color: #8b949e; font-size: 14px; padding: 60px; "
-            "background-color: #161b22; border-radius: 8px;"
-        )
-        charts_layout.addWidget(chart_placeholder)
-        layout.addWidget(charts_card)
-        
-        # Status notice
-        status_label = QLabel("⚠️ Will be available in production version")
-        status_label.setStyleSheet(
-            "background-color: #1c2128; color: #d29922; padding: 12px; "
-            "border-radius: 6px; font-weight: 600; font-size: 13px;"
-        )
-        status_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(status_label)
-        
+        levels_table.horizontalHeader().setStretchLastSection(True)
+        levels_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        levels_table.setSelectionMode(QAbstractItemView.NoSelection)
+        rows = insights.get("per_level") or []
+        levels_table.setRowCount(len(rows))
+        for row_i, lvl in enumerate(rows):
+            models = ", ".join(lvl.get("models") or [])
+            auc_ap = f"{lvl['ensemble_auc'] * 100:.2f}% / {lvl['ensemble_ap'] * 100:.2f}%"
+            levels_table.setItem(row_i, 0, QTableWidgetItem(f"L{lvl['level']}"))
+            levels_table.setItem(row_i, 1, QTableWidgetItem(models))
+            levels_table.setItem(row_i, 2, QTableWidgetItem(str(lvl.get("feature_count", 0))))
+            levels_table.setItem(row_i, 3, QTableWidgetItem(auc_ap))
+        levels_table.resizeColumnsToContents()
+        levels_layout.addWidget(levels_table)
+        layout.addWidget(levels_card)
+
+        if tier_b.get("folds"):
+            folds_card = QGroupBox("Cross-level holdout folds")
+            folds_layout = QVBoxLayout(folds_card)
+            folds_table = QTableWidget()
+            folds_table.setColumnCount(4)
+            folds_table.setHorizontalHeaderLabels(
+                ["Test level", "Train levels", "Test rows", "Ensemble AUC / AP"]
+            )
+            folds_table.horizontalHeader().setStretchLastSection(True)
+            folds_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+            folds = tier_b["folds"]
+            folds_table.setRowCount(len(folds))
+            for row_i, fold in enumerate(folds):
+                train = ", ".join(str(x) for x in (fold.get("train_levels") or []))
+                scores = (
+                    f"{fold['ensemble_auc'] * 100:.2f}% / {fold['ensemble_ap'] * 100:.2f}%"
+                )
+                folds_table.setItem(
+                    row_i, 0, QTableWidgetItem(f"L{fold.get('test_level', '?')}")
+                )
+                folds_table.setItem(row_i, 1, QTableWidgetItem(train))
+                folds_table.setItem(
+                    row_i, 2, QTableWidgetItem(str(fold.get("test_rows", "—")))
+                )
+                folds_table.setItem(row_i, 3, QTableWidgetItem(scores))
+            folds_table.resizeColumnsToContents()
+            folds_layout.addWidget(folds_table)
+            layout.addWidget(folds_card)
+
+        if not insights.get("manifest_ok"):
+            warn = QLabel("⚠️ Could not load ensemble_manifest.json — check FYP_ARTIFACT_RUN")
+            warn.setStyleSheet(
+                "background-color: #1c2128; color: #d29922; padding: 12px; "
+                "border-radius: 6px; font-weight: 600;"
+            )
+            warn.setAlignment(Qt.AlignCenter)
+            layout.addWidget(warn)
+
+        layout.addStretch()
+        scroll.setWidget(content)
+        outer.addWidget(scroll)
         return page
     
     def create_config_page(self):
@@ -2348,19 +2410,43 @@ class FYPMainWindow(QMainWindow):
         detection_mode: str,
         confidence: float,
         per_level: dict,
+        suspect_pid: Optional[int] = None,
+        suspect_process: Optional[str] = None,
     ) -> None:
         """Push ML detection into the Alerts tab (daemon heuristics do not cover ML)."""
         lvl = level if level is not None else "?"
         scores = ", ".join(f"L{k}:{float(v):.2f}" for k, v in sorted(per_level.items()))
-        message = f"{detection_mode}: Level {lvl} (confidence {confidence:.2f}) | {scores}"
+
+        pid = suspect_pid or 0
+        process_name = suspect_process or "unknown"
+        if pid == 0 and hasattr(self, "processes") and self.processes:
+            for pid_str, stats in self.processes.items():
+                comm = stats.get("comm", "")
+                rapid = float(stats.get("rapid_ratio", 0) or 0)
+                eps = float(stats.get("events_per_second", 0) or 0)
+                if rapid > 50 or eps > 100:
+                    pid = int(pid_str)
+                    process_name = comm
+                    break
+
+        message = (
+            f"ML telemetry detection: Level {lvl} (confidence {confidence:.2f}, "
+            f"{detection_mode}) | {scores}"
+        )
         alert = Alert(
             timestamp=datetime.now().isoformat(timespec="seconds"),
             severity=self._ml_alert_severity(level, detection_mode),
             message=message,
-            process_name="ML / eBPF telemetry",
-            pid=0,
+            process_name=process_name,
+            pid=pid,
         )
-        logger.warning("ML alert: [%s] %s", alert.severity, message)
+        logger.warning(
+            "ML alert: [%s] %s (PID %s) - %s",
+            alert.severity,
+            process_name,
+            pid,
+            message,
+        )
         self.on_alert_received(alert)
 
     def on_ml_prediction(self, data: dict):
@@ -2388,12 +2474,14 @@ class FYPMainWindow(QMainWindow):
             )
         elif label == "malicious":
             self.ml_status_indicator.set_status("error", pulse=True)
-            lvl_text = level if level is not None else "?"
-            self.ml_status_title.setText(f"Keylogger Detected — Level {lvl_text}")
+            self.ml_status_title.setText("Keylogger Detected")
             self.ml_status_title.setStyleSheet(
                 "font-size: 18px; font-weight: 700; color: #ff7b72;"
             )
-            self.ml_status_mode.setText(f"Detection: {detection_mode}")
+            lvl_text = level if level is not None else "?"
+            self.ml_status_mode.setText(
+                f"Detection: {detection_mode} | Level {lvl_text}"
+            )
             self.ml_panel.setStyleSheet(
                 "#mlStatusPanel { border: 2px solid #da3633; border-radius: 8px; "
                 "background-color: #1c1214; }"
@@ -2401,7 +2489,14 @@ class FYPMainWindow(QMainWindow):
             self.set_tray_status("error")
             if not self._ml_alert_active:
                 self._ml_alert_active = True
-                self._raise_ml_alert(level, detection_mode, confidence, per_level)
+                self._raise_ml_alert(
+                    level,
+                    detection_mode,
+                    confidence,
+                    per_level,
+                    data.get("suspect_pid"),
+                    data.get("suspect_process"),
+                )
             elif detection_mode.startswith(("ml-L", "spike-L")) and level is not None:
                 self.ml_status_mode.setText(f"Detection: {detection_mode}")
         else:
@@ -2428,6 +2523,52 @@ class FYPMainWindow(QMainWindow):
         if label == "malicious":
             detail = f"Confidence: {confidence:.2f} | " + detail
         self.ml_status_detail.setText(detail)
+        self._update_ml_insights_live(data)
+
+    def _update_ml_insights_live(self, data: Optional[dict] = None, error: Optional[str] = None):
+        if not hasattr(self, "ml_insights_live_title"):
+            return
+        if error:
+            self.ml_insights_live_title.setText("ML API offline")
+            self.ml_insights_live_title.setStyleSheet(
+                "font-size: 16px; font-weight: 700; color: #d29922;"
+            )
+            self.ml_insights_live_detail.setText(error)
+            return
+        if not data:
+            return
+
+        label = data.get("label", "benign")
+        level = data.get("level")
+        confidence = float(data.get("confidence", 0.0))
+        per_level = data.get("per_level", {})
+        detection_mode = data.get("detection_mode") or "idle"
+        calibrating = data.get("calibrating", False)
+
+        if calibrating:
+            self.ml_insights_live_title.setText("Calibrating…")
+            self.ml_insights_live_title.setStyleSheet(
+                "font-size: 16px; font-weight: 700; color: #d29922;"
+            )
+        elif label == "malicious":
+            self.ml_insights_live_title.setText("Keylogger Detected")
+            self.ml_insights_live_title.setStyleSheet(
+                "font-size: 16px; font-weight: 700; color: #ff7b72;"
+            )
+        else:
+            self.ml_insights_live_title.setText("Benign")
+            self.ml_insights_live_title.setStyleSheet(
+                "font-size: 16px; font-weight: 700; color: #3fb950;"
+            )
+
+        score_parts = [f"L{k}: {float(v):.3f}" for k, v in sorted(per_level.items())]
+        detail = f"Mode: {detection_mode}"
+        if label == "malicious":
+            lvl_text = level if level is not None else "?"
+            detail += f" | Level {lvl_text} | Confidence: {confidence:.2f}"
+        if score_parts:
+            detail += " | " + ", ".join(score_parts)
+        self.ml_insights_live_detail.setText(detail)
 
     def on_ml_api_error(self, message: str):
         self.ml_status_indicator.set_status("warning")
@@ -2441,6 +2582,7 @@ class FYPMainWindow(QMainWindow):
             "#mlStatusPanel { border: 2px solid #9e6a03; border-radius: 8px; "
             "background-color: #1c1810; }"
         )
+        self._update_ml_insights_live(error=message)
 
     def on_ml_csv_offline(self, offline: bool):
         if offline and self.ml_status_title.text() == "System Clean":

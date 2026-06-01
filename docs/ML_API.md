@@ -73,6 +73,8 @@ Send numeric telemetry columns from the live CSV row. Metadata columns are optio
 | `per_level_adjusted` | Raw minus calibrated baseline (after 20 rows) |
 | `detection_mode` | `idle`, `sim-L2`, `spike-L4`, `ml-L3`, `delta`, … |
 | `raw_label` | Instant result before hysteresis |
+| `suspect_pid` | PID of unseen keylogger script when running (optional) |
+| `suspect_process` | Script filename or process name for alerts (optional) |
 
 ---
 

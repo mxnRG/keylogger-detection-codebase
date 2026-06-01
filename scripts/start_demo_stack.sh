@@ -89,6 +89,9 @@ if ! pgrep -f "ml_api.py" >/dev/null; then
         export FYP_ML_CALIBRATE_SAMPLES='${FYP_ML_CALIBRATE_SAMPLES}' &&
         export FYP_ML_L2_THRESHOLD='${FYP_ML_L2_THRESHOLD}' &&
         export FYP_ML_L3_THRESHOLD='${FYP_ML_L3_THRESHOLD}' &&
+        export FYP_ML_L4_THRESHOLD='${FYP_ML_L4_THRESHOLD}' &&
+        export FYP_ML_L4_DELTA='${FYP_ML_L4_DELTA}' &&
+        export FYP_ML_LEVEL_STREAK='${FYP_ML_LEVEL_STREAK}' &&
         export FYP_ML_L2_DELTA='${FYP_ML_L2_DELTA}' &&
         export FYP_ML_L3_DELTA='${FYP_ML_L3_DELTA}' &&
         export FYP_ML_L2_SPIKES='${FYP_ML_L2_SPIKES}' &&

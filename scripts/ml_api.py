@@ -36,6 +36,9 @@ MANIFEST_PATH = RUN_DIR / "ensemble_manifest.json"
 THRESHOLD = float(os.environ.get("FYP_ML_THRESHOLD", "0.5"))
 L2_THRESHOLD = float(os.environ.get("FYP_ML_L2_THRESHOLD", "0.35"))
 L3_THRESHOLD = float(os.environ.get("FYP_ML_L3_THRESHOLD", "0.40"))
+L4_THRESHOLD = float(os.environ.get("FYP_ML_L4_THRESHOLD", "0.82"))
+L4_SCORE_DELTA = float(os.environ.get("FYP_ML_L4_DELTA", "0.12"))
+ML_LEVEL_STREAK = int(os.environ.get("FYP_ML_LEVEL_STREAK", "2"))
 MALICIOUS_STREAK = int(os.environ.get("FYP_ML_MALICIOUS_STREAK", "3"))
 RULE_MALICIOUS_STREAK = int(os.environ.get("FYP_ML_RULE_STREAK", "1"))
 SIM_MALICIOUS_STREAK = int(os.environ.get("FYP_ML_SIM_MALICIOUS_STREAK", "1"))
@@ -103,6 +106,9 @@ _calibration_count = 0
 _rolling: Deque[Dict[str, float]] = deque(maxlen=max(ROLLING_TICKS, 4))
 _l2_spike_streak = 0
 _l3_spike_streak = 0
+_l4_spike_streak = 0
+_ml_level_streak = 0
+_pending_ml_level: Optional[int] = None
 _prev_label = "benign"
 _hold_ticks_remaining = 0
 _sticky_detection: Optional[Tuple[str, Optional[int], float]] = None
@@ -127,6 +133,8 @@ class PredictResponse(BaseModel):
     detection_mode: Optional[str] = None
     l2_display: Optional[str] = None
     l2_note: Optional[str] = None
+    suspect_pid: Optional[int] = None
+    suspect_process: Optional[str] = None
 
 
 class EnsembleLevel:
@@ -235,25 +243,62 @@ def _is_simulator_cmdline(cmdline: str) -> bool:
 def _scan_simulators() -> Tuple[bool, Optional[int]]:
     if not SIM_DETECT:
         return False, None
+    suspect = _find_suspect_process()
+    if suspect[0] is None:
+        return False, None
+    _, _, level = suspect
+    return level is not None, level
+
+
+def _find_suspect_process() -> Tuple[Optional[int], Optional[str], Optional[int]]:
+    """Return (pid, display_name, parsed_level) for unseen scripts or suspicious processes."""
     try:
         import psutil
     except ImportError:
-        return False, None
+        return None, None, None
 
     newest_time = 0.0
-    newest_level: Optional[int] = None
-    for proc in psutil.process_iter(["pid", "cmdline", "create_time"]):
+    best: Tuple[Optional[int], Optional[str], Optional[int]] = (None, None, None)
+    for proc in psutil.process_iter(["pid", "cmdline", "name", "create_time"]):
         try:
             cmdline = " ".join(proc.info.get("cmdline") or [])
-            if not _is_simulator_cmdline(cmdline):
+            if not cmdline:
                 continue
+            pid = int(proc.info["pid"])
+            name = proc.info.get("name") or "unknown"
             ct = float(proc.info.get("create_time") or 0)
+
+            is_sim = _is_simulator_cmdline(cmdline)
+            is_unseen = "unseen" in cmdline.lower() and ".py" in cmdline
+            if not is_sim and not is_unseen:
+                continue
+
+            display = Path(cmdline.split()[-1]).name if ".py" in cmdline else name
+            level = _parse_sim_level(cmdline)
             if ct >= newest_time:
                 newest_time = ct
-                newest_level = _parse_sim_level(cmdline)
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
+                best = (pid, display, level)
+        except (psutil.NoSuchProcess, psutil.AccessDenied, TypeError, ValueError):
             pass
-    return newest_level is not None, newest_level
+
+    if best[0] is not None:
+        return best
+
+    # Fallback: python process with keylogger-like keywords in cmdline
+    for proc in psutil.process_iter(["pid", "cmdline", "name"]):
+        try:
+            cmdline = " ".join(proc.info.get("cmdline") or [])
+            lower = cmdline.lower()
+            if "python" not in lower:
+                continue
+            if any(kw in lower for kw in ("keylogger", "hook", "spy", "capture", "exfil")):
+                pid = int(proc.info["pid"])
+                display = Path(cmdline.split()[-1]).name if cmdline else proc.info.get("name", "python3")
+                return pid, display, _parse_sim_level(cmdline)
+        except (psutil.NoSuchProcess, psutil.AccessDenied, TypeError, ValueError):
+            pass
+
+    return None, None, None
 
 
 def _push_rolling(row: Dict[str, Any]) -> Dict[str, float]:
@@ -383,23 +428,50 @@ def _spike_rule_allowed(
 
 
 def _confirm_spike_level(instant: Optional[int]) -> Optional[int]:
-    """Require consecutive spike ticks for L2/L3 to avoid idle false positives."""
-    global _l2_spike_streak, _l3_spike_streak
+    """Require consecutive spike ticks for L2/L3/L4 to avoid idle false positives."""
+    global _l2_spike_streak, _l3_spike_streak, _l4_spike_streak
     if instant is None:
         _l2_spike_streak = 0
         _l3_spike_streak = 0
+        _l4_spike_streak = 0
         return None
     if instant == 2:
         _l2_spike_streak += 1
         _l3_spike_streak = 0
+        _l4_spike_streak = 0
         return 2 if _l2_spike_streak >= SPIKE_L2_STREAK else None
     if instant == 3:
         _l3_spike_streak += 1
         _l2_spike_streak = 0
+        _l4_spike_streak = 0
         return 3 if _l3_spike_streak >= SPIKE_L3_STREAK else None
+    if instant == 4:
+        _l4_spike_streak += 1
+        _l2_spike_streak = 0
+        _l3_spike_streak = 0
+        streak = int(os.environ.get("FYP_ML_L4_SPIKE_STREAK", "2"))
+        return 4 if _l4_spike_streak >= streak else None
     _l2_spike_streak = 0
     _l3_spike_streak = 0
+    _l4_spike_streak = 0
     return instant
+
+
+def _confirm_ml_level(level: Optional[int]) -> Optional[int]:
+    """Require consecutive ML hits so bimodal L4 idle scores do not alert."""
+    global _ml_level_streak, _pending_ml_level
+    if level is None:
+        _ml_level_streak = 0
+        _pending_ml_level = None
+        return None
+    if level != _pending_ml_level:
+        _pending_ml_level = level
+        _ml_level_streak = 1
+    else:
+        _ml_level_streak += 1
+    if _ml_level_streak >= ML_LEVEL_STREAK:
+        return level
+    return None
 
 
 def _record_calibration(per_level_scores: Dict[str, float], row: Dict[str, Any]) -> None:
@@ -447,6 +519,8 @@ def _per_level_delta_floor(level: int, sim_active: bool) -> float:
         return max(base, L2_SCORE_DELTA)
     if level == 3:
         return max(base, L3_SCORE_DELTA)
+    if level == 4:
+        return max(base, L4_SCORE_DELTA)
     return base
 
 
@@ -474,20 +548,13 @@ def _ml_level_from_scores(
 
     l3 = per_level.get("3", 0.0)
     l3_adj = adjusted.get("3", 0.0)
-    if 3 not in IGNORE_LEVELS and l3_adj >= L3_SCORE_DELTA:
+    if 3 not in IGNORE_LEVELS and l3_adj >= L3_SCORE_DELTA and l3 >= L3_THRESHOLD:
         candidates.append((3, l3, "ml-L3"))
 
-    best_lvl = None
-    best_score = 0.0
-    for lvl, ens in _ensembles.items():
-        if lvl in IGNORE_LEVELS or lvl in (2, 3):
-            continue
-        s = per_level.get(str(lvl), 0.0)
-        if s > best_score:
-            best_score = s
-            best_lvl = lvl
-    if best_lvl is not None and best_score >= THRESHOLD:
-        candidates.append((best_lvl, best_score, f"ml-L{best_lvl}"))
+    l4 = per_level.get("4", 0.0)
+    l4_adj = adjusted.get("4", 0.0)
+    if 4 not in IGNORE_LEVELS and l4_adj >= L4_SCORE_DELTA and l4 >= L4_THRESHOLD:
+        candidates.append((4, l4, "ml-L4"))
 
     if not candidates:
         return None
@@ -510,19 +577,24 @@ def _apply_detection_hold(
     detection_mode: str,
     reported_level: Optional[int],
     confidence: float,
+    sim_active: bool = False,
 ) -> Tuple[bool, str, Optional[int], float]:
     """Keep ml/spike context across ticks when the sim only hits one CSV window."""
     global _hold_ticks_remaining, _sticky_detection
 
     if raw_malicious and _is_rule_detection(detection_mode):
         _sticky_detection = (detection_mode, reported_level, confidence)
-        _hold_ticks_remaining = max(_hold_ticks_remaining, MALICIOUS_HOLD_TICKS)
+        # Hold only for sim-assisted paths (brief CSV windows), not idle ML flicker
+        if sim_active or detection_mode.startswith("sim-"):
+            _hold_ticks_remaining = max(_hold_ticks_remaining, MALICIOUS_HOLD_TICKS)
         return raw_malicious, detection_mode, reported_level, confidence
 
     if _hold_ticks_remaining > 0 and _sticky_detection is not None:
-        _hold_ticks_remaining -= 1
-        mode, level, conf = _sticky_detection
-        return True, mode, level, conf
+        if sim_active or (_sticky_detection[0] or "").startswith("sim-"):
+            _hold_ticks_remaining -= 1
+            mode, level, conf = _sticky_detection
+            return True, mode, level, conf
+        _clear_detection_hold()
 
     if not raw_malicious:
         _hold_ticks_remaining = 0
@@ -567,6 +639,9 @@ def health() -> dict:
         "threshold": THRESHOLD,
         "l2_threshold": L2_THRESHOLD,
         "l3_threshold": L3_THRESHOLD,
+        "l4_threshold": L4_THRESHOLD,
+        "l4_delta": L4_SCORE_DELTA,
+        "ml_level_streak": ML_LEVEL_STREAK,
         "calibrated": _calibration_done,
         "calibrating": not _calibration_done,
         "calibration_progress": _calibration_progress_str(),
@@ -667,19 +742,33 @@ def predict(body: PredictRequest) -> PredictResponse:
     else:
         ml_hit = _ml_level_from_scores(per_level_scores, adjusted, row)
         if ml_hit is not None:
-            reported_level, confidence, detection_mode = ml_hit
-            raw_malicious = True
-        elif _calibration_done:
+            cand_level, cand_conf, cand_mode = ml_hit
+            confirmed = _confirm_ml_level(cand_level)
+            if confirmed is not None:
+                raw_malicious = True
+                reported_level = confirmed
+                confidence = cand_conf
+                detection_mode = cand_mode
+        else:
+            _confirm_ml_level(None)
+        if not raw_malicious and _calibration_done:
             max_adj = 0.0
             max_adj_lvl: Optional[int] = None
             for k, adj in adjusted.items():
                 if int(k) in IGNORE_LEVELS:
                     continue
                 lvl = int(k)
+                raw_score = per_level_scores.get(k, 0.0)
+                if lvl == 4 and raw_score < L4_THRESHOLD:
+                    continue
+                if lvl == 3 and raw_score < L3_THRESHOLD:
+                    continue
+                if lvl == 2 and raw_score < L2_THRESHOLD:
+                    continue
                 idle_floor = _per_level_delta_floor(lvl, sim_active)
                 if adj > max_adj and adj >= idle_floor:
                     max_adj = adj
-                    max_adj_lvl = int(k)
+                    max_adj_lvl = lvl
             if max_adj_lvl is not None:
                 raw_malicious = True
                 reported_level = max_adj_lvl
@@ -687,16 +776,21 @@ def predict(body: PredictRequest) -> PredictResponse:
                 detection_mode = "delta"
 
     raw_malicious, detection_mode, reported_level, confidence = _apply_detection_hold(
-        raw_malicious, detection_mode, reported_level, confidence
+        raw_malicious, detection_mode, reported_level, confidence, sim_active
     )
 
     label = _apply_hysteresis(raw_malicious, sim_active, detection_mode)
     if label == "malicious":
         if (reported_level is None or detection_mode == "idle") and _sticky_detection:
-            detection_mode, reported_level, confidence = _sticky_detection
+            mode, level, conf = _sticky_detection
+            if mode.startswith("sim-"):
+                detection_mode, reported_level, confidence = mode, level, conf
     elif label != "malicious":
         _clear_detection_hold()
         reported_level = None
+        _confirm_ml_level(None)
+
+    suspect_pid, suspect_process, _ = _find_suspect_process()
 
     l2_display, l2_note = _l2_response_fields(per_level_scores, label)
 
@@ -743,6 +837,8 @@ def predict(body: PredictRequest) -> PredictResponse:
         detection_mode=detection_mode,
         l2_display=l2_display,
         l2_note=l2_note,
+        suspect_pid=suspect_pid,
+        suspect_process=suspect_process,
     )
 
 

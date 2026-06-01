@@ -45,8 +45,8 @@ Full command list: [`docs/SESSION_RESUME.md`](docs/SESSION_RESUME.md)
 
 - Wait ~15 s after start for calibration.
 - Dashboard should show **System Clean** at idle.
-- **L2 score** may still appear in detail line (e.g. `L2=0.45`) — that is not an alert; L2 is in `IGNORE_LEVELS`.
-- Detection at idle was caused by **roll-L3** (now disabled by default).
+- **L4 idle FP fix (2026-06-01):** L4 threshold 0.82 + delta 0.12 + 2-tick ML streak; hold disabled for non-sim.
+- GUI shows **Keylogger Detected** (level in details only); ML alerts include suspect PID/process.
 
 ### Examiner demo
 
@@ -90,9 +90,9 @@ Kernel v0.6, Daemon v0.2, GUI v3.3
 
 | Doc | Content |
 |-----|---------|
-| [`docs/SESSION_RESUME.md`](docs/SESSION_RESUME.md) | Commands, logs, env vars |
-| [`docs/ml_work.md`](docs/ml_work.md) | ML tuning + session work log |
-| [`docs/ML_API.md`](docs/ML_API.md) | API endpoints + response fields |
+| [`docs/ARCHITECTURE_AND_DETECTION.md`](docs/ARCHITECTURE_AND_DETECTION.md) | Full architecture + detection pipeline |
+| [`docs/FYP_JURY_EVALUATION_GUIDE.md`](docs/FYP_JURY_EVALUATION_GUIDE.md) | Examiner Q&A |
+| [`docs/LIVE_DEMO_GUIDE.md`](docs/LIVE_DEMO_GUIDE.md) | Demo script + troubleshooting |
 
 ---
 

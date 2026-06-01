@@ -1,0 +1,97 @@
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+        
+  @app.on_event("startup")
+INFO:     Started server process [6474]
+INFO:     Waiting for application startup.
+[07:27:29] [ML-API] INFO: Loaded run_20260531_l2_hybrid | levels=[2, 3, 4] ignore=none L2_thr=0.35 L3_thr=0.40 roll=10
+[07:27:29] [ML-API] INFO: Loaded run_20260531_l2_hybrid | levels=[2, 3, 4] ignore=none L2_thr=0.35 L3_thr=0.40 roll=10
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8765 (Press CTRL+C to quit)
+INFO:     127.0.0.1:39118 - "GET /health HTTP/1.1" 200 OK
+[07:27:41] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.127 L3=0.233 L4=0.238 | cal=False (1/20)
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[07:27:41] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.127 L3=0.233 L4=0.238 | cal=False (1/20)
+
+==> /tmp/fyp-demo/fyp_collector_live.log <==
+In file included from include/linux/stddef.h:5:
+In file included from include/uapi/linux/stddef.h:5:
+In file included from include/linux/compiler_types.h:80:
+include/linux/compiler-clang.h:43:9: warning: '__HAVE_BUILTIN_BSWAP16__' macro redefined [-Wmacro-redefined]
+#define __HAVE_BUILTIN_BSWAP16__
+        ^
+<command line>:3:9: note: previous definition is here
+#define __HAVE_BUILTIN_BSWAP16__ 1
+        ^
+3 warnings generated.
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-06-01 07:26:51] FYP-Daemon [INFO]: Netlink socket created (PID 6451, protocol 31)
+[2026-06-01 07:26:51] FYP-Daemon [INFO]: Sent registration message to kernel (PID 6451)
+[2026-06-01 07:26:51] FYP-Daemon [INFO]: Netlink receiver started successfully
+[2026-06-01 07:26:51] FYP-Daemon [INFO]: Status writer thread started
+[2026-06-01 07:26:51] FYP-Daemon [INFO]: Daemon running. Press Ctrl+C to stop.
+[2026-06-01 07:26:51] FYP-Daemon [INFO]: Events will be delivered via Netlink (real-time, <1ms latency)
+[2026-06-01 07:26:51] FYP-Daemon [INFO]: Entering Netlink receive loop...
+[2026-06-01 07:27:01] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-06-01 07:27:29] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-06-01 07:27:39] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-06-01 07:26:59] FYP-GUI [INFO]: Monitoring started with 500ms interval
+[2026-06-01 07:26:59] FYP-GUI [INFO]: LKM status monitor started (2000ms)
+[2026-06-01 07:26:59] FYP-GUI [INFO]: Telemetry ML monitor started → http://127.0.0.1:8765/predict
+[2026-06-01 07:26:59] FYP-GUI [INFO]: Live ML + LKM watchdog monitors enabled
+[2026-06-01 07:26:59] FYP-GUI [INFO]: Resource monitoring enabled (1s interval)
+[2026-06-01 07:26:59] FYP-GUI [INFO]: GUI initialization complete
+[2026-06-01 07:26:59] FYP-GUI [INFO]: Entering Qt event loop
+[2026-06-01 07:26:59] FYP-GUI [INFO]: ✓ Daemon connection established. Baseline: 0 events
+[2026-06-01 07:26:59] FYP-GUI [INFO]: ✓ Daemon connection established
+[2026-06-01 07:27:00] FYP-GUI [INFO]: Found daemon PID: 6450
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-06-01 07:27:49] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-06-01 07:27:59] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[07:28:03] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.043 L3=0.232 L4=0.228 | cal=False (2/20)
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[07:28:03] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.043 L3=0.232 L4=0.228 | cal=False (2/20)
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-06-01 07:28:10] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-06-01 07:28:20] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-06-01 07:28:30] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-06-01 07:28:38] FYP-GUI [INFO]: Switching to page: alerts
+[2026-06-01 07:28:40] FYP-GUI [INFO]: Switching to page: dashboard
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-06-01 07:28:41] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-06-01 07:28:51] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_gui.log <==
+[2026-06-01 07:28:53] FYP-GUI [INFO]: Application closing...
+[2026-06-01 07:28:53] FYP-GUI [INFO]: Monitoring stopped
+[2026-06-01 07:28:53] FYP-GUI [INFO]: Application closed
+[2026-06-01 07:28:53] FYP-GUI [INFO]: Application exited with code 0
+QThread: Destroyed while thread '' is still running
+
+==> /tmp/fyp-demo/fyp_daemon.log <==
+[2026-06-01 07:29:01] FYP-Daemon [INFO]: Status: 0 events | 0 processes tracked | 0 active | 0 alerts
+[2026-06-01 07:29:12] FYP-Daemon [INFO]: Status: 17 events | 2 processes tracked | 2 active | 0 alerts
+[2026-06-01 07:29:22] FYP-Daemon [INFO]: Status: 17 events | 2 processes tracked | 0 active | 0 alerts
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[07:29:22] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.041 L3=0.246 L4=0.228 | cal=False (3/20)
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[07:29:22] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.041 L3=0.246 L4=0.228 | cal=False (3/20)
+
+==> /tmp/fyp-demo/fyp_ml_api.log <==
+[07:29:25] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.060 L3=0.233 L4=0.247 | cal=False (4/20)
+
+==> /tmp/fyp-demo/fyp_ml_decisions.log <==
+[07:29:25] [ML-DEC] INFO: BENIGN | mode=calibrating level=None conf=0.000 | raw L2=0.060 L3=0.233 L4=0.247 | cal=False (4/20)

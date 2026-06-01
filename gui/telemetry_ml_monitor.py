@@ -20,6 +20,7 @@ logger = logging.getLogger("FYP-GUI")
 
 DEFAULT_CSV = os.environ.get("FYP_TELEMETRY_CSV", "/tmp/fyp_telemetry_live.csv")
 DEFAULT_API = os.environ.get("FYP_ML_API_URL", "http://127.0.0.1:8765/predict")
+DEFAULT_TIMEOUT_S = float(os.environ.get("FYP_ML_API_TIMEOUT_S", "20"))
 
 SKIP_FOR_API = {"timestamp", "scenario", "collector_type"}
 
@@ -28,10 +29,11 @@ class _PredictWorker(QThread):
     finished_ok = Signal(dict)
     finished_err = Signal(str)
 
-    def __init__(self, api_url: str, features: Dict[str, Any], parent=None):
+    def __init__(self, api_url: str, features: Dict[str, Any], timeout_s: float, parent=None):
         super().__init__(parent)
         self.api_url = api_url
         self.features = features
+        self.timeout_s = timeout_s
 
     def run(self):
         try:
@@ -42,7 +44,7 @@ class _PredictWorker(QThread):
                 headers={"Content-Type": "application/json"},
                 method="POST",
             )
-            with urllib.request.urlopen(req, timeout=3) as resp:
+            with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
                 body = json.loads(resp.read().decode("utf-8"))
             self.finished_ok.emit(body)
         except urllib.error.URLError as exc:
@@ -66,6 +68,7 @@ class TelemetryMlMonitor(QObject):
         super().__init__(parent)
         self.csv_path = Path(csv_path)
         self.api_url = api_url
+        self.timeout_s = DEFAULT_TIMEOUT_S
         self._offset = 0
         self._inode: Optional[int] = None
         self._fieldnames: List[str] = []
@@ -152,7 +155,7 @@ class TelemetryMlMonitor(QObject):
 
     def _request_prediction(self, row: Dict[str, Any]):
         self._busy = True
-        self._worker = _PredictWorker(self.api_url, row)
+        self._worker = _PredictWorker(self.api_url, row, self.timeout_s)
 
         def clear_busy():
             self._busy = False
