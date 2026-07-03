@@ -1,0 +1,23 @@
+Level 1 — User/API Keylogger
+
+A User/API keylogger is the simplest type of software keylogger. It works by repeatedly asking the operating system whether any key has been pressed. Instead of directly interacting with hardware, it relies on normal system functions and keyboard APIs provided by the OS. Since it runs like a regular application, it is usually easier to detect and remove. This type of keylogger leaves obvious behavioral traces such as frequent keyboard polling and repeated API calls.
+
+Level 2 — Hook/Trap Keylogger
+
+A Hook or Trap keylogger works by inserting itself into the keyboard message flow inside the operating system. Instead of continuously checking for pressed keys, it intercepts keyboard messages before they reach applications like browsers or text editors. In simple terms, it secretly stands between the keyboard input and the application receiving it. This makes it more stealthy and efficient than a basic API keylogger. It commonly uses keyboard hook mechanisms provided by the operating system.
+
+Level 3 — Rootkit Keylogger
+
+A Rootkit keylogger is a more advanced type of software keylogger designed not only to capture keystrokes but also to hide its own presence. It attempts to remain invisible by hiding processes, files, or system activity from the user and even from security software. This level is considered more dangerous because the operating system may not easily recognize that the keylogger exists. Rootkit keyloggers are commonly associated with stealth techniques and advanced malware behavior.
+
+Level 4 — Kernel-Level Keylogger
+
+A Kernel-Level keylogger operates deep inside the operating system at the kernel or driver level. Instead of waiting for applications to process keyboard input, it captures keystrokes much earlier, close to where the keyboard communicates with the system itself. Because it works with high privileges, it is extremely stealthy and difficult to detect using normal antivirus methods. This type of keylogger is considered one of the most dangerous software-based keyloggers because it can monitor input before most security tools can observe it.
+
+Level 5 — Hardware Keylogger
+
+A Hardware keylogger is not software at all but a physical device connected between the keyboard and the computer. It records keystrokes directly from the keyboard signals without relying on the operating system. Since it exists outside the software environment, traditional antivirus or software-based detection methods usually cannot identify it. Hardware keyloggers are difficult to detect unless the physical hardware setup is inspected carefully.
+
+Level 6 — Wireless/Acoustic Keylogger
+
+A Wireless or Acoustic keylogger captures keystrokes remotely without directly interacting with the computer system. Wireless keyloggers intercept signals transmitted by wireless keyboards, while acoustic keyloggers analyze the sound produced when keys are pressed. These attacks occur outside the operating system and therefore produce little or no software traces on the target machine. Because they operate externally, they are extremely difficult to detect using traditional system monitoring methods.
